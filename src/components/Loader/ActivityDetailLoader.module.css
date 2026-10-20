@@ -1,0 +1,163 @@
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.bone {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #e6e6e6 40%,
+    #f0f0f0 80%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+.galleryMain {
+  height: 410px;
+  width: 100%;
+}
+
+.galleryThumb {
+  height: 200px;
+  width: 100%;
+}
+
+.badge {
+  height: 32px;
+  width: 140px;
+  border-radius: 50px;
+}
+
+.badgeSm {
+  height: 32px;
+  width: 160px;
+  border-radius: 50px;
+}
+
+.title {
+  height: 36px;
+  width: 85%;
+  max-width: 520px;
+  border-radius: 6px;
+}
+
+.titleLine {
+  height: 28px;
+  width: 55%;
+  max-width: 340px;
+  border-radius: 6px;
+}
+
+.infoItem {
+  height: 18px;
+  width: 110px;
+  border-radius: 4px;
+}
+
+.tab {
+  height: 40px;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.sectionTitle {
+  height: 22px;
+  width: 140px;
+  border-radius: 4px;
+}
+
+.line {
+  height: 14px;
+  border-radius: 4px;
+}
+
+.lineFull {
+  width: 100%;
+}
+
+.lineLg {
+  width: 92%;
+}
+
+.lineMd {
+  width: 78%;
+}
+
+.lineSm {
+  width: 60%;
+}
+
+.meetingCard {
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.meetingHeader {
+  height: 64px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.sidebarCard {
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.25rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.price {
+  height: 32px;
+  width: 120px;
+  border-radius: 6px;
+}
+
+.calendar {
+  height: 220px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.counter {
+  height: 44px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.btn {
+  height: 48px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+@media (max-width: 991.98px) {
+  .galleryMain {
+    height: 240px;
+  }
+
+  .galleryThumb {
+    height: 110px;
+  }
+
+  .sidebarCard {
+    position: static;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .galleryMain {
+    height: 200px;
+  }
+
+  .hideMobile {
+    display: none !important;
+  }
+}

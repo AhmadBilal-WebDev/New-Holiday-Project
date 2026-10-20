@@ -1,0 +1,929 @@
+/* ===================================
+   HERO WRAPPER WITH CAROUSEL BACKGROUND
+   =================================== */
+.heroWrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Desktop tabs visible by default; mobile tabs hidden */
+.mobilesearch {
+  display: none !important;
+}
+
+.largesearch {
+  display: flex !important;
+}
+
+/* Carousel Background - Fixed position */
+.heroCarouselBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Overlay between carousel and content */
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.493);
+  z-index: 1;
+}
+
+/* Content layer on top */
+.heroContent {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 50px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===================================
+   HERO INTRO (lg+ only — 992px+)
+   =================================== */
+.heroIntro {
+  display: none;
+  max-width: 820px;
+  margin: 0 0 40px;
+  text-align: left;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #E7247A;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 10px 16px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  white-space: nowrap;
+}
+
+.heroBadge svg {
+  flex-shrink: 0;
+  font-size: 15px;
+}
+
+.heroHeading {
+  font-family: inherit;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 72px;
+  line-height: 73.44px;
+  letter-spacing: -1.8px;
+  vertical-align: middle;
+  color: #ffffff;
+  margin: 0 0 20px;
+  max-width: 14ch;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.heroHeadingAccent {
+  color: var(--Violet-Red-600, #E7247A);
+}
+
+.heroLead {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 28px;
+  max-width: 620px;
+}
+
+.heroFeatures {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+}
+
+.heroFeatures li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.heroFeatureIcon {
+  color: #E7247A;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Show intro + centered hero from lg (992px+) */
+@media (min-width: 992px) {
+  .heroWrapper {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .heroCarouselBackground {
+    display: block !important;
+  }
+
+  .heroContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .heroIntro {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .heroHeading {
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -1.2px;
+    max-width: 16ch;
+  }
+
+  .heroLead {
+    font-size: 16px;
+  }
+
+  .heroBadge {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .heroContent {
+    padding: 48px 20px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .heroHeading {
+    font-size: 64px;
+    line-height: 1.02;
+    letter-spacing: -1.5px;
+  }
+}
+
+/* Legacy title styles */
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 15px;
+}
+
+.heroSubtitle {
+  font-size: 1.3rem;
+  color: #ffffff;
+  opacity: 0.95;
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ===================================
+   SEARCH PANEL (floating white card)
+   =================================== */
+.searchPanel {
+  --search-pink: #e7247a;
+  --search-pink-soft: #fef5f7;
+  --search-lavender: #eef0f8;
+  --search-label: #9ca3af;
+  --search-value: #131423;
+  --search-muted: #5f6275;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 36px;
+  padding: 18px 20px 22px;
+  box-shadow:
+    0 20px 60px rgba(19, 20, 35, 0.18),
+    0 4px 16px rgba(19, 20, 35, 0.06);
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.searchTabsWrapper {
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.searchTabsWrapper .largesearch {
+  width: 100%;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px !important;
+  background: var(--search-pink-soft);
+  border-radius: 999px;
+  padding: 6px 8px;
+  margin: 0;
+}
+
+.searchTabsWrapper .largesearch :global(.nav-item) {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.searchTabsWrapper :global(.nav-pills.lights .nav-link),
+.searchTabsWrapper :global(.nav-pills.medium .nav-link) {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent !important;
+  color: var(--search-muted) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 12px 14px !important;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchTabsWrapper :global(.nav-pills.lights .nav-link:hover) {
+  color: var(--search-pink) !important;
+  background: rgba(255, 255, 255, 0.55) !important;
+}
+
+.searchTabsWrapper :global(.nav-pills.lights .nav-link.active),
+.searchTabsWrapper :global(.nav-pills.lights .show > .nav-link) {
+  background: #ffffff !important;
+  color: var(--search-pink) !important;
+  box-shadow: 0 4px 14px rgba(231, 36, 122, 0.16);
+}
+
+.searchTabsWrapper :global(.nav-link svg) {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* Desktop tab icons: white → muted / active pink */
+.searchTabsWrapper .largesearch :global(.nav-link svg [fill="#ffffff"]),
+.searchTabsWrapper .largesearch :global(.nav-link svg[fill="#ffffff"]) {
+  fill: #8b8fa3 !important;
+}
+
+.searchTabsWrapper .largesearch :global(.nav-link svg [stroke="#ffffff"]),
+.searchTabsWrapper .largesearch :global(.nav-link svg[stroke="#ffffff"]) {
+  stroke: #8b8fa3 !important;
+}
+
+.searchTabsWrapper .largesearch :global(.nav-link.active svg [fill="#ffffff"]),
+.searchTabsWrapper .largesearch :global(.nav-link.active svg[fill="#ffffff"]) {
+  fill: var(--search-pink) !important;
+}
+
+.searchTabsWrapper .largesearch :global(.nav-link.active svg [stroke="#ffffff"]),
+.searchTabsWrapper .largesearch :global(.nav-link.active svg[stroke="#ffffff"]) {
+  stroke: var(--search-pink) !important;
+}
+
+/* Mobile tab icons: brand blue → muted / active pink */
+.searchTabsWrapper .mobilesearch :global(.nav-link svg [fill="#0b659b"]),
+.searchTabsWrapper .mobilesearch :global(.nav-link svg[fill="#0b659b"]) {
+  fill: #8b8fa3 !important;
+}
+
+.searchTabsWrapper .mobilesearch :global(.nav-link svg [stroke="#0b659b"]),
+.searchTabsWrapper .mobilesearch :global(.nav-link svg[stroke="#0b659b"]) {
+  stroke: #8b8fa3 !important;
+}
+
+.searchTabsWrapper .mobilesearch :global(.nav-link.active svg [fill="#0b659b"]),
+.searchTabsWrapper .mobilesearch :global(.nav-link.active svg[fill="#0b659b"]) {
+  fill: var(--search-pink) !important;
+}
+
+.searchTabsWrapper .mobilesearch :global(.nav-link.active svg [stroke="#0b659b"]),
+.searchTabsWrapper .mobilesearch :global(.nav-link.active svg[stroke="#0b659b"]) {
+  stroke: var(--search-pink) !important;
+}
+
+.searchTabsWrapper .mobilesearch :global(.nav-link svg),
+.searchTabsWrapper .mobilesearch :global(.nav-link [color]) {
+  color: #8b8fa3 !important;
+}
+
+.searchTabsWrapper .mobilesearch :global(.nav-link.active svg),
+.searchTabsWrapper .mobilesearch :global(.nav-link.active [color]) {
+  color: var(--search-pink) !important;
+}
+
+.searchBody {
+  margin-top: 18px;
+}
+
+.searchdivider {
+  display: none;
+}
+
+/* Search Box Wrapper (inside panel — flat) */
+.searchBoxWrapper {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 4px 4px 0;
+  box-shadow: none;
+  max-width: none;
+  margin: 0;
+}
+
+/* Field row chrome */
+.searchPanel :global(.form-floating > label) {
+  color: var(--search-label) !important;
+  font-size: 11px !important;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 1;
+  /* Keep label parked top-left so placeholders stay visible */
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !important;
+}
+
+.searchPanel :global(.form-control),
+.searchPanel :global(.form-select),
+.searchPanel :global(.person-selection),
+.searchPanel :global(.hotel-date-range.form-control) {
+  border: none !important;
+  border-radius: 18px !important;
+  background: #f8f9fc !important;
+  color: var(--search-value) !important;
+  font-weight: 600;
+  min-height: 68px;
+  box-shadow: none !important;
+}
+
+/* Bootstrap form-floating hides placeholders — show them again */
+.searchPanel :global(.form-floating > .form-control::placeholder),
+.searchPanel :global(.form-floating > input::placeholder),
+.searchPanel :global(.form-floating input.form-control::placeholder),
+.searchPanel :global(.hotel-date-range input::placeholder),
+.searchPanel :global(.mantine-Input-input::placeholder) {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+  font-weight: 500;
+}
+
+.searchPanel :global(.flight-add-leg-btn.btn-outline-success) {
+  color: #e7247a !important;
+  border-color: #e7247a !important;
+  border-radius: 999px !important;
+  font-weight: 600;
+  background: #fff !important;
+}
+
+.searchPanel :global(.flight-add-leg-btn.btn-outline-success:hover),
+.searchPanel :global(.flight-add-leg-btn.btn-outline-success:disabled) {
+  color: #fff !important;
+  background: #e7247a !important;
+  border-color: #e7247a !important;
+  opacity: 1;
+}
+
+.searchPanel :global(.flight-add-leg-btn.btn-outline-success:disabled) {
+  opacity: 0.55;
+}
+
+.searchPanel :global(.form-control:focus),
+.searchPanel :global(.form-select:focus),
+.searchPanel :global(.person-selection:focus) {
+  border: none !important;
+  box-shadow: 0 0 0 2px rgba(231, 36, 122, 0.18) !important;
+}
+
+.searchPanel :global(.search-field-icon) {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--search-lavender);
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #4b5563 !important;
+  flex-shrink: 0;
+  pointer-events: none;
+  top: 50% !important;
+  transform: translateY(-50%);
+}
+
+.searchPanel :global(.search-field-icon svg) {
+  width: 18px;
+  height: 18px;
+}
+
+/* Icon sits at left:12 + 42px wide → text starts ~58px.
+   Pad only the interactive control / label — never the Mantine root wrapper
+   (that caused double left gap on date fields). */
+.searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > .form-control:not(.hotel-date-range)),
+.searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > .form-select),
+.searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > .person-selection),
+.searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > input.form-control),
+.searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > label),
+.searchPanel :global(.form-floating.position-relative:has(.search-field-icon) > .form-control:not(.hotel-date-range)),
+.searchPanel :global(.form-floating.position-relative:has(.search-field-icon) > input.form-control),
+.searchPanel :global(.form-floating.position-relative:has(.search-field-icon) > label) {
+  padding-left: 58px !important;
+}
+
+.searchPanel :global(.position-relative:has(.search-field-icon) .hotel-date-range.form-control) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.searchPanel :global(.position-relative:has(.search-field-icon) .hotel-date-range input),
+.searchPanel :global(.position-relative:has(.search-field-icon) .hotel-date-range .mantine-Input-input),
+.searchPanel :global(.position-relative:has(.search-field-icon) .mantine-DatePickerInput-input),
+.searchPanel :global(.position-relative:has(.search-field-icon) .mantine-DateInput-input),
+.searchPanel :global(.position-relative:has(.search-field-icon) .mantine-DateTimePicker-input) {
+  padding-left: 58px !important;
+}
+
+/* Packages: keep category + date + search on one row (desktop/tablet) */
+.searchPanel :global(.package-search-row) {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+}
+
+.searchPanel :global(.package-search-field) {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.searchPanel :global(.package-search-field .form-select),
+.searchPanel :global(.package-search-field .form-control),
+.searchPanel :global(.package-search-field select) {
+  min-width: 0 !important;
+  max-width: 100%;
+}
+
+.searchPanel :global(.package-search-action) {
+  flex: 0 0 180px;
+  display: flex;
+  align-items: stretch;
+}
+
+.searchPanel :global(.package-search-action .btn) {
+  white-space: nowrap;
+  min-height: 68px;
+}
+
+.searchPanel :global(.search-btn-styling-home.bg-color),
+.searchPanel :global(.btn-success.search-btn-styling-home) {
+  background: linear-gradient(90deg, #ff4195 0%, #e7247a 100%) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  min-height: 56px;
+  line-height: 1.2;
+  box-shadow: 0 10px 28px rgba(231, 36, 122, 0.32);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.searchPanel :global(.search-btn-styling-home.bg-color:hover),
+.searchPanel :global(.btn-success.search-btn-styling-home:hover) {
+  background: linear-gradient(90deg, #ff5aa3 0%, #d61b6c 100%) !important;
+  border: none !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(231, 36, 122, 0.4);
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+/* Large Desktop (1400px+) */
+@media (min-width: 1400px) {
+  .heroContent {
+    padding: 56px 40px;
+  }
+
+  .heroHeading {
+    font-size: 72px;
+    line-height: 73.44px;
+    letter-spacing: -1.8px;
+  }
+
+  .heroTitle {
+    font-size: 4rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.5rem;
+  }
+
+  .searchPanel {
+    max-width: 1280px;
+    padding: 20px 24px 26px;
+  }
+}
+
+/* Desktop (1200px - 1399px) */
+@media (max-width: 1399px) {
+  .heroTitle {
+    font-size: 3.2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.25rem;
+  }
+}
+
+/* Laptop/Tablet Large (992px - 1199px) */
+@media (max-width: 1199px) {
+  .heroTitle {
+    font-size: 2.8rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.15rem;
+  }
+
+  .searchPanel {
+    padding: 16px 18px 20px;
+    border-radius: 28px;
+  }
+}
+
+/* Below lg — no hero intro / bg image layout */
+@media (max-width: 991px) {
+  .heroWrapper {
+    min-height: auto;
+  }
+
+  .heroCarouselBackground {
+    display: none !important;
+  }
+
+  .heroIntro {
+    display: none !important;
+  }
+
+  .heroContent {
+    padding: 50px 15px;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+
+  .searchPanel {
+    border-radius: 24px;
+    padding: 14px 14px 18px;
+  }
+
+  .searchTabsWrapper :global(.nav-pills.lights .nav-link),
+  .searchTabsWrapper :global(.nav-pills.medium .nav-link) {
+    padding: 10px 8px !important;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .searchTabsWrapper :global(.nav-link svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .searchBody {
+    margin-top: 14px;
+  }
+
+  .searchBoxWrapper {
+    padding: 0;
+  }
+}
+
+/* Mobile Large (576px - 767px) */
+@media (max-width: 767px) {
+  .heroContent {
+    padding: 50px 15px;
+  }
+
+  .searchPanel {
+    border-radius: 22px;
+    padding: 12px;
+    box-shadow: 0 12px 36px rgba(19, 20, 35, 0.12);
+  }
+
+  /* Force single tab row on mobile — overrides any nested flex rules */
+  .mobilesearch {
+    display: flex !important;
+  }
+
+  .largesearch {
+    display: none !important;
+  }
+
+  .searchTabsWrapper .largesearch {
+    display: none !important;
+  }
+
+  .searchTabsWrapper .mobilesearch {
+    display: flex !important;
+  }
+
+  .searchdivider {
+    display: block;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+
+  .searchTabsWrapper {
+    margin-bottom: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    white-space: nowrap;
+    display: block !important;
+    border-bottom: none;
+  }
+
+  .searchTabsWrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .searchTabsWrapper .mobilesearch {
+    flex-wrap: nowrap;
+    gap: 4px !important;
+    padding: 6px !important;
+    width: max-content;
+    min-width: 100%;
+    background: var(--search-pink-soft);
+    border-radius: 999px;
+  }
+
+  .searchTabsWrapper .mobilesearch :global(.nav-item) {
+    flex: 0 0 auto;
+  }
+
+  .searchTabsWrapper :global(.nav-pills.lights .nav-link),
+  .searchTabsWrapper :global(.nav-pills.medium .nav-link),
+  .searchTabsWrapper :global(.home-search-top-wrapper .nav-pills.lights .nav-link),
+  .searchTabsWrapper :global(.home-search-top-wrapper .nav-pills.lights .nav-link.active) {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: none !important;
+    border-radius: 999px !important;
+    color: var(--search-muted) !important;
+  }
+
+  .searchTabsWrapper :global(.nav-pills.lights .nav-link.active) {
+    background: #ffffff !important;
+    color: var(--search-pink) !important;
+    box-shadow: 0 4px 12px rgba(231, 36, 122, 0.14);
+  }
+
+  .mobileTab {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 12px !important;
+    min-width: 76px !important;
+    text-align: center !important;
+    gap: 4px !important;
+  }
+
+  .mobileTab svg {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 1.5rem !important;
+    margin: 0 !important;
+  }
+
+  .tabLabel {
+    display: block !important;
+    font-size: 0.7rem !important;
+    font-weight: 600;
+    margin-top: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .searchBody {
+    margin-top: 12px;
+  }
+
+  .searchBoxWrapper {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .searchPanel :global(.search-btn-styling-home.bg-color),
+  .searchPanel :global(.btn-success.search-btn-styling-home) {
+    width: 100% !important;
+    min-height: 52px;
+    margin-top: 4px;
+  }
+
+  .searchPanel :global(.package-search-row) {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .searchPanel :global(.package-search-field),
+  .searchPanel :global(.package-search-action) {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  .searchPanel :global(.package-search-action .btn) {
+    min-height: 52px;
+  }
+
+  .searchPanel :global(.row > [class*="col-"]) {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  .searchPanel :global(.search-field-icon) {
+    width: 38px;
+    height: 38px;
+    left: 10px !important;
+  }
+
+  .searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > .form-control:not(.hotel-date-range)),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > .form-select),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > .person-selection),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > input.form-control),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .form-floating > label),
+  .searchPanel :global(.form-floating.position-relative:has(.search-field-icon) > .form-control:not(.hotel-date-range)),
+  .searchPanel :global(.form-floating.position-relative:has(.search-field-icon) > input.form-control),
+  .searchPanel :global(.form-floating.position-relative:has(.search-field-icon) > label),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .hotel-date-range input),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .hotel-date-range .mantine-Input-input),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .mantine-DatePickerInput-input),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .mantine-DateInput-input),
+  .searchPanel :global(.position-relative:has(.search-field-icon) .mantine-DateTimePicker-input) {
+    padding-left: 54px !important;
+  }
+
+  .searchPanel :global(.form-control),
+  .searchPanel :global(.form-select),
+  .searchPanel :global(.person-selection),
+  .searchPanel :global(.hotel-date-range.form-control) {
+    min-height: 64px;
+    border-radius: 16px !important;
+  }
+}
+
+/* Mobile Medium (480px - 575px) */
+@media (max-width: 575px) {
+  .heroContent {
+    padding: 30px 12px 15px;
+  }
+
+  .heroTitle {
+    font-size: 1.75rem;
+    margin-bottom: 8px;
+  }
+
+  .heroSubtitle {
+    font-size: 0.95rem;
+  }
+
+  .searchPanel {
+    border-radius: 20px;
+    padding: 10px;
+  }
+
+  .searchTabsWrapper :global(.nav-pills) {
+    gap: 0.25rem !important;
+  }
+
+  .searchTabsWrapper :global(.nav-link) {
+    padding: 0.45rem 0.55rem !important;
+  }
+
+  .searchTabsWrapper :global(.nav-link svg) {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* Mobile Small (max 479px) */
+@media (max-width: 479px) {
+  .heroContent {
+    padding: 25px 10px 10px;
+  }
+
+  .heroTitle {
+    font-size: 1.6rem;
+    line-height: 1.3;
+  }
+
+  .heroSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .searchTabsWrapper :global(.nav-link) {
+    padding: 0.4rem 0.5rem !important;
+  }
+
+  .searchTabsWrapper :global(.nav-link svg) {
+    font-size: 1.2rem !important;
+  }
+
+  .searchTabsWrapper :global(.nav-pills) {
+    gap: 0.2rem !important;
+  }
+}
+
+/* Extra Small Mobile (max 375px) */
+@media (max-width: 375px) {
+  .heroContent {
+    padding: 25px 8px 15px;
+  }
+
+  .searchTabsWrapper :global(.nav-link) {
+    padding: 0.35rem 0.45rem !important;
+  }
+
+  .searchTabsWrapper :global(.nav-link svg) {
+    font-size: 1.1rem !important;
+  }
+
+  .searchTabsWrapper :global(.nav-pills) {
+    gap: 0.15rem !important;
+  }
+
+  .heroTitle {
+    font-size: 1.35rem;
+  }
+
+  .heroSubtitle {
+    font-size: 0.85rem;
+  }
+}
+
+/* ===================================
+   CAROUSEL — only used at lg+
+   =================================== */
+@media (min-width: 992px) {
+  .heroCarouselBackground :global(.swiper) {
+    height: 100%;
+  }
+}

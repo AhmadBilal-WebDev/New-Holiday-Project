@@ -1,0 +1,286 @@
+.sidebar {
+  --ff-pink: #e7247a;
+  --ff-border: #c4c4c4;
+  --ff-muted: #6b7280;
+  --ff-text: #1f2937;
+  background: #ffffff;
+  border: none;
+  border-radius: 28px;
+  box-shadow:
+    0px 8px 32px -12px #2620671f,
+    0px 20px 60px -20px #613dff59;
+  padding: 0;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  font-family: Outfit, sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 1.2rem 1.35rem 0.85rem;
+}
+
+.footer {
+  padding-top: 1rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid rgba(196, 196, 196, 0.45);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #1f2937;
+}
+
+.body {
+  padding: 0 1.35rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.section {
+  --ff-pink: #e7247a;
+  --ff-border: #c4c4c4;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(196, 196, 196, 0.45);
+  font-family: Outfit, sans-serif;
+}
+
+.section:first-child {
+  border-top: none;
+  padding-top: 0.25rem;
+}
+
+.sectionLabel {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1f2937;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.checkbox {
+  align-items: flex-start;
+}
+
+.checkboxInput {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  border-radius: 5px !important;
+  border: 1.5px solid #c4c4c4 !important;
+  background-color: #ffffff !important;
+  cursor: pointer;
+  opacity: 1 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: block !important;
+  flex-shrink: 0;
+}
+
+.checkboxInput:checked,
+.checkboxInput[data-checked],
+:global([data-checked]) > .checkboxInput {
+  background-color: #e7247a !important;
+  border-color: #e7247a !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.5L6.5 11.5L12.5 4.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  background-size: 12px 12px !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+.checkboxLabel {
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  color: #4b5563 !important;
+  padding-left: 0.55rem !important;
+  cursor: pointer;
+  line-height: 1.35;
+  font-family: Outfit, sans-serif;
+}
+
+.rangeValue {
+  display: block;
+  margin-bottom: 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e7247a;
+}
+
+.slider {
+  margin-bottom: 0.25rem !important;
+  width: 100%;
+}
+
+.sliderTrack {
+  background-color: #e5e7eb !important;
+  height: 6px !important;
+}
+
+.sliderBar {
+  background-color: #e7247a !important;
+  height: 6px !important;
+}
+
+.sliderThumb {
+  background-color: #ffffff !important;
+  border: 2.5px solid #e7247a !important;
+  width: 18px !important;
+  height: 18px !important;
+  box-shadow: 0 2px 8px rgba(231, 36, 122, 0.28) !important;
+}
+
+/* Fallbacks for Mantine generated class names inside drawers */
+.slider :global(.mantine-Slider-track),
+.slider :global([class*="Slider-track"]) {
+  background-color: #e5e7eb !important;
+  height: 6px !important;
+}
+
+.slider :global(.mantine-Slider-bar),
+.slider :global([class*="Slider-bar"]) {
+  background-color: #e7247a !important;
+}
+
+.slider :global(.mantine-Slider-thumb),
+.slider :global([class*="Slider-thumb"]) {
+  background-color: #fff !important;
+  border: 2.5px solid #e7247a !important;
+  width: 18px !important;
+  height: 18px !important;
+  box-shadow: 0 2px 8px rgba(231, 36, 122, 0.28) !important;
+}
+
+.checkbox :global(.mantine-Checkbox-input),
+.checkbox :global(input[type="checkbox"]) {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  border-radius: 5px !important;
+  border: 1.5px solid #c4c4c4 !important;
+  background-color: #fff !important;
+  opacity: 1 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  display: inline-block !important;
+}
+
+.checkbox :global(.mantine-Checkbox-input:checked),
+.checkbox :global(input[type="checkbox"]:checked) {
+  background-color: #e7247a !important;
+  border-color: #e7247a !important;
+}
+
+.resetWrap {
+  width: 100%;
+}
+
+.resetDrawer {
+  width: 100%;
+  margin-top: 0.85rem;
+}
+
+.resetBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.8rem 1.15rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(231, 36, 122, 0.28);
+  background: #fff;
+  color: #e7247a;
+  font-family: Outfit, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.resetBtn svg {
+  flex-shrink: 0;
+  color: #e7247a;
+}
+
+.resetBtn:hover {
+  background: #fef5f7;
+  border-color: #e7247a;
+  color: #e7247a;
+}
+
+.moreBtn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-top: 0.65rem;
+  color: #e7247a;
+  font-family: Outfit, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.moreBtn:hover {
+  text-decoration: underline;
+}
+
+.drawerDone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  border: none;
+  border-radius: 999px;
+  background: #e7247a;
+  color: #fff;
+  font-family: Outfit, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -10px rgba(231, 36, 122, 0.65);
+}
+
+.drawerDone:hover {
+  background: #d11f6d;
+}
+
+.drawerFooter {
+  border-top: 1px solid rgba(196, 196, 196, 0.45);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    border-radius: 22px;
+    margin-bottom: 1rem;
+  }
+
+  .header,
+  .body {
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+  }
+
+  .title {
+    font-size: 1.125rem;
+  }
+}

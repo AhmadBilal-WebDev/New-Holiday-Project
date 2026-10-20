@@ -1,0 +1,213 @@
+.gallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3.2 / 1;
+  min-height: 280px;
+  max-height: 460px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #f3e8ee;
+  box-shadow: 0px 8px 32px -12px #74302024;
+  cursor: pointer;
+}
+
+.heroImg {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.45s ease;
+}
+
+.hero:hover .heroImg {
+  transform: scale(1.03);
+}
+
+.heroScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(19, 20, 35, 0) 45%,
+    rgba(19, 20, 35, 0.35) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.viewAllBtn {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.05rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #e7247a;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 10px 24px rgba(19, 20, 35, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.viewAllBtn:hover {
+  background: #e7247a;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.countBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(231, 36, 122, 0.12);
+  color: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.viewAllBtn:hover .countBadge {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 3.2 / 1;
+  min-height: 240px;
+  border-radius: 28px;
+  background: #fef5f7;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+/* Modal — match hotel gallery modal */
+.modalContent {
+  max-height: min(85vh, 820px) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 20px !important;
+}
+
+.modalHeader {
+  flex-shrink: 0;
+  padding: 1rem 1.15rem 0.85rem !important;
+  border-bottom: 1px solid #f0ecee;
+  margin: 0 !important;
+}
+
+.modalTitleText {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: #131423 !important;
+}
+
+.modalClose {
+  color: #6b7280 !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 999px !important;
+  background: #f3f4f6 !important;
+}
+
+.modalClose:hover {
+  background: #e5e7eb !important;
+  color: #111827 !important;
+}
+
+.modalBodyWrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto !important;
+  padding: 1rem 1.15rem 1.25rem !important;
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.modalItem {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #f3f4f6;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.modalItem:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(231, 36, 122, 0.12);
+}
+
+.modalItemImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 991px) {
+  .hero {
+    aspect-ratio: 2.2 / 1;
+    min-height: 240px;
+    max-height: 380px;
+    border-radius: 24px;
+  }
+
+  .modalGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+}
+
+@media (max-width: 575px) {
+  .hero {
+    aspect-ratio: 16 / 10;
+    min-height: 200px;
+    max-height: none;
+    border-radius: 20px;
+  }
+
+  .viewAllBtn {
+    right: 12px;
+    bottom: 12px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  .modalContent {
+    max-height: 90vh !important;
+    border-radius: 18px !important;
+  }
+
+  .modalGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modalItem {
+    border-radius: 12px;
+  }
+}

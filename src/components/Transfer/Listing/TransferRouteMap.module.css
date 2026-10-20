@@ -1,0 +1,81 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.resultsCount {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #E7247A;
+}
+
+.resultsCount svg {
+    font-size: 1rem;
+    color: #3d8b6e;
+}
+
+.resultsSubtext {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #8a9a94;
+}
+
+.mapCard {
+    flex: 1;
+    border: 1px solid #e8e6e1;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    background: #fff;
+    min-height: 280px;
+}
+
+.mapFrame {
+    display: block;
+    width: 100%;
+    border: 0;
+    height: 280px;
+}
+
+@media (min-width: 768px) {
+    .mapFrame {
+        height: 320px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .mapFrame {
+        height: 350px;
+    }
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: #8a9a94;
+    font-size: 0.85rem;
+}
+
+.emptyState svg {
+    font-size: 2rem;
+    color: #b8cfc6;
+}

@@ -1,0 +1,99 @@
+.wrap {
+  --pfl-pink: #e7247a;
+  padding-bottom: 0.5rem;
+}
+
+.section {
+  padding: 1rem 1.35rem;
+  border-bottom: 1px solid #f0ecee;
+}
+
+.footer {
+  padding: 0.85rem 1.35rem 1.35rem;
+}
+
+.shimmer {
+  display: block;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #f3e8ee 0%,
+    #fceef4 40%,
+    #f3e8ee 80%
+  );
+  background-size: 200% 100%;
+  animation: pfl-shimmer 1.25s ease-in-out infinite;
+}
+
+.label {
+  height: 11px;
+  width: 68px;
+  margin-bottom: 0.85rem;
+  border-radius: 6px;
+}
+
+.calendar {
+  height: 220px;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.slider {
+  height: 10px;
+  width: 100%;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.priceChip {
+  height: 14px;
+  width: 88px;
+  border-radius: 999px;
+}
+
+.select {
+  height: 48px;
+  width: 100%;
+  border-radius: 999px;
+}
+
+.starRow {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+}
+
+.check {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.stars {
+  height: 14px;
+  width: 92px;
+  border-radius: 6px;
+}
+
+.reset {
+  height: 48px;
+  width: 100%;
+  border-radius: 999px;
+}
+
+@keyframes pfl-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

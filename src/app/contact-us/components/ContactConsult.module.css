@@ -1,0 +1,219 @@
+/* ─── Section ─────────────────────────────────────────────── */
+.section {
+  background: #FEF5F7;
+  padding: 0 0 4rem;
+}
+
+/* ─── Stats cards ─────────────────────────────────────────── */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.15rem;
+  margin-bottom: 1.35rem;
+}
+
+.statCard {
+  background: #ffffff;
+  border: 1px solid #eceef2;
+  border-radius: 20px;
+  padding: 1.35rem 1.3rem 1.4rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.statIcon {
+  font-size: 18px;
+  color: #E7247A;
+  margin-bottom: 2px;
+}
+
+.statValue {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: #131423;
+}
+
+.statLabel {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #5F6275;
+}
+
+/* ─── CTA banner ──────────────────────────────────────────── */
+.cta {
+  background: #E7247A;
+  border-radius: 24px;
+  padding: 2rem 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.75rem 2rem;
+  flex-wrap: wrap;
+}
+
+.ctaText {
+  flex: 1 1 320px;
+  min-width: 0;
+  max-width: 640px;
+}
+
+.ctaEyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #F6D36B;
+  margin-bottom: 0.55rem;
+}
+
+.ctaTitle {
+  margin: 0 0 0.55rem;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+  color: #ffffff;
+}
+
+.ctaCopy {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 520px;
+}
+
+.ctaActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease,
+    color 0.2s ease;
+}
+
+.primaryBtn {
+  background: #ffffff;
+  color: #1e2a4a;
+  border: none;
+}
+
+.primaryBtn:hover {
+  color: #1e2a4a;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.secondaryBtn {
+  background: transparent;
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+}
+
+.secondaryBtn:hover {
+  color: #ffffff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .statsGrid {
+    gap: 1rem;
+  }
+
+  .statValue {
+    font-size: 28px;
+  }
+
+  .cta {
+    padding: 1.75rem 1.5rem;
+    border-radius: 22px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 0 0 3.25rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .statCard {
+    border-radius: 18px;
+    padding: 1.2rem 1.15rem;
+  }
+
+  .cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.35rem;
+    padding: 1.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .ctaText {
+    max-width: none;
+  }
+
+  .ctaActions {
+    width: 100%;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaActions {
+    flex-direction: column;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+  }
+
+  .ctaTitle {
+    font-size: 22px;
+  }
+
+  .ctaCopy {
+    font-size: 14px;
+  }
+}

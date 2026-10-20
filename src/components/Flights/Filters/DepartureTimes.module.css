@@ -1,0 +1,122 @@
+.flightTimes {
+  margin-bottom: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #1f2937;
+  margin: 0;
+  text-transform: uppercase;
+  font-family: Outfit, sans-serif;
+}
+
+.chevron {
+  color: #6b7280;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.route {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 1rem;
+  font-family: Outfit, sans-serif;
+}
+
+.section {
+  margin-bottom: 1rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionLabel {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: 0 0 0.6rem;
+  font-family: Outfit, sans-serif;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-height: 88px;
+  padding: 0.55rem 0.4rem;
+  border: 1.5px solid #c4c4c4;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  text-align: center;
+  font-family: Outfit, sans-serif;
+}
+
+.card:hover:not(:disabled) {
+  border-color: #e7247a;
+  background: #fef5f7;
+}
+
+.cardSelected {
+  border-color: #e7247a;
+  background: #fef5f7;
+  box-shadow: 0 0 0 1px #e7247a;
+}
+
+.cardDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.icon {
+  color: #9ca3af;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.cardSelected .icon {
+  color: #e7247a;
+}
+
+.timeLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.price {
+  font-size: 0.68rem;
+  color: #6b7280;
+  line-height: 1.2;
+  min-height: 1rem;
+}
+
+.cardSelected .price {
+  color: #e7247a;
+}

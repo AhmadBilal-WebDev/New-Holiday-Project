@@ -1,0 +1,219 @@
+/* ─── Section (shares bg with AboutHero via aboutPage.topFlow) ─ */
+.section {
+  position: relative;
+  overflow: visible;
+  background: transparent;
+  /* Top padding clears the floating hero stats bar */
+  padding: 5.75rem 0 5rem;
+}
+
+.glowTop,
+.glowBottom {
+  display: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  gap: 3.5rem 4rem;
+  align-items: start;
+}
+
+/* ─── Left copy ───────────────────────────────────────────── */
+.left {
+  max-width: 440px;
+  padding-top: 0.35rem;
+}
+
+.label {
+  display: inline-block;
+  font-family: inherit;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #FF4195;
+  margin-bottom: 1.15rem;
+}
+
+.heading {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(36px, 4.2vw, 52px);
+  line-height: 1.12;
+  letter-spacing: -1.1px;
+  color: #060606;
+  margin: 0 0 1.35rem;
+}
+
+.intro {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #5F6275;
+}
+
+/* ─── Cards ───────────────────────────────────────────────── */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  background: #ffffff;
+  border: 1px solid #eceef2;
+  border-radius: 24px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 32px rgba(207, 30, 108, 0.1);
+  border-color: rgba(255, 65, 149, 0.25);
+  transform: translateY(-2px);
+}
+
+.cardNum {
+  flex-shrink: 0;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  color: #FF4195;
+  padding-top: 2px;
+  min-width: 2.1rem;
+}
+
+.cardBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.2px;
+  color: #060606;
+}
+
+.cardText {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #5F6275;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1199px) {
+  .grid {
+    gap: 2.75rem 2.5rem;
+  }
+
+  .heading {
+    font-size: 42px;
+  }
+
+  .card {
+    padding: 1.25rem 1.3rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .section {
+    padding: 5rem 0 4rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .left {
+    max-width: 560px;
+  }
+
+  .heading {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 6.5rem 0 3.25rem;
+  }
+
+  .heading {
+    font-size: 32px;
+    letter-spacing: -0.7px;
+    margin-bottom: 1rem;
+  }
+
+  .intro {
+    font-size: 15px;
+  }
+
+  .cards {
+    gap: 0.95rem;
+  }
+
+  .card {
+    gap: 1rem;
+    padding: 1.15rem 1.1rem;
+    border-radius: 20px;
+  }
+
+  .cardNum {
+    font-size: 26px;
+    min-width: 1.8rem;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+  }
+
+  .cardText {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding-top: 7rem;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .label {
+    margin-bottom: 0.9rem;
+  }
+
+  .card {
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .cardNum {
+    font-size: 24px;
+  }
+}

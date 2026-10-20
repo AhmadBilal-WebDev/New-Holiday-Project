@@ -1,0 +1,147 @@
+.activity-checkout-skeleton .cks-shimmer {
+  display: block;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #f1e8ec 0%,
+    #fceef4 45%,
+    #f1e8ec 90%
+  );
+  background-size: 200% 100%;
+  animation: cksPulse 1.35s ease-in-out infinite;
+}
+
+.activity-checkout-skeleton .cks-on-dark {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.18) 90%
+  );
+  background-size: 200% 100%;
+}
+
+.activity-checkout-skeleton .cks-back {
+  width: 180px;
+  height: 16px;
+  margin-bottom: 0.85rem;
+  border-radius: 6px;
+}
+
+.activity-checkout-skeleton .cks-hero-banner {
+  width: 100%;
+  height: 96px;
+  border-radius: 24px;
+}
+
+.activity-checkout-skeleton .cks-square-media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+}
+
+.activity-checkout-skeleton .cks-price-bar {
+  width: 100%;
+  height: 64px;
+  border-radius: 12px;
+}
+
+.activity-checkout-skeleton .cks-banner {
+  width: 100%;
+  height: 220px;
+  border-radius: 0;
+}
+
+.activity-checkout-skeleton .cks-info-card {
+  min-height: 78px;
+}
+
+.activity-checkout-skeleton .cks-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.activity-checkout-skeleton .cks-info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-checkout-skeleton .cks-line-xs {
+  width: 48px;
+  height: 12px;
+}
+
+.activity-checkout-skeleton .cks-line-sm {
+  width: 72px;
+  height: 12px;
+}
+
+.activity-checkout-skeleton .cks-line-md {
+  width: 120px;
+  height: 16px;
+}
+
+.activity-checkout-skeleton .cks-line-lg {
+  width: 85%;
+  max-width: 220px;
+  height: 14px;
+}
+
+.activity-checkout-skeleton .cks-block {
+  width: 100%;
+  height: 88px;
+  border-radius: 12px;
+}
+
+.activity-checkout-skeleton .cks-block-tall {
+  width: 100%;
+  height: 140px;
+  border-radius: 12px;
+}
+
+.activity-checkout-skeleton .cks-included {
+  min-height: 160px;
+}
+
+.activity-checkout-skeleton .cks-step-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.activity-checkout-skeleton .cks-input {
+  width: 100%;
+  height: 42px;
+  border-radius: 8px;
+}
+
+.activity-checkout-skeleton .cks-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.activity-checkout-skeleton .cks-total {
+  width: 100%;
+  height: 52px;
+  border-radius: 12px;
+}
+
+@keyframes cksPulse {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+@media (max-width: 767px) {
+  .activity-checkout-skeleton .cks-banner {
+    height: 180px;
+  }
+}

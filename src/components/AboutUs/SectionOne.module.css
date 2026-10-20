@@ -1,0 +1,181 @@
+/* ─── Section ─────────────────────────────────────────────── */
+.section {
+  background: #ffffff;
+  padding: 4.5rem 0 5rem;
+}
+
+/* ─── Header ──────────────────────────────────────────────── */
+.header {
+  text-align: center;
+  margin-bottom: 2.75rem;
+}
+
+.label {
+  display: inline-block;
+  font-family: inherit;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #E7247A;
+  margin-bottom: 0.9rem;
+}
+
+.heading {
+  font-family: inherit;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 48px;
+  line-height: 48px;
+  letter-spacing: -0.96px;
+  text-align: center;
+  vertical-align: middle;
+  color: #060606;
+  margin: 0 auto;
+  max-width: 720px;
+}
+
+/* ─── Cards ───────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.35rem;
+}
+
+.card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #eceef2;
+  border-radius: 24px;
+  padding: 2.15rem 1.35rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 28px rgba(231, 36, 122, 0.1);
+  border-color: rgba(231, 36, 122, 0.22);
+  transform: translateY(-2px);
+}
+
+.badge {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  background: #E7247A;
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+  color: #060606;
+}
+
+.cardText {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #5F6275;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1199px) {
+  .heading {
+    font-size: 40px;
+    line-height: 1.1;
+    letter-spacing: -0.8px;
+  }
+
+  .grid {
+    gap: 1.15rem;
+  }
+
+  .cardTitle {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 991px) {
+  .section {
+    padding: 3.5rem 0 4rem;
+  }
+
+  .heading {
+    font-size: 34px;
+    line-height: 1.15;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 1rem;
+  }
+
+  .card {
+    padding-top: 2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 2.75rem 0 3.25rem;
+  }
+
+  .header {
+    margin-bottom: 2.25rem;
+  }
+
+  .heading {
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 20px;
+    padding: 2rem 1.25rem 1.35rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 24px;
+  }
+
+  .cardTitle {
+    font-size: 17px;
+  }
+
+  .cardText {
+    font-size: 13px;
+  }
+}

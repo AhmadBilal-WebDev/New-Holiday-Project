@@ -1,0 +1,38 @@
+/* Contact hero — shorter than About (no floating stats bar) */
+.bg {
+  background-image: url('/updatedImages/contact-hero.jpg') !important;
+  background-position: center center;
+}
+
+.hero {
+  height: 380px !important;
+  margin-bottom: 0;
+}
+
+.content {
+  padding-bottom: 1.75rem !important;
+}
+
+@media (max-width: 1199px) {
+  .hero {
+    height: 350px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .hero {
+    height: 310px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    height: 270px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 240px !important;
+  }
+}

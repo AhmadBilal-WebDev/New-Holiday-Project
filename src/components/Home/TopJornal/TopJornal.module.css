@@ -1,0 +1,412 @@
+/* ─── Section ─────────────────────────────────────────────── */
+.section {
+  background: #FEF5F3;
+  padding: 3.5rem 0;
+}
+
+/* ─── Header ──────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 2rem;
+}
+
+.headerLeft {
+  flex: 1;
+  min-width: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  color: #E7247A;
+  font-family: inherit;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.badgeIcon {
+  font-size: 14px;
+  color: #E7247A;
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 1.2;
+  letter-spacing: -0.9px;
+  color: #0a0a0a;
+  margin: 0;
+  max-width: 640px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+}
+
+.journalLink {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #E7247A;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  margin-right: 4px;
+}
+
+.journalLink:hover {
+  opacity: 0.8;
+  color: #E7247A;
+  text-decoration: none;
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #E7247A;
+  background: #ffffff;
+  color: #E7247A;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navBtn:hover {
+  background: #E7247A;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(231, 36, 122, 0.28);
+}
+
+.navBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ─── Slider ──────────────────────────────────────────────── */
+.sliderWrap {
+  position: relative;
+  width: 100%;
+}
+
+.journalSwiper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  height: auto;
+  display: flex;
+}
+
+.journalSwiper :global(.swiper-wrapper) {
+  align-items: stretch;
+}
+
+.journalSwiper :global(.swiper-slide) {
+  height: auto;
+}
+
+/* ─── Card ────────────────────────────────────────────────── */
+.card {
+  background: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  background: linear-gradient(135deg, #f3e0e6 0%, #f8d5df 50%, #efe8e4 100%);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.body {
+  padding: 1.25rem 1.35rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.category {
+  display: inline-flex;
+  align-items: center;
+  background: #fce8f1;
+  color: #E7247A;
+  font-family: inherit;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  vertical-align: middle;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.readTime {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #9ca3af;
+  line-height: 1.3;
+}
+
+.clockIcon {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.imageLink {
+  display: block;
+  text-decoration: none;
+}
+
+.cardTitle {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.2px;
+  color: #0a0a0a;
+  margin: 0;
+  flex: 1;
+}
+
+.cardTitle a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardTitle a:hover {
+  color: #E7247A;
+}
+
+.readMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  margin-top: 4px;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.readMore:hover {
+  color: #E7247A;
+  text-decoration: none;
+  gap: 10px;
+}
+
+/* ─── Skeleton ───────────────────────────────────────────── */
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.skeletonCard {
+  background: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+}
+
+.skeletonBlock {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e8ecef 25%, #f5f6f8 50%, #e8ecef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeletonImage {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 0;
+}
+
+.skeletonBody {
+  padding: 1.25rem 1.35rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeletonMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeletonTag {
+  height: 26px;
+  width: 88px;
+  border-radius: 999px;
+}
+
+.skeletonTime {
+  height: 14px;
+  width: 72px;
+}
+
+.skeletonTitle {
+  height: 20px;
+  width: 92%;
+}
+
+.skeletonTitleShort {
+  height: 20px;
+  width: 68%;
+}
+
+.skeletonLink {
+  height: 14px;
+  width: 90px;
+  margin-top: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1199px) {
+  .title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 991px) {
+  .section {
+    padding: 2.75rem 0;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .journalLink {
+    display: none;
+  }
+
+  .cardTitle {
+    font-size: 17px;
+  }
+
+  .skeletonGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 2.25rem 0;
+  }
+
+  .header {
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 28px;
+    letter-spacing: -0.5px;
+  }
+
+  .headerActions {
+    padding-bottom: 0;
+    align-self: flex-end;
+  }
+
+  .navBtn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .body {
+    padding: 1.1rem 1.15rem 1.25rem;
+  }
+
+  .skeletonGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 7px 12px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+  }
+}

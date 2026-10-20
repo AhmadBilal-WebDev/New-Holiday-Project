@@ -1,0 +1,508 @@
+/* ─── Section ─────────────────────────────────────────────── */
+.section {
+  background-color: #ffffff;
+  padding: 3rem 0;
+}
+
+/* ─── Header ──────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.headerLeft {
+  flex: 1;
+  min-width: 0;
+  max-width: 720px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fce8f1;
+  color: #E7247A;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.tagIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: inherit;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 60px;
+  letter-spacing: -0.96px;
+  color: #0a0a0a;
+  margin: 0;
+  max-width: 656px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-bottom: 2px;
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #E7247A;
+  background: #fff;
+  color: #E7247A;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.navBtn:hover {
+  background: #E7247A;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(231, 36, 122, 0.28);
+}
+
+.navBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Slider ──────────────────────────────────────────────── */
+.sliderWrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.transferSwiper {
+  touch-action: pan-y;
+  padding-bottom: 1.75rem;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+}
+
+.transferSwiper :global(.swiper-wrapper) {
+  height: auto !important;
+  align-items: stretch;
+}
+
+.transferSwiper :global(.swiper-slide) {
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.transferSwiper :global(.swiper-pagination) {
+  bottom: 0;
+}
+
+.transferSwiper :global(.swiper-pagination-bullet) {
+  width: 10px;
+  height: 10px;
+  background-color: #e5e7eb;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.transferSwiper :global(.swiper-pagination-bullet-active) {
+  background-color: #E7247A;
+  width: 28px;
+  border-radius: 6px;
+}
+
+/* ─── Card ────────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border-radius: 32px;
+  overflow: hidden;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  transition: box-shadow 0.28s ease, transform 0.28s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  min-height: 160px;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.cardImage {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.45s ease;
+}
+
+.card:hover .cardImage {
+  transform: scale(1.04);
+}
+
+.cardBody {
+  padding: 1rem 4px 4px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.vehicleName {
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.metaIcon {
+  font-size: 11px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.metaDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d1d5db;
+  flex-shrink: 0;
+}
+
+.divider {
+  height: 1px;
+  background: #eeeeee;
+  border: none;
+  margin: 6px 0 2px;
+  width: 100%;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 2px;
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.priceValue {
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #E7247A;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.taxNote {
+  font-size: 11px;
+  font-weight: 400;
+  color: #9ca3af;
+  line-height: 1.3;
+}
+
+.grabBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  background: #E7247A;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(231, 36, 122, 0.25);
+}
+
+.grabBtn:hover {
+  background: #d01d6a;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(231, 36, 122, 0.35);
+  transform: translateY(-1px);
+}
+
+/* ─── Skeleton ────────────────────────────────────────────── */
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.skeletonCard {
+  pointer-events: none;
+}
+
+.skeletonBlock {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e8ecef 25%, #f5f6f8 50%, #e8ecef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeletonImage {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  min-height: 160px;
+  border-radius: 24px;
+}
+
+.skeletonBody {
+  padding: 1rem 4px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.skeletonTitle {
+  height: 18px;
+  width: 72%;
+}
+
+.skeletonMeta {
+  height: 13px;
+  width: 85%;
+}
+
+.skeletonFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.skeletonPrice {
+  height: 20px;
+  width: 90px;
+  margin-bottom: 6px;
+}
+
+.skeletonTax {
+  height: 11px;
+  width: 110px;
+}
+
+.skeletonBtn {
+  height: 38px;
+  width: 100px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1199px) {
+  .title {
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+  }
+
+  .skeletonGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .vehicleName {
+    font-size: 1.05rem;
+  }
+
+  .priceValue {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .section {
+    padding: 2.25rem 0;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .title {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+
+  .headerActions {
+    margin-left: auto;
+  }
+
+  .skeletonGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 1.75rem 0;
+  }
+
+  .header {
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+  }
+
+  .navBtn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .transferSwiper {
+    padding-bottom: 1.5rem;
+  }
+
+  .imageWrap {
+    min-height: 140px;
+    border-radius: 20px;
+  }
+
+  .card {
+    border-radius: 28px;
+    padding: 12px;
+  }
+
+  .cardBody {
+    padding: 0.9rem 2px 2px;
+  }
+
+  .grabBtn {
+    padding: 9px 16px;
+    font-size: 12px;
+  }
+
+  .skeletonGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .headerActions {
+    margin-left: 0;
+  }
+
+  .vehicleName {
+    font-size: 1rem;
+  }
+
+  .metaRow {
+    font-size: 12px;
+  }
+
+  .priceValue {
+    font-size: 1.1rem;
+  }
+
+  .cardFooter {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .cardFooter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .grabBtn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,427 @@
+/* ============================================================
+   Umrah Packages Page – Elegant Two-Column Hero
+   Inspired by: dark maroon / gold / teal Islamic design
+   ============================================================ */
+
+/* ── Wrapper ── */
+.heroSection {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  margin-top: 1px;
+  align-items: stretch;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg,
+      rgba(0, 53, 53, 0.92) 0%,
+      rgba(0, 76, 76, 0.82) 80%,
+      rgba(0, 72, 72, 0.72) 100%
+    ),
+    url('/images/hajj/hero-bg.jpg') center / cover no-repeat;
+}
+
+/* ── Decorative ring pattern (CSS-only, like the image) ── */
+.heroSection::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 38px 38px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Soft vignette on the left so text reads cleanly */
+.heroSection::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(0,0,0,0.55) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Inner grid ── */
+.heroInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* ══════════════════════════════
+   LEFT COLUMN – Content
+══════════════════════════════ */
+.heroLeft {
+  padding: 5rem 1rem 6rem 0;
+  animation: fadeInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Brand pill */
+.heroBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(201, 162, 39, 0.15);
+  border: 1px solid rgba(201, 162, 39, 0.45);
+  color: #f0c755;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 0.3rem 1rem;
+  border-radius: 50px;
+  margin-bottom: 1.4rem;
+}
+
+.heroBrandDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f0c755;
+  box-shadow: 0 0 8px rgba(240, 199, 85, 0.8);
+  flex-shrink: 0;
+}
+
+/* Main heading */
+.heroTitle {
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  /* margin-bottom: 1.4rem; */
+}
+
+.heroTitle span {
+  color: #f0c755;
+}
+
+/* Gold ornament line */
+.heroDivider {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.heroDivider::before,
+.heroDivider::after {
+  content: '';
+  display: block;
+  height: 2px;
+  flex: 0 0 50px;
+  border-radius: 2px;
+}
+
+.heroDivider::before {
+  background: linear-gradient(90deg, transparent, #c9a227);
+}
+
+.heroDivider::after {
+  background: linear-gradient(90deg, #c9a227, transparent);
+}
+
+.heroDividerStar {
+  color: #c9a227;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Sub text */
+.heroText {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.75;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+/* CTA buttons */
+.heroActions {
+  display: flex;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.8rem;
+  background: #c9a227;
+  color: #1a0606;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: 2px solid #c9a227;
+  border-radius: 8px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+}
+
+.btnPrimary:hover {
+  background: #f0c755;
+  border-color: #f0c755;
+  color: #1a0606;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(201,162,39,0.4);
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.8rem;
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 8px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+}
+
+.btnSecondary:hover {
+  border-color: #ffffff;
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════
+   RIGHT COLUMN – Image Panel
+══════════════════════════════ */
+.heroRight {
+  position: relative;
+  height: 100%;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInRight 0.9s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.heroImgWrap {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(201,162,39,0.3),
+    0 0 0 8px rgba(201,162,39,0.07),
+    0 32px 64px rgba(0,0,0,0.6);
+}
+
+.heroImgWrap img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+  transition: transform 6s ease;
+}
+
+.heroImgWrap:hover img {
+  transform: scale(1.04);
+}
+
+/* Gold corner accents */
+.heroImgWrap::before,
+.heroImgWrap::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+}
+
+.heroImgWrap::before {
+  top: 12px;
+  left: 12px;
+  border-top: 3px solid #c9a227;
+  border-left: 3px solid #c9a227;
+  border-radius: 4px 0 0 0;
+}
+
+.heroImgWrap::after {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 3px solid #c9a227;
+  border-right: 3px solid #c9a227;
+  border-radius: 0 0 4px 0;
+}
+
+/* Soft image overlay */
+.heroImgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,53,53,0.18) 0%, rgba(0,30,30,0.35) 100%);
+  pointer-events: none;
+}
+
+/* Floating badge on image */
+.heroImgBadge {
+  position: absolute;
+  bottom: 20px;
+  left: -20px;
+  background: #c9a227;
+  color: #1a0606;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+/* Small floating trust pill */
+.heroImgPill {
+  position: absolute;
+  top: 20px;
+  right: 14px;
+  background: rgba(255,255,255,0.96);
+  color: #1a0606;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.5rem 0.9rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 3;
+  letter-spacing: 0.3px;
+}
+
+.heroImgPill svg {
+  color: #c9a227;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   BOTTOM DIAGONAL CUT (like image)
+══════════════════════════════ */
+.heroWave {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.heroWave svg {
+  display: block;
+  width: 100%;
+  height: 70px;
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 992px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    padding: 0 1.5rem;
+  }
+
+  .heroLeft {
+    padding: 4rem 0 2rem;
+    text-align: center;
+  }
+
+  .heroBrand {
+    margin: 0 auto 1.2rem;
+  }
+
+  .heroDivider {
+    justify-content: center;
+  }
+
+  .heroText {
+    margin: 0 auto 1.8rem;
+    text-align: center;
+  }
+
+
+  .heroActions {
+    justify-content: center;
+  }
+
+  .heroRight {
+    min-height: 320px;
+    padding-bottom: 4rem;
+  }
+
+  .heroImgWrap {
+    width: 80%;
+    max-width: 400px;
+  }
+
+  .heroImgWrap img {
+    height: 300px;
+  }
+
+  .heroImgBadge {
+    left: 0;
+  }
+
+  .heroImgPill {
+    right: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .heroSection {
+    min-height: auto;
+  }
+
+  .heroTitle {
+    font-size: 1.9rem;
+  }
+
+  .heroImgWrap {
+    width: 95%;
+  }
+
+  .heroImgWrap img {
+    height: 240px;
+  }
+
+
+  .heroStatNum {
+    font-size: 1.2rem;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    padding: 0.65rem 1.3rem;
+    font-size: 0.85rem;
+  }
+}

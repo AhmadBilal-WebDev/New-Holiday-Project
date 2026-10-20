@@ -1,0 +1,25 @@
+/* Shared surface under hero + philosophy so stats sit on one continuous bg */
+.topFlow {
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.topFlowGlow {
+  position: absolute;
+  top: 42%;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: #CF1E6CB2;
+  opacity: 0.14;
+  filter: blur(64px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.topFlow > * {
+  position: relative;
+  z-index: 1;
+}

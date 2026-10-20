@@ -1,0 +1,119 @@
+.resultsHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 0 22px;
+    flex-wrap: wrap;
+}
+
+.countBlock {
+    flex: 1;
+    min-width: 0;
+}
+
+.countTitle {
+    font-family: 'Inter', 'Inter Fallback';
+    font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+    margin: 0;
+}
+
+.countBold {
+    font-weight: 700;
+    color: #E7247A;
+}
+
+.countItalic {
+    font-style: italic;
+    font-weight: 400;
+    color: #5a7a8a;
+}
+
+.countSubtext {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin: 2px 0 0;
+}
+
+.sortBlock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding-top: 4px;
+}
+
+.sortIcon {
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+}
+
+.sortLabel {
+    font-size: 0.82rem;
+    color: #9ca3af;
+    white-space: nowrap;
+}
+
+.sortSelect :global(.mantine-Select-input),
+.sortSelect :global(.mantine-Input-input) {
+    border: 1px solid #e5e7eb !important;
+    /* border-radius: 999px !important; */
+    background: #fff !important;
+    font-size: 0.84rem !important;
+    font-weight: 600 !important;
+    color: #E7247A !important;
+    padding: 8px 36px 8px 16px !important;
+    min-height: unset !important;
+    /* height: auto !important; */
+    cursor: pointer !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.sortSelect :global(.mantine-Select-section[data-position="right"]) {
+    display: flex !important;
+}
+
+.sortSelect :global(.mantine-Select-input:focus),
+.sortSelect :global(.mantine-Input-input:focus) {
+    border-color: #c5a059 !important;
+}
+
+.sortSelect :global(.mantine-Select-section[data-position="right"]) {
+    color: #E7247A;
+    pointer-events: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .sortSelect :global(.mantine-Select-input),
+    .sortSelect :global(.mantine-Input-input) {
+        /* Prevent iOS Safari from auto-zooming focused form controls. */
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .sortSelect :global(.mantine-Select-input),
+    .sortSelect :global(.mantine-Input-input) {
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .resultsHeader {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 5px 0 18px;
+    }
+
+    .sortBlock {
+        justify-content: flex-end;
+        padding-top: 0;
+    }
+
+    .sortSelect {
+        flex: 1;
+        max-width: 200px;
+    }
+}

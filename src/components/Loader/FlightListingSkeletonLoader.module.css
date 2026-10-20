@@ -1,0 +1,677 @@
+.wrapper {
+  --fsl-pink: #e7247a;
+  --fsl-pink-soft: #fef5f7;
+  position: relative;
+  min-height: 50vh;
+  padding-bottom: 1.5rem;
+}
+
+/* ── Professional flight search status (hotel-parity) ── */
+.statusCard {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.15rem;
+  border-radius: 28px;
+  border: 1px solid rgba(231, 36, 122, 0.1);
+  background:
+    radial-gradient(circle at 12% 20%, rgba(231, 36, 122, 0.12), transparent 42%),
+    radial-gradient(circle at 88% 80%, rgba(231, 36, 122, 0.08), transparent 40%),
+    linear-gradient(160deg, #fff 0%, #fff8fa 55%, #fef5f7 100%);
+  box-shadow: 0 16px 40px rgba(19, 20, 35, 0.07);
+  font-family: Outfit, sans-serif;
+}
+
+.statusStage {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem 1.5rem;
+  padding: 1.35rem 1.4rem;
+}
+
+.radar {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(231, 36, 122, 0.08) 0 18%, transparent 19%),
+    repeating-radial-gradient(
+      circle at center,
+      transparent 0 18px,
+      rgba(231, 36, 122, 0.06) 18px 19px
+    );
+}
+
+.orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(231, 36, 122, 0.22);
+  animation: fslSpin 12s linear infinite;
+}
+
+.orbitA {
+  inset: 10px;
+  animation-duration: 10s;
+}
+
+.orbitB {
+  inset: 28px;
+  animation-duration: 14s;
+  animation-direction: reverse;
+}
+
+.orbitC {
+  inset: 46px;
+  animation-duration: 8s;
+}
+
+.scan {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(231, 36, 122, 0.28),
+    transparent 55deg,
+    transparent 360deg
+  );
+  animation: fslSpin 2.4s linear infinite;
+  mask-image: radial-gradient(circle, transparent 28%, #000 29%);
+}
+
+.pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--fsl-pink);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 24px rgba(231, 36, 122, 0.25);
+  z-index: 2;
+  animation: fslPinBounce 1.8s ease-in-out infinite;
+  font-size: 1rem;
+}
+
+.flightTrail {
+  position: absolute;
+  top: 50%;
+  left: 18%;
+  width: 64%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(231, 36, 122, 0.35),
+    transparent
+  );
+  transform: translateY(-50%) rotate(-18deg);
+  z-index: 1;
+  animation: fslTrail 2.2s ease-in-out infinite;
+}
+
+.blip {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--fsl-pink);
+  box-shadow: 0 0 0 0 rgba(231, 36, 122, 0.45);
+  animation: fslBlip 2.2s ease-out infinite;
+  z-index: 1;
+}
+
+.blip1 { top: 18%; left: 62%; }
+.blip2 { top: 58%; left: 18%; animation-delay: 0.45s; }
+.blip3 { top: 72%; left: 70%; animation-delay: 0.9s; }
+.blip4 { top: 28%; left: 22%; animation-delay: 1.3s; }
+
+.story {
+  min-width: 0;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.45rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(231, 36, 122, 0.08);
+  color: var(--fsl-pink);
+  font-family: Inter, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--fsl-pink);
+  animation: fslLiveDot 1s ease-in-out infinite;
+}
+
+.headline {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #1b1b1b;
+  letter-spacing: -0.02em;
+}
+
+.headline em {
+  font-style: normal;
+  color: var(--fsl-pink);
+}
+
+.live {
+  margin: 0.45rem 0 0;
+  font-family: Inter, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #5f6275;
+  min-height: 1.45em;
+}
+
+.progressTrack {
+  margin-top: 0.95rem;
+  width: 100%;
+  max-width: 360px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(231, 36, 122, 0.1);
+  overflow: hidden;
+}
+
+.progressBar {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e7247a 0%, #f95c95 100%);
+  box-shadow: 0 0 12px rgba(231, 36, 122, 0.35);
+  transition: width 0.35s ease;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 86px;
+  padding: 0.9rem 0.75rem;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid rgba(231, 36, 122, 0.14);
+  box-shadow: 0 10px 24px rgba(231, 36, 122, 0.1);
+  text-align: center;
+}
+
+.score strong {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--fsl-pink);
+  letter-spacing: -0.03em;
+}
+
+.score span {
+  margin-top: 0.3rem;
+  font-family: Inter, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+@keyframes fslSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fslPinBounce {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, calc(-50% - 4px)) scale(1.04); }
+}
+
+@keyframes fslBlip {
+  0% {
+    transform: scale(0.7);
+    box-shadow: 0 0 0 0 rgba(231, 36, 122, 0.45);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 12px rgba(231, 36, 122, 0);
+    opacity: 0.55;
+  }
+  100% { opacity: 0.35; }
+}
+
+@keyframes fslLiveDot {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fslTrail {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+
+/* Shared shimmer */
+.shimmer {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    #f3e8ee 0%,
+    #fef5f7 45%,
+    #f3e8ee 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerMove 1.25s ease-in-out infinite;
+  border-radius: 10px;
+}
+
+@keyframes shimmerMove {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* Sort bar */
+.sortBar {
+  display: flex;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.4rem;
+  margin-bottom: 1rem;
+  background: #fff;
+  border-radius: 999px;
+  box-shadow:
+    0px 8px 32px -12px #2620671f,
+    0px 20px 60px -20px #613dff59;
+  overflow: hidden;
+}
+
+.sortItem {
+  flex: 1;
+  height: 52px;
+  border-radius: 999px;
+}
+
+/* Filter sidebar */
+.filterSidebar {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow:
+    0px 8px 32px -12px #2620671f,
+    0px 20px 60px -20px #613dff59;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+.filterHeader {
+  padding: 1.2rem 1.35rem 0.85rem;
+}
+
+.filterTitle {
+  width: 72px;
+  height: 22px;
+  border-radius: 8px;
+}
+
+.filterBody {
+  padding: 0 1.35rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.filterSection {
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(196, 196, 196, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.filterLabel {
+  width: 88px;
+  height: 14px;
+  border-radius: 6px;
+}
+
+.filterBlock {
+  width: 100%;
+  height: 72px;
+  border-radius: 12px;
+}
+
+.filterReset {
+  width: 100%;
+  height: 48px;
+  border-radius: 999px;
+  margin-top: 0.35rem;
+}
+
+/* Count */
+.countSkel {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.countIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.countText {
+  width: 160px;
+  height: 16px;
+  border-radius: 6px;
+}
+
+/* Flight card skeleton — matches new card */
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  overflow: hidden;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow:
+    0px 8px 32px -12px #2620671f,
+    0px 20px 60px -20px #613dff59;
+}
+
+.dateBar {
+  background: #fef5f7;
+  padding: 0.7rem 1.25rem;
+}
+
+.dateBar .shimmer {
+  width: 140px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f9d6e4 0%, #fef5f7 50%, #f9d6e4 100%);
+  background-size: 200% 100%;
+}
+
+.cardMain {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) 180px;
+  gap: 0;
+  padding: 1.15rem 1.1rem 1.2rem;
+  align-items: center;
+}
+
+.airlineCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-right: 1rem;
+  border-right: 1px solid #eceff3;
+}
+
+.logoSkel {
+  width: 121px;
+  height: 68px;
+  border-radius: 12px;
+}
+
+.cabinSkel {
+  width: 110px;
+  height: 24px;
+  border-radius: 999px;
+}
+
+.routeCol {
+  padding: 0 1.1rem;
+  min-width: 0;
+}
+
+.routeTop {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 0.65rem;
+  align-items: start;
+}
+
+.endpoint {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.endpointRight {
+  align-items: flex-end;
+}
+
+.timeSkel {
+  width: 82px;
+  height: 24px;
+  border-radius: 999px;
+}
+
+.routeMiddle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pathSkel {
+  width: 100%;
+  max-width: 140px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.airportRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+
+.airportSkel {
+  height: 32px;
+  border-radius: 999px;
+}
+
+.priceCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.45rem;
+  padding-left: 1rem;
+  border-left: 1px solid #eceff3;
+}
+
+.priceSkel {
+  width: 120px;
+  height: 28px;
+  border-radius: 8px;
+}
+
+.btnSkel {
+  width: 100%;
+  max-width: 150px;
+  height: 40px;
+  border-radius: 999px;
+}
+
+.lineSkel {
+  height: 10px;
+  border-radius: 6px;
+}
+
+.w40 { width: 40%; }
+.w50 { width: 50%; }
+.w60 { width: 60%; }
+.w70 { width: 70%; }
+.w80 { width: 80%; }
+
+@media (max-width: 1199.98px) {
+  .cardMain {
+    grid-template-columns: 130px minmax(0, 1fr) 160px;
+  }
+
+  .logoSkel {
+    width: 100px;
+    height: 56px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .statusStage {
+    grid-template-columns: 130px minmax(0, 1fr);
+    padding: 1.15rem 1.15rem 1.2rem;
+  }
+
+  .radar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .score {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+  }
+
+  .score strong {
+    font-size: 1.25rem;
+  }
+
+  .score span {
+    margin-top: 0;
+  }
+
+  .progressTrack {
+    max-width: none;
+  }
+
+  .sortBar {
+    border-radius: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .sortItem {
+    flex: 0 0 7.5rem;
+    min-width: 7.5rem;
+  }
+
+  .cardMain {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .airlineCol {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-bottom: 0.85rem;
+    border-right: none;
+    border-bottom: 1px solid #eceff3;
+  }
+
+  .routeCol {
+    padding: 0;
+  }
+
+  .priceCol {
+    align-items: stretch;
+    padding-left: 0;
+    padding-top: 0.85rem;
+    border-left: none;
+    border-top: 1px solid #eceff3;
+  }
+
+  .btnSkel {
+    max-width: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .statusCard {
+    border-radius: 22px;
+  }
+
+  .statusStage {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.1rem 1rem 1.15rem;
+  }
+
+  .story {
+    width: 100%;
+  }
+
+  .eyebrow {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .score {
+    width: 100%;
+  }
+
+  .card {
+    border-radius: 16px;
+  }
+
+  .dateBar {
+    padding: 0.55rem 0.9rem;
+  }
+
+  .cardMain {
+    padding: 0.85rem;
+  }
+
+  .routeTop {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .routeMiddle {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
+  .airportRow {
+    grid-template-columns: 1fr;
+  }
+
+  .logoSkel {
+    width: 90px;
+    height: 50px;
+  }
+
+  .filterSidebar {
+    border-radius: 22px;
+  }
+}

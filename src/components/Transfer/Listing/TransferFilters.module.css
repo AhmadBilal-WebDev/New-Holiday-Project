@@ -1,0 +1,301 @@
+/* ── Transfer Filters Sidebar (desktop) ── */
+.sidebar {
+  --tf-pink: #e7247a;
+  --tf-pink-soft: #fef5f7;
+  --tf-border: #e8e5ea;
+  --tf-divider: #eceff3;
+  --tf-label: #6b7280;
+  --tf-text: #374151;
+  --tf-title: #1f2937;
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: 28px;
+  box-shadow: 0 10px 32px rgba(19, 20, 35, 0.06);
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.35rem 1rem;
+  border-bottom: 1px solid var(--tf-divider);
+}
+
+.title {
+  margin: 0;
+  color: var(--tf-title);
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.headerIcon {
+  color: var(--tf-pink);
+  flex-shrink: 0;
+}
+
+.section {
+  padding: 1rem 1.35rem;
+  border-bottom: 1px solid var(--tf-divider);
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.footer {
+  padding: 1rem 1.35rem 1.35rem;
+}
+
+.label {
+  margin: 0 0 0.7rem;
+  color: var(--tf-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.input,
+.select,
+.sidebar :global(.mantine-Autocomplete-input),
+.sidebar :global(.mantine-Input-input) {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.65rem 1.1rem !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  color: var(--tf-text) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500;
+  box-shadow: none !important;
+  outline: none;
+  appearance: none;
+}
+
+.select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239ca3af' d='M1.4.6 6 5.2 10.6.6 12 2 6 8 0 2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.1rem center;
+  padding-right: 2.4rem !important;
+  cursor: pointer;
+}
+
+.input:focus,
+.select:focus,
+.sidebar :global(.mantine-Autocomplete-input:focus),
+.sidebar :global(.mantine-Input-input:focus) {
+  border-color: var(--tf-pink) !important;
+  box-shadow: 0 0 0 3px rgba(231, 36, 122, 0.12) !important;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkbox {
+  margin: 0;
+  padding: 0.15rem 0;
+}
+
+.checkbox :global(.mantine-Checkbox-label) {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--tf-text);
+  cursor: pointer;
+  padding-left: 0.55rem;
+}
+
+.checkbox :global(.mantine-Checkbox-input) {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px !important;
+  border-color: #d1d5db !important;
+  background: #fff;
+  cursor: pointer;
+}
+
+.checkbox :global(.mantine-Checkbox-input:checked) {
+  background-color: var(--tf-pink) !important;
+  border-color: var(--tf-pink) !important;
+}
+
+.resetWrap {
+  width: 100%;
+}
+
+.resetBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.65rem 1.25rem;
+  border: 1.5px solid var(--tf-pink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tf-pink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.resetBtn:hover {
+  background: var(--tf-pink-soft);
+  color: var(--tf-pink);
+  box-shadow: 0 6px 16px rgba(231, 36, 122, 0.12);
+}
+
+.resetIcon {
+  flex-shrink: 0;
+  font-size: 1.05rem;
+}
+
+/* ── Mobile filter pills ── */
+.mobilePills {
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filterPill {
+  border: 1px solid #eee8ec;
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #374151;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(19, 20, 35, 0.04);
+  cursor: pointer;
+}
+
+.filterPill:hover {
+  border-color: #f3b6ce;
+  background: var(--tf-pink-soft, #fef5f7);
+  color: var(--tf-pink, #e7247a);
+}
+
+.filterPillActive {
+  border-color: #e7247a;
+  background: #fef5f7;
+  color: #e7247a;
+  font-weight: 600;
+}
+
+.filterPillActive .arrow {
+  color: #e7247a;
+}
+
+.arrow {
+  font-size: 12px;
+  color: #9ca3af;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── Mobile drawers ── */
+.drawerBody {
+  position: relative;
+  z-index: 1;
+}
+
+.drawerReset {
+  display: block;
+  width: 100%;
+  text-align: right;
+  margin-top: 0.75rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #e7247a;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.drawerReset:hover {
+  text-decoration: underline;
+}
+
+.drawerFooter {
+  border-top: 1px solid #eceae5;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.drawerDone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: #e7247a;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.drawerDone:hover {
+  background: #d61b6c;
+}
+
+/* Drawer content uses same field styles */
+.drawerPanel .label {
+  margin-bottom: 0.75rem;
+}
+
+.drawerPanel :global(.mantine-Autocomplete-input),
+.drawerPanel :global(.mantine-Input-input),
+.drawerPanel .select,
+.drawerPanel .input {
+  min-height: 48px;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 999px !important;
+  font-size: 16px !important;
+  background: #fff !important;
+}
+
+.drawerPanel .checkbox :global(.mantine-Checkbox-input:checked) {
+  background-color: #e7247a !important;
+  border-color: #e7247a !important;
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    border-radius: 22px;
+  }
+
+  .header,
+  .section,
+  .footer {
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+}

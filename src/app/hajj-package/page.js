@@ -1,0 +1,149 @@
+import React from "react";
+import styles from "./HajjPage.module.css";
+import Step from "./components/Step";
+import Prehajj from "./components/Prehajj";
+import Form from "./components/Form";
+import UnderstandingHajj from "./components/UnderstandingHajj";
+import PrepareJourney from "./components/PrepareJourney";
+import moment from "moment";
+import WhyAlhijaz from "./components/WhyAlhijaz";
+import HajjFaq from "./components/HajjFaq";
+import LastSection from "./components/LastSection";
+import Link from "next/link";
+export const metadata = {
+  title:
+    "Hajj Packages 2027 UK | ATOL Protected Hajj Packages | Al Hijaz Tours",
+  description:
+    "Book Hajj Packages 2027 from the UK with flights, hotels near Haram and professional guidance. ATOL protected and trusted pilgrimage services.",
+  keywords: [
+    "Hajj Packages UK",
+    "Hajj 2027 UK",
+    "ATOL Hajj Packages",
+    "Hajj Travel Agency UK",
+    "Pilgrimage Packages",
+  ],
+  alternates: {
+    canonical: "https://alhijaztours.net/hajj-package",
+  },
+};
+export default function page() {
+  return (
+    <>
+      <script type="application/ld+json" id="organization-schema">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "TravelAgency",
+          name: "Al Hijaz Tours",
+          url: "https://alhijaztours.net",
+          keywords: [
+            "Hajj Packages 2027 UK",
+            "ATOL Protected Hajj Packages",
+            "Makkah and Madinah Hajj Travel",
+            "Hajj Pilgrimage from UK",
+            "Saudi Arabia Hajj Packages",
+            "Masjid al-Haram Accommodation",
+            "Licensed Hajj Travel Agency UK",
+          ],
+        })}
+      </script>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            name: "Alhijaz tours",
+            image:
+              "https://alhijaztours.net/_next/image?url=%2Fimages%2Flogo.png&w=256&q=75",
+            description:
+              "Book Hajj Packages UK with Al Hijaz Tours. We offer affordable and cheap Hajj deals with flights, visa, hotels near Haram, and complete guidance for a smooth spiritual journey.",
+            brand: {
+              "@type": "Brand",
+              name: "Alhijaz tours",
+            },
+            offers: {
+              "@type": "AggregateOffer",
+              url: "https://alhijaztours.net/hajj-package",
+              priceCurrency: "GBP",
+              lowPrice: "5000",
+              highPrice: "15000",
+              offerCount: "1",
+            },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "5",
+              bestRating: "5",
+              worstRating: "0",
+              ratingCount: "1",
+              reviewCount: "1",
+            },
+            review: {
+              "@type": "Review",
+              name: "Mehrun",
+              reviewBody:
+                "Salaam, We booked our Hajj with Al Hijaz. The whole experience, from the booking process to the logistics and packages, was smooth and efficient. The organisation of transport was done really well. We were guided all the way, and brother Zahid kept in touch with us to keep us updated on any changes to timings, etc. I highly recommend Al Hijaz for all Umrah and Hajj packages as they really go above and beyond. May Allah SWT bless all at Al Hijaz with Barakah. Ameen. JazakAllah Khair again",
+              reviewRating: {
+                "@type": "Rating",
+                ratingValue: "5",
+                bestRating: "5",
+                worstRating: "0",
+              },
+              datePublished: "2025-08-07",
+              author: { "@type": "Person", name: "Muhammad Waqas" },
+            },
+          }),
+        }}
+      />
+
+      <div className={`min-vh-100  ${styles.hajj}`}>
+        {/* Hero */}
+        <section className={`py-5 text-center ${styles.hero}`}>
+          <div className={styles.overLay}></div>
+          <div className={`container ${styles.box}`}>
+            <h1 className="display-5 h2 fw-bold text-white mb-4">
+              Hajj Packages {moment().add(1, "year").format("YYYY")} – Begin
+              Your <br /> Sacred Journey with Confidence
+            </h1>
+            <p className="lead text-white mb-3 w-75 mx-auto">
+              Performing Hajj is one of the most profound journeys in a Muslim's
+              life. At Al Hijaz Tours, we help pilgrims prepare for this
+              once-in-a-lifetime experience with carefully organised Hajj
+              packages, expert guidance, and complete travel support.
+            </p>
+            <div className="d-flex justify-content-center gap-3 mt-4">
+              {/* <button className={`btn btn-warning ${styles.btntextyello}`}>
+                View Hajj Packages
+              </button> */}
+              <Link href="#register">
+                <button className={`btn btn-light ${styles.btntextwhite}`}>
+                  Register Your Interest
+                </button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* step-by-step */}
+        <Step />
+
+        {/* Interest Form */}
+        <section id="prepare" className="py-5">
+          <div className={styles.svgbg}>
+            <div className="container">
+              <UnderstandingHajj />
+            </div>
+          </div>
+        
+        </section>
+        <Prehajj />
+        <WhyAlhijaz />
+        <div id="register">
+          <Form />
+        </div>
+        <HajjFaq />
+        {/* <LastSection /> */}
+      </div>
+    </>
+  );
+}

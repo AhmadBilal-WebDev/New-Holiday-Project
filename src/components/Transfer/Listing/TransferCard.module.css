@@ -1,0 +1,411 @@
+.transferList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  width: 100%;
+}
+
+.transferCard {
+  --tc-pink: #e7247a;
+  --tc-pink-soft: #fef5f7;
+  --tc-text: #131423;
+  --tc-muted: #6b7280;
+  --tc-border: #eee8ec;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--tc-border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(19, 20, 35, 0.06);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.transferCard:hover {
+  border-color: #f3b6ce;
+  box-shadow: 0 14px 36px rgba(231, 36, 122, 0.1);
+}
+
+.includedCard {
+  border: 2px solid var(--tc-pink);
+  box-shadow: 0 12px 32px rgba(231, 36, 122, 0.14);
+}
+
+.cardMedia {
+  position: relative;
+  flex: 0 0 280px;
+  width: 280px;
+  min-height: 220px;
+  background: linear-gradient(165deg, #fff7f9 0%, #f8ece8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.categoryBadge,
+.includedBadge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--tc-pink);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.includedBadge {
+  top: 14px;
+  left: 14px;
+}
+
+.includedBadge + .categoryBadge {
+  top: 44px;
+}
+
+.cardImage {
+  object-fit: contain !important;
+  object-position: center;
+  padding: 1.25rem 1rem;
+}
+
+.cardImagePlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #d4a5b8;
+  font-size: 2.75rem;
+}
+
+.cardBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.35rem 1.2rem;
+}
+
+.cardContent {
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-bottom: 0.55rem;
+}
+
+.vehicleName {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--tc-text);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.routeRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin-bottom: 0.65rem;
+  min-width: 0;
+  cursor: help;
+}
+
+.routeIcon {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--tc-pink);
+  font-size: 0.9rem;
+}
+
+.routeText {
+  flex: 1;
+  min-width: 0;
+  color: #4b5563;
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.datetimeChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: var(--tc-pink-soft);
+  color: #4b5563;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.datetimeIcon {
+  flex-shrink: 0;
+  color: var(--tc-pink);
+  font-size: 1rem;
+}
+
+.cardDescription {
+  margin: 0 0 0.95rem;
+  color: var(--tc-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.specsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem 1.25rem;
+  max-width: 420px;
+}
+
+.specItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  color: #4b5563;
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.specIcon {
+  flex-shrink: 0;
+  color: var(--tc-pink);
+  font-size: 1rem;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.35rem;
+}
+
+.priceBlock {
+  min-width: 0;
+}
+
+.priceLabel {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: #9ca3af;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.priceValue {
+  margin: 0;
+  color: var(--tc-pink);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.priceNote {
+  display: block;
+  margin-top: 0.25rem;
+  color: #9ca3af;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+
+.bookBtn,
+.detailBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.55rem 1.15rem;
+  border-radius: 12px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.bookBtn {
+  border: none;
+  background: var(--tc-pink);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(231, 36, 122, 0.28);
+}
+
+.bookBtn:hover:not(:disabled) {
+  background: #d61b6c;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.bookBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.detailBtn {
+  border: 1.5px solid var(--tc-pink);
+  background: #fff;
+  color: var(--tc-pink);
+}
+
+.detailBtn:hover {
+  background: var(--tc-pink-soft);
+  color: var(--tc-pink);
+}
+
+@media (max-width: 1100px) {
+  .cardMedia {
+    flex-basis: 240px;
+    width: 240px;
+  }
+
+  .vehicleName {
+    font-size: 1.2rem;
+  }
+
+  .datetimeChip {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.65rem;
+  }
+
+  .priceValue {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .transferCard {
+    flex-direction: column;
+    border-radius: 20px;
+  }
+
+  .cardMedia {
+    flex: none;
+    width: 100%;
+    min-height: 200px;
+  }
+
+  .cardBody {
+    padding: 1.05rem 1.1rem 1.15rem;
+    gap: 1.1rem;
+  }
+
+  .titleRow {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .vehicleName {
+    font-size: 1.15rem;
+    flex: 1 1 auto;
+  }
+
+  .datetimeChip {
+    margin-left: auto;
+  }
+
+  .specsGrid {
+    max-width: none;
+    gap: 0.5rem 1rem;
+  }
+
+  .cardFooter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+
+  .actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+  }
+
+  .bookBtn,
+  .detailBtn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .titleRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .datetimeChip {
+    margin-left: 0;
+    white-space: normal;
+  }
+
+  .specsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .routeText {
+    -webkit-line-clamp: 3;
+  }
+}

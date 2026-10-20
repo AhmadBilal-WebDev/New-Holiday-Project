@@ -1,0 +1,391 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  --pc-pink: #e7247a;
+  --pc-pink-bright: #ff3f93;
+  --pc-text: #131423;
+  --pc-muted: #6b7280;
+  --pc-soft: #f3f4f6;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #eee8ec;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0px 8px 32px -12px #74302024;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 36px rgba(231, 36, 122, 0.12);
+  transform: translateY(-2px);
+}
+
+.media {
+  position: relative;
+  flex: 0 0 34%;
+  min-width: 0;
+  min-height: 260px;
+  align-self: stretch;
+}
+
+.mediaLink {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.badgeNights {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(19, 20, 35, 0.72);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  backdrop-filter: blur(4px);
+}
+
+.badgeCategory {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  max-width: calc(100% - 110px);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--pc-pink-bright) 0%, var(--pc-pink) 100%);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.body {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.25rem 1.35rem 1.2rem;
+}
+
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.titleBlock {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.title {
+  margin: 0;
+  color: var(--pc-text);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.title:hover {
+  color: var(--pc-pink);
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.4rem;
+  color: var(--pc-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.locationIcon {
+  color: var(--pc-pink);
+  flex-shrink: 0;
+}
+
+.priceBlock {
+  flex-shrink: 0;
+  text-align: right;
+  min-width: 110px;
+}
+
+.priceFrom {
+  display: block;
+  margin: 0;
+  color: #9ca3af;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.priceValue {
+  display: block;
+  margin: 0.1rem 0;
+  color: var(--pc-pink);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.pricePer {
+  display: block;
+  margin: 0;
+  color: var(--pc-text);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.priceTax {
+  display: block;
+  margin-top: 0.15rem;
+  color: #9ca3af;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.ratingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  background: var(--pc-pink);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--pc-muted);
+  font-size: 0.86rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.metaIcon {
+  color: var(--pc-pink);
+  flex-shrink: 0;
+}
+
+.description {
+  margin: 0;
+  color: var(--pc-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  color: var(--pc-muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.infoIcon {
+  color: var(--pc-pink);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.infoText {
+  min-width: 0;
+  word-break: break-word;
+}
+
+.bookBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  margin-top: auto;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--pc-pink-bright) 0%, var(--pc-pink) 100%);
+  color: #fff !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(231, 36, 122, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.bookBtn:hover {
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(231, 36, 122, 0.36);
+  background: linear-gradient(90deg, #ff5aa3 0%, #d61b6c 100%);
+}
+
+@media (max-width: 991px) {
+  .media {
+    flex-basis: 38%;
+  }
+
+  .title {
+    font-size: 1.05rem;
+  }
+
+  .priceValue {
+    font-size: 1.15rem;
+  }
+
+  .body {
+    padding: 1.1rem 1.15rem 1.05rem;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .card {
+    flex-direction: column;
+    border-radius: 20px;
+  }
+
+  .media,
+  .mediaLink,
+  .image {
+    flex-basis: auto;
+    width: 100%;
+    min-height: 200px;
+    height: 200px;
+  }
+
+  .badgeCategory {
+    max-width: 55%;
+  }
+
+  .body {
+    padding: 1rem 1rem 1.05rem;
+  }
+
+  .topRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .priceBlock {
+    text-align: start;
+    min-width: 0;
+    padding-top: 0.65rem;
+    border-top: 1px solid #f0ecee;
+  }
+
+  .title {
+    font-size: 1.05rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .metaRow {
+    gap: 0.55rem 0.85rem;
+  }
+
+  .metaItem {
+    white-space: normal;
+  }
+
+  .description {
+    -webkit-line-clamp: 3;
+    font-size: 0.86rem;
+  }
+
+  .bookBtn {
+    min-height: 46px;
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .media,
+  .mediaLink,
+  .image {
+    min-height: 180px;
+    height: 180px;
+  }
+
+  .badgeNights,
+  .badgeCategory {
+    top: 10px;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .badgeNights {
+    left: 10px;
+  }
+
+  .badgeCategory {
+    right: 10px;
+  }
+
+  .priceValue {
+    font-size: 1.1rem;
+  }
+}

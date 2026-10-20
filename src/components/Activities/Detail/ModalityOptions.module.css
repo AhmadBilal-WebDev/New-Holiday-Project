@@ -1,0 +1,410 @@
+.wrapper {
+  margin-top: 12px;
+}
+
+.lowestPriceNote {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.lowestPriceNote strong {
+  color: #111827;
+}
+
+.timeSection {
+  margin-bottom: 16px;
+}
+
+.timeLabel {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.timePills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.timePill {
+  appearance: none;
+  border: 1.5px solid #d1d5db;
+  background: #fff;
+  color: #111827;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.timePill:hover {
+  border-color: #E7247A;
+  color: #E7247A;
+}
+
+.timePillActive {
+  border-color: #E7247A;
+  background: #e0f7f7;
+  color: #E7247A;
+}
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cardExpanded {
+  border-color: #E7247A;
+  box-shadow: 0 0 0 1px #E7247A;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cardTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.changeLink {
+  appearance: none;
+  background: none;
+  border: none;
+  color: #E7247A;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0;
+  text-decoration: none;
+}
+
+.changeLink:hover {
+  text-decoration: underline;
+}
+
+.cancelBlock {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.cancelIcon {
+  color: #16a34a;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cancelTitle {
+  color: #16a34a;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 0 0 2px;
+}
+
+.cancelText {
+  color: #6b7280;
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.detailRow {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.detailIcon {
+  color: #E7247A;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.detailText {
+  font-size: 0.875rem;
+  color: #374151;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.seeDetails {
+  appearance: none;
+  background: none;
+  border: none;
+  color: #E7247A;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+}
+
+.seeDetails:hover {
+  text-decoration: underline;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.priceFrom {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.priceMain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.amount {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.taxesNote {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.selectBtn {
+  appearance: none;
+  background: #fff;
+  border: 1.5px solid #E7247A;
+  color: #E7247A;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 8px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.selectBtn:hover {
+  background: #E7247A;
+  color: #fff;
+}
+
+.fieldLabel {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.ticketHint {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: -2px 0 12px;
+}
+
+.cardLangNote {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: -4px 0 12px;
+}
+
+.maxReachedNote {
+  font-size: 0.8rem;
+  color: #b45309;
+  margin: 0 0 12px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.languageSelect {
+  width: 100%;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  color: #111827;
+  background: #fff;
+  margin-bottom: 16px;
+  outline: none;
+}
+
+.languageSelect:focus {
+  border-color: #E7247A;
+}
+
+.ticketList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ticketRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.ticketLabel {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.ticketPrice {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 2px 0 0;
+}
+
+.qtyBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 110px;
+  padding: 6px 8px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.qtyBtn {
+  appearance: none;
+  background: none;
+  border: none;
+  color: #E7247A;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qtyBtn:disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.qtyValue {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+  min-width: 24px;
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.totalLabel {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.nextBtn {
+  appearance: none;
+  background: #E7247A;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 10px 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.nextBtn:hover:not(:disabled) {
+  background: #E7247A;
+}
+
+.nextBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.emptyState {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+  padding: 20px 12px;
+}
+
+.detailsExpanded {
+  margin-top: 6px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+@media (max-width: 576px) {
+  .card {
+    padding: 14px;
+  }
+
+  .priceRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .selectBtn,
+  .nextBtn {
+    width: 100%;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -1,0 +1,777 @@
+/* ===================================
+   VOYARA HEADER — clean white bar
+   =================================== */
+.islamicHeader {
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+    background: #ffffff;
+}
+
+.islamicHeaderBar {
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.islamicHeaderInner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+/* ===================================
+   LOGO / BRAND
+   =================================== */
+.islamicNavbarBrand {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.islamicLogoWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.islamicLogo {
+    height: 36px;
+    width: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.islamicBrandName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0a0a0a;
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+/* ===================================
+   DESKTOP CENTER NAV
+   =================================== */
+.islamicDesktopNav {
+    display: none;
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+}
+
+.islamicNavMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: nowrap;
+}
+
+.islamicNavItem {
+    position: relative;
+}
+
+.islamicNavLink {
+    color: #0a0a0a !important;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 14px !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    border-radius: 8px;
+    background: transparent !important;
+    cursor: pointer;
+}
+
+.islamicNavLink:hover {
+    color: #E7247A !important;
+    background: transparent !important;
+}
+
+.islamicNavLinkActive {
+    color: #E7247A !important;
+}
+
+.islamicNavLinkActive::after {
+    display: none;
+}
+
+/* Dropdown */
+.islamicDropdownItem {
+    position: relative;
+}
+
+.islamicDropdownIcon {
+    font-size: 11px;
+    transition: transform 0.25s ease;
+    color: inherit;
+}
+
+.islamicDropdownIconOpen {
+    transform: rotate(180deg);
+}
+
+.islamicDropdownMenu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: #ffffff;
+    min-width: 220px;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 8px;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+    border: 1px solid #f0f0f0;
+}
+
+.islamicDropdownMenuOpen {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.islamicDropdownMenuItem {
+    margin: 0;
+    padding: 0;
+}
+
+.islamicDropdownLink {
+    display: block;
+    padding: 10px 14px;
+    color: #0a0a0a !important;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    border-left: none;
+}
+
+.islamicDropdownLink:hover {
+    background: #fdf2f7;
+    color: #E7247A !important;
+    padding-left: 14px;
+}
+
+/* ===================================
+   RIGHT ACTIONS
+   =================================== */
+.islamicNavActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    padding-right: 0;
+}
+
+.islamicCurrencyDesktop {
+    display: none;
+}
+
+.islamicCurrencyDesktop :global(select),
+.islamicCurrencyDesktop :global(.form-control) {
+    border: 1px solid #ebebeb !important;
+    border-radius: 999px !important;
+    padding: 8px 28px 8px 14px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #0a0a0a !important;
+    background: #fafafa !important;
+    min-height: 38px;
+    box-shadow: none !important;
+}
+
+.islamicSignInLink {
+    display: none;
+    color: #0a0a0a;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 4px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.islamicSignInLink:hover {
+    color: #E7247A;
+}
+
+.islamicCtaBtn {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: #E7247A;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(231, 36, 122, 0.25);
+}
+
+.islamicCtaBtn:hover {
+    background: #d01d6a;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(231, 36, 122, 0.35);
+}
+
+.islamicCtaIcon {
+    font-size: 12px;
+}
+
+/* Legacy phone (unused on desktop, kept for safety) */
+.islamicPhoneLink {
+    display: none;
+}
+
+/* ===================================
+   MOBILE MENU TOGGLE
+   =================================== */
+.islamicMobileToggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+    flex-shrink: 0;
+}
+
+.islamicMobileToggle span {
+    width: 100%;
+    height: 2px;
+    background-color: #0a0a0a;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+}
+
+.islamicMobileToggle:hover span {
+    background-color: #E7247A;
+}
+
+/* ===================================
+   MOBILE MENU OVERLAY
+   =================================== */
+.islamicMobileMenu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(360px, 100%);
+    height: 100vh;
+    height: 100dvh;
+    background: #ffffff;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.1);
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.islamicMobileMenuOpen {
+    right: 0;
+}
+
+.islamicMobileMenuHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    background: #ffffff;
+    flex-shrink: 0;
+}
+
+.islamicMobileMenuLogo {
+    display: block;
+    text-decoration: none;
+}
+
+.islamicMobileMenuClose {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.islamicMobileMenuClose:hover {
+    background-color: #E7247A;
+    border-color: #E7247A;
+    color: #ffffff;
+}
+
+.islamicMobileMenuBody {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+    scrollbar-width: thin;
+    scrollbar-color: #e0e0e0 transparent;
+}
+
+.islamicMobileMenuBody::-webkit-scrollbar {
+    width: 4px;
+}
+
+.islamicMobileMenuBody::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+.islamicMobileMenuList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.islamicMobileMenuItem {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+    background: #ffffff;
+}
+
+.islamicMobileMenuLink {
+    width: 100%;
+    color: #0a0a0a;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+}
+
+.islamicMobileDropdownIcon {
+    font-size: 11px;
+    color: #9ca3af;
+    transition: transform 0.25s ease, color 0.2s ease;
+}
+
+.islamicMobileDropdownIconOpen {
+    transform: rotate(180deg);
+    color: #E7247A;
+}
+
+.islamicMobileDropdownMenu {
+    list-style: none;
+    padding: 0 8px 8px;
+    margin: 0;
+    background-color: #fafafa;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+
+.islamicMobileDropdownMenuOpen {
+    max-height: 400px;
+}
+
+.islamicMobileDropdownItem {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.islamicMobileDropdownItem+.islamicMobileDropdownItem {
+    margin-top: 2px;
+}
+
+.islamicMobileDropdownLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 12px 11px 14px;
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.islamicMobileDropdownLink::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d1d5db;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+}
+
+.islamicMobileDropdownLink:hover {
+    background-color: #ffffff;
+    color: #E7247A;
+}
+
+.islamicMobileDropdownLink:hover::before {
+    background: #E7247A;
+}
+
+.islamicMobileMenuLink:hover {
+    background-color: #fdf2f7;
+    color: #E7247A;
+}
+
+.islamicMobileMenuLinkActive {
+    background-color: #fdf2f7;
+    color: #E7247A;
+    border-left: 3px solid #E7247A;
+    padding-left: 13px;
+}
+
+.islamicMobileMenuLinkExpanded {
+    background-color: #fdf2f7;
+    color: #E7247A;
+}
+
+.islamicMobileMenuFooter {
+    flex-shrink: 0;
+    padding: 16px 20px 20px;
+    border-top: 1px solid #f0f0f0;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.islamicMobileCtaBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: #E7247A;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    box-shadow: 0 4px 14px rgba(231, 36, 122, 0.25);
+}
+
+.islamicMobileCtaBtn:hover {
+    background: #d01d6a;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.islamicMobileCallBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: #0a0a0a;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.islamicMobileCallBtn:hover {
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.islamicMobileCurrency {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid #ebebeb;
+    border-radius: 12px;
+}
+
+.islamicMobileCurrencyLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+.islamicMobileCurrencySelect {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #ebebeb !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #0a0a0a !important;
+    background: #fafafa !important;
+    cursor: pointer;
+}
+
+.islamicMobileBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 1001;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+/* Large tablets / small laptops — show full desktop layout */
+@media (min-width: 992px) {
+    .islamicDesktopNav {
+        display: flex;
+    }
+
+    .islamicCurrencyDesktop {
+        display: block;
+    }
+
+    .islamicSignInLink {
+        display: inline-flex;
+    }
+
+    .islamicCtaBtn {
+        display: inline-flex;
+    }
+
+    .islamicMobileToggle {
+        display: none;
+    }
+}
+
+/* Mid desktop — tighten nav spacing */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .islamicHeaderInner {
+        padding: 0 20px;
+        gap: 12px;
+    }
+
+    .islamicNavLink {
+        font-size: 13px;
+        padding: 8px 8px !important;
+    }
+
+    .islamicNavMenu {
+        gap: 0;
+    }
+
+    .islamicCtaBtn {
+        padding: 9px 14px;
+        font-size: 13px;
+    }
+
+    .islamicSignInLink {
+        font-size: 13px;
+    }
+
+    .islamicBrandName {
+        font-size: 1.1rem;
+    }
+}
+
+/* Compact large screens */
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .islamicNavLink {
+        font-size: 14px;
+        padding: 10px 10px !important;
+    }
+}
+
+/* Tablet & below */
+@media (max-width: 991px) {
+    .islamicHeaderInner {
+        padding: 0 20px;
+        min-height: 64px;
+    }
+
+    /* Keep CTA + My Bookings visible on tablet where space allows */
+    .islamicSignInLink {
+        display: none;
+    }
+
+    .islamicCtaBtn {
+        display: inline-flex;
+        padding: 9px 16px;
+        font-size: 13px;
+    }
+
+    .islamicCurrencyDesktop {
+        display: none;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .islamicHeaderInner {
+        padding: 0 16px;
+        min-height: 60px;
+        gap: 12px;
+    }
+
+    .islamicBrandName {
+        font-size: 1.15rem;
+    }
+
+    .islamicLogo {
+        height: 32px;
+        width: 32px;
+    }
+
+    .islamicCtaBtn {
+        display: none;
+    }
+
+    .islamicMobileMenu {
+        width: min(320px, 88vw);
+    }
+}
+
+/* Small phones */
+@media (max-width: 575px) {
+    .islamicHeaderInner {
+        padding: 0 14px;
+        min-height: 56px;
+    }
+
+    .islamicBrandName {
+        font-size: 1.05rem;
+    }
+
+    .islamicMobileMenu {
+        width: 100%;
+        right: -100%;
+    }
+
+    .islamicMobileMenuOpen {
+        right: 0;
+    }
+
+    .islamicMobileMenuHeader {
+        padding: 15px;
+    }
+
+    .islamicMobileMenuClose {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+
+    .islamicMobileMenuLink {
+        font-size: 14px;
+        padding: 13px 14px;
+    }
+
+    .islamicMobileMenuBody {
+        padding: 10px 12px;
+    }
+
+    .islamicMobileMenuFooter {
+        padding: 14px 16px 18px;
+    }
+}
+
+/* Extra small */
+@media (max-width: 380px) {
+    .islamicLogo {
+        height: 28px;
+        width: 28px;
+    }
+
+    .islamicBrandName {
+        font-size: 1rem;
+    }
+
+    .islamicMobileToggle {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* Legacy class aliases so older wrappers don't break */
+.islamicHeaderOther {
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+    background: #ffffff;
+}
+
+.islamicHeaderContainer {
+    max-width: 100%;
+    padding: 0;
+}
+
+.islamicNavbar {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.islamicDesktopMenu {
+    display: none;
+}

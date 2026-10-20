@@ -1,0 +1,451 @@
+/* ── Flight Summary Sidebar ─────────────────────────────────── */
+.summary {
+    --fs-pink: #e7247a;
+    --fs-pink-soft: #fef5f7;
+    --fs-text: #131423;
+    --fs-muted: #6b7280;
+    --fs-label: #9ca3af;
+    --fs-border: #eceff3;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.card {
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+        0 18px 48px rgba(19, 20, 35, 0.1),
+        0 4px 14px rgba(231, 36, 122, 0.06);
+    border: 1px solid rgba(231, 36, 122, 0.06);
+}
+
+.title {
+    margin: 0;
+    padding: 22px 22px 14px;
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--fs-text);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.heroWrap {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 200px;
+    overflow: hidden;
+    background: var(--fs-pink-soft);
+}
+
+.heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cardBody {
+    padding: 20px 22px 22px;
+}
+
+/* ── Leg / airline / info rows ───────────────────────────────── */
+.legBlock {
+    margin-bottom: 4px;
+}
+
+.legLabel {
+    margin: 0 0 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fs-pink);
+}
+
+.airlineBlock {
+    margin-bottom: 16px;
+}
+
+.airlineName {
+    margin: 0 0 2px;
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--fs-text);
+    line-height: 1.3;
+}
+
+.flightNo {
+    margin: 0;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--fs-muted);
+    line-height: 1.4;
+}
+
+.infoRow,
+.infoRowStatic {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 8px 0;
+    text-align: left;
+}
+
+.infoRow {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background 0.15s ease;
+}
+
+.infoRow:hover {
+    background: var(--fs-pink-soft);
+}
+
+.iconCircle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--fs-pink-soft);
+    color: var(--fs-pink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+}
+
+.infoText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    padding-top: 2px;
+}
+
+.infoPrimary {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--fs-text);
+    line-height: 1.35;
+}
+
+.infoSecondary {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--fs-muted);
+    line-height: 1.35;
+}
+
+.legDivider {
+    height: 0;
+    border-top: 1px dashed var(--fs-border);
+    margin: 14px 0;
+}
+
+.sectionDivider {
+    height: 0;
+    border-top: 1px solid var(--fs-border);
+    margin: 18px 0 16px;
+}
+
+/* ── Price details ───────────────────────────────────────────── */
+.priceSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.priceSectionTitle {
+    margin: 0 0 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fs-label);
+}
+
+.priceRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.priceRowLabel {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--fs-text);
+    line-height: 1.35;
+}
+
+.priceRowAmount {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--fs-text);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.taxToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--fs-text);
+}
+
+.chevron {
+    font-size: 0.9rem;
+    color: var(--fs-muted);
+    flex-shrink: 0;
+}
+
+.taxNote {
+    margin: 0 0 6px;
+    font-size: 0.75rem;
+    color: var(--fs-muted);
+    line-height: 1.45;
+}
+
+.travelerGroup {
+    padding: 6px 0;
+}
+
+.travelerToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.travelerToggleRight {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.travelerDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 0 2px 12px;
+}
+
+.travelerDetailRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--fs-muted);
+}
+
+.bookingFeeValue {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #059669;
+    white-space: nowrap;
+}
+
+.totalRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--fs-border);
+}
+
+.totalLabel {
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--fs-text);
+    padding-top: 2px;
+}
+
+.totalRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    min-width: 0;
+}
+
+.totalValue {
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--fs-pink);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.totalNote {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--fs-label);
+    text-align: right;
+}
+
+/* ── Cancellation policy box ─────────────────────────────────── */
+.policyBox {
+    margin-top: 18px;
+    padding: 16px;
+    background: var(--fs-pink-soft);
+    border-radius: 16px;
+}
+
+.policyHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.policyIcon {
+    flex-shrink: 0;
+    font-size: 1.15rem;
+    color: var(--fs-pink);
+}
+
+.policyTitle {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--fs-text);
+}
+
+.policyText {
+    margin: 0 0 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--fs-muted);
+    line-height: 1.5;
+}
+
+.policyText strong {
+    color: var(--fs-text);
+    font-weight: 700;
+}
+
+.policyLink {
+    display: inline;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--fs-pink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-align: left;
+}
+
+.policyLink:hover {
+    color: #d61b6c;
+}
+
+/* ── Sticky wrapper (used by checkout page) ──────────────────── */
+@media (min-width: 768px) {
+    .summarySticky {
+        position: sticky;
+        top: 24px;
+        z-index: 2;
+    }
+}
+
+@media (max-width: 767px) {
+    .summarySticky {
+        margin-bottom: 24px;
+    }
+
+    .title {
+        padding: 18px 16px 12px;
+        font-size: 1.2rem;
+    }
+
+    .cardBody {
+        padding: 16px;
+    }
+
+    .heroWrap {
+        max-height: 160px;
+    }
+
+    .card {
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 575px) {
+    .title {
+        padding: 16px 14px 10px;
+        font-size: 1.1rem;
+    }
+
+    .cardBody {
+        padding: 14px;
+    }
+
+    .iconCircle {
+        width: 36px;
+        height: 36px;
+        font-size: 0.78rem;
+    }
+
+    .infoPrimary {
+        font-size: 0.9rem;
+    }
+
+    .totalValue {
+        font-size: 1.25rem;
+    }
+
+    .priceRow {
+        flex-wrap: wrap;
+    }
+
+    .totalRow {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .totalRight {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .totalNote {
+        text-align: left;
+    }
+
+    .policyBox {
+        padding: 14px;
+        border-radius: 14px;
+    }
+}

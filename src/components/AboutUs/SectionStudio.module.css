@@ -1,0 +1,284 @@
+/* ─── Section ─────────────────────────────────────────────── */
+.section {
+  background: #ffffff;
+  padding: 0 0 5rem;
+}
+
+.inner {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 3rem 3.5rem;
+  align-items: center;
+}
+
+/* ─── Left copy ───────────────────────────────────────────── */
+.left {
+  max-width: 460px;
+}
+
+.label {
+  display: inline-block;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #E7247A;
+  margin-bottom: 1rem;
+}
+
+.heading {
+  font-family: inherit;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 48px;
+  line-height: 48px;
+  letter-spacing: -0.96px;
+  vertical-align: middle;
+  color: #131423;
+  margin: 0 0 1.25rem;
+  max-width: 420px;
+}
+
+.copy {
+  font-family: inherit;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  vertical-align: middle;
+  color: #5F6275;
+  margin: 0 0 1.75rem;
+  max-width: 420px;
+}
+
+/* ─── Stat cards ──────────────────────────────────────────── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 360px;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e6e8ee;
+  border-radius: 18px;
+  padding: 1rem 0.65rem;
+  min-height: 96px;
+}
+
+.statIcon {
+  font-size: 20px;
+  color: #131423;
+  opacity: 0.85;
+}
+
+.statValue {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: -0.3px;
+  color: #131423;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── Gallery ─────────────────────────────────────────────── */
+.gallery {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 16px;
+  min-height: 420px;
+  height: 100%;
+}
+
+.tall,
+.wide {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #f3f4f6;
+}
+
+.tall {
+  min-height: 420px;
+  height: 100%;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 420px;
+}
+
+.wide {
+  flex: 1;
+  min-height: 0;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1199px) {
+  .heading {
+    font-size: 40px;
+    line-height: 1.1;
+    letter-spacing: -0.8px;
+  }
+
+  .gallery {
+    min-height: 380px;
+  }
+
+  .tall,
+  .stack {
+    min-height: 380px;
+  }
+}
+
+@media (max-width: 991px) {
+  .section {
+    padding: 3.5rem 0 4rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .left {
+    max-width: 560px;
+  }
+
+  .heading {
+    font-size: 36px;
+    line-height: 1.15;
+    max-width: none;
+  }
+
+  .copy {
+    max-width: 520px;
+  }
+
+  .stats {
+    max-width: 400px;
+  }
+
+  .gallery {
+    min-height: 360px;
+    height: 360px;
+  }
+
+  .tall,
+  .stack {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 2.75rem 0 3.25rem;
+  }
+
+  .heading {
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
+  }
+
+  .copy {
+    font-size: 15px;
+    line-height: 23px;
+    margin-bottom: 1.35rem;
+  }
+
+  .stats {
+    max-width: none;
+    gap: 10px;
+  }
+
+  .statCard {
+    min-height: 84px;
+    border-radius: 16px;
+    padding: 0.85rem 0.5rem;
+  }
+
+  .statValue {
+    font-size: 18px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    height: 280px;
+    min-height: 280px;
+  }
+
+  .tall,
+  .stack {
+    min-height: 280px;
+  }
+
+  .tall,
+  .wide {
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 24px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 0;
+  }
+
+  .tall {
+    min-height: 220px;
+    height: 220px;
+  }
+
+  .stack {
+    min-height: 0;
+  }
+
+  .wide {
+    min-height: 150px;
+    height: 150px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

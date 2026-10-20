@@ -1,0 +1,925 @@
+.mobileMapLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #E7247E;
+  border: 1px solid #E7247E;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.mobileMapLink:hover {
+  background: #E7247E;
+  color: #fff;
+}
+
+.modalContent {
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modalBody {
+  flex: 1;
+  padding: 0 !important;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mapView {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  background: #f5f6f7;
+}
+
+/* ── Top filter bar ── */
+.filterBar {
+  flex-shrink: 0;
+  background: #fff;
+  border-bottom: 1px solid #e8eaed;
+  z-index: 20;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.filterBarOpen {
+  overflow: visible;
+}
+
+.filterBarInner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  width: max-content;
+  min-width: 100%;
+}
+
+.filterDivider {
+  width: 1px;
+  height: 22px;
+  background: #e5e7eb;
+  flex-shrink: 0;
+  margin: 0 2px;
+}
+
+.filterPillWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.filterPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #fff;
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filterPill:hover {
+  border-color: #E7247A;
+  color: #E7247A;
+}
+
+.filterPillApplied,
+.filterPillOpen {
+  border-color: #E7247A;
+  color: #E7247A;
+  background: rgba(0, 76, 76, 0.06);
+  box-shadow: 0 0 0 1px #E7247A;
+}
+
+.filterDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 260px;
+  max-width: min(360px, calc(100vw - 32px));
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);
+  z-index: 30;
+  padding: 14px;
+}
+
+.filterDropdownWide {
+  min-width: 300px;
+}
+
+.filterDropdownBody {
+  margin-bottom: 12px;
+}
+
+.filterDropdownBody :global(.hotel-filter-section__label) {
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.filterDropdownBody :global(.hotel-filter-checkbox-group) {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filterDropdownBody :global(.hotel-filter-price-values) {
+  display: flex;
+  gap: 8px;
+}
+
+.filterDropdownBody :global(.hotel-filter-price-badge) {
+  flex: 1;
+}
+
+.filterDropdownActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.filterClearBtn {
+  border: none;
+  background: transparent;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.filterClearBtn:hover {
+  background: #f3f4f6;
+  color: #111;
+}
+
+.filterApplyBtn {
+  border: none;
+  background: #E7247A;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.filterApplyBtn:hover {
+  background: #006666;
+}
+
+.splitLayout {
+  display: flex;
+  flex: 1;
+  height: auto;
+  width: 100%;
+  min-height: 0;
+  background: #f5f6f7;
+}
+
+/* ── Left list panel ── */
+.listPanel {
+  width: 540px;
+  min-width: 480px;
+  max-width: 48%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f5f6f7;
+  border-right: 1px solid #e5e7eb;
+  z-index: 2;
+  min-height: 0;
+}
+
+.listHeader {
+  padding: 16px 16px 12px;
+  background: #fff;
+  border-bottom: 1px solid #eef0f2;
+  flex-shrink: 0;
+}
+
+.listHeaderTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.listHeaderTop .closeBtn {
+  display: none;
+}
+
+.listCount {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.3;
+}
+
+.listEmpty {
+  padding: 28px 16px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.listLoadMore {
+  padding: 14px 8px 8px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.listScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 12px;
+  -webkit-overflow-scrolling: touch;
+  overflow-anchor: auto;
+}
+
+.prefetchSentinel {
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* ── Compact hotel cards ── */
+.listCard {
+  display: flex;
+  gap: 0;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid transparent;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+}
+
+.listCard:last-child {
+  margin-bottom: 0;
+}
+
+.listCard:hover {
+  box-shadow: 0 4px 16px rgba(0, 76, 76, 0.12);
+  border-color: rgba(0, 76, 76, 0.35);
+}
+
+.listCardHovered {
+  border-color: rgba(0, 76, 76, 0.55);
+  box-shadow: 0 4px 16px rgba(0, 76, 76, 0.14);
+}
+
+.listCardSelected {
+  border-color: #E7247A;
+  box-shadow: 0 4px 18px rgba(0, 76, 76, 0.18);
+}
+
+.listCardMedia {
+  position: relative;
+  flex: 0 0 168px;
+  width: 168px;
+  min-height: 150px;
+  align-self: stretch;
+  background: #eee;
+  overflow: hidden;
+}
+
+.listCardImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.listCardBadge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #E7247A;
+  color: #c9a227;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+}
+
+.listCardBody {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.listCardTitleRow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+}
+
+.listCardTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.listCardDistance {
+  font-size: 11px;
+  font-weight: 500;
+  color: #2563eb;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.listCardDistanceLoading {
+  display: inline-block;
+  width: 5.5rem;
+  height: 0.7rem;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: mapDistShimmer 1.2s ease-in-out infinite;
+}
+
+.listCardLocation {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  font-size: 11px;
+  color: #6b7280;
+  line-height: 1.35;
+}
+
+.listCardLocation span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.listCardLocation svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #E7247A;
+}
+
+.listCardStars {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 6px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
+
+.listCardStar {
+  color: #E7247A;
+  font-size: 10px;
+}
+
+.listCardNoRating {
+  font-size: 10px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.listCardBottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.listCardPricing {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.listCardPrice {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+
+.listCardPerNight {
+  font-size: 12px;
+  font-weight: 600;
+  color: #E7247A;
+  line-height: 1.2;
+}
+
+.listCardNights {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.listCardCancel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #059669;
+  margin-top: 2px;
+}
+
+.listCardCta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  background: #E7247A;
+  color: #fff !important;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.listCardCta:hover {
+  background: #006666;
+  transform: translateY(-1px);
+  color: #fff !important;
+}
+
+/* ── Right map panel ── */
+.mapPanel {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  background: #e8eaed;
+}
+
+.mapLoading {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #e8eaed;
+  pointer-events: none;
+}
+
+.mapLoadingIcon {
+  color: #1a1a1a;
+  opacity: 0.9;
+}
+
+.mapLoadingText {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 80%;
+}
+
+.mapLoadingSpinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid #c5c9ce;
+  border-top-color: #1a73e8;
+  animation: mapSpin 0.75s linear infinite;
+}
+
+@keyframes mapSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mapContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #f3f4f6;
+  color: #374151;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.closeBtn:hover {
+  background: #e5e7eb;
+}
+
+.closeBtnMap {
+  display: inline-flex;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.closeBtnMap:hover {
+  background: #f3f4f6;
+}
+
+.previewOverlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+}
+
+.showMapBtn {
+  background: #E7247A;
+  border: none;
+  color: #fff;
+  padding: 0.65rem 1.6rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 76, 76, 0.35);
+}
+
+.showMapBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 76, 76, 0.45);
+  color: #fff;
+}
+
+/* ── Bottom floating hotel card ── */
+.floatingCard {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: flex;
+  width: min(440px, calc(100% - 32px));
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  animation: floatingCardIn 0.22s ease;
+  pointer-events: auto;
+}
+
+@keyframes floatingCardIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.floatingCardMedia {
+  position: relative;
+  flex: 0 0 118px;
+  width: 118px;
+  min-height: 118px;
+  align-self: stretch;
+  background: #eee;
+  overflow: hidden;
+}
+
+.floatingCardImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.floatingCardBody {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.floatingCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.floatingCardTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.floatingCardClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: #f3f4f6;
+  color: #4b5563;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.floatingCardClose:hover {
+  background: #e5e7eb;
+}
+
+.floatingCardMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  min-width: 0;
+}
+
+.floatingCardStars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.floatingCardStar {
+  color: #E7247A;
+  font-size: 11px;
+}
+
+.floatingCardLocation {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.floatingCardDistance {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: #2563eb;
+  line-height: 1.3;
+  margin-top: -2px;
+}
+
+.floatingCardDistanceLoading {
+  width: 5.5rem;
+  height: 0.7rem;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: mapDistShimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes mapDistShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.floatingCardBottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.floatingCardLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.floatingCardCancel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #059669;
+}
+
+.floatingCardCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  background: #E7247A;
+  color: #fff !important;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.floatingCardCta:hover {
+  background: #006666;
+  color: #fff !important;
+}
+
+.floatingCardPricing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.floatingCardPrice {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.floatingCardPerNight {
+  font-size: 12px;
+  font-weight: 600;
+  color: #E7247A;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.floatingCardTaxes {
+  font-size: 11px;
+  color: #6b7280;
+  text-align: right;
+}
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .filterBar {
+    display: none;
+  }
+
+  .filterBarInner {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .filterPill {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .filterDropdown {
+    position: fixed;
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    min-width: 0;
+    max-width: none;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .splitLayout {
+    flex-direction: column;
+  }
+
+  .listPanel {
+    display: none;
+  }
+
+  .mapPanel {
+    height: 100%;
+    flex: 1;
+  }
+
+  .closeBtnMap {
+    display: inline-flex;
+  }
+
+  .listHeaderTop .closeBtn {
+    display: none;
+  }
+
+  .listCardMedia {
+    flex: 0 0 120px;
+    width: 120px;
+    min-height: 120px;
+  }
+
+  .floatingCard {
+    bottom: 12px;
+    width: calc(100% - 24px);
+  }
+
+  .floatingCardMedia {
+    flex: 0 0 96px;
+    width: 96px;
+    min-height: 96px;
+  }
+
+  .floatingCardBody {
+    padding: 10px 10px 10px 10px;
+  }
+
+  .floatingCardTitle {
+    font-size: 13px;
+  }
+
+  .floatingCardPrice {
+    font-size: 15px;
+  }
+}

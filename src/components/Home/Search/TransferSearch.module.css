@@ -1,0 +1,391 @@
+.tripToggle {
+  --tt-pink: #e7247a;
+  --tt-text: #1f2937;
+  --tt-track: #f3f4f6;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.22rem;
+  background: var(--tt-track);
+  border-radius: 999px;
+  max-width: 100%;
+}
+
+.tripOption {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--tt-text);
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.tripOption:hover:not(.tripOptionActive) {
+  background: rgba(231, 36, 122, 0.06);
+  color: var(--tt-pink);
+}
+
+.tripOptionActive {
+  background: var(--tt-pink);
+  color: #ffffff;
+  box-shadow: 0 8px 18px -8px rgba(231, 36, 122, 0.65);
+}
+
+.tripOption:focus-visible {
+  outline: 2px solid rgba(231, 36, 122, 0.35);
+  outline-offset: 2px;
+}
+
+/* ── Hero / listing modify layout ── */
+.heroWrap {
+  --pm-pink: #e7247a;
+  --pm-pink-soft: #fef5f7;
+  --pm-label: #9ca3af;
+  --pm-value: #131423;
+  width: 100%;
+  overflow: visible;
+  position: relative;
+  z-index: 5;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  overflow: visible;
+  position: relative;
+  z-index: 6;
+}
+
+.travelersDropdown {
+  z-index: 4000 !important;
+  overflow: visible !important;
+  max-height: none !important;
+}
+
+.travelerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 42px;
+  padding: 0.45rem 1rem 0.45rem 0.85rem;
+  border: 1px solid #eee8ec;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #131423;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(19, 20, 35, 0.04);
+}
+
+.travelerBtn:hover {
+  border-color: #f3b6ce;
+  color: var(--pm-pink);
+}
+
+.travelerIcon {
+  color: var(--pm-pink);
+  flex-shrink: 0;
+}
+
+.bar {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid rgba(233, 233, 233, 0.95);
+  box-shadow:
+    0 18px 48px rgba(19, 20, 35, 0.1),
+    0 4px 14px rgba(231, 36, 122, 0.06);
+  box-sizing: border-box;
+}
+
+.field {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.fieldDivider {
+  width: 1px;
+  align-self: stretch;
+  background: #eceff3;
+  margin: 12px 2px;
+  flex-shrink: 0;
+}
+
+.searchAction {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  padding-left: 4px;
+}
+
+.searchBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 128px;
+  min-height: 56px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 999px;
+  background: var(--pm-pink);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(231, 36, 122, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  cursor: pointer;
+}
+
+.searchBtn:hover:not(:disabled) {
+  background: #d61b6c;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(231, 36, 122, 0.36);
+}
+
+.searchBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Field chrome inside hero bar */
+.bar :global(.form-floating > label) {
+  color: var(--pm-label) !important;
+  font-size: 11px !important;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 1;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !important;
+}
+
+.bar :global(.form-control),
+.bar :global(.form-select),
+.bar :global(.hotel-date-range.form-control) {
+  border: none !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: var(--pm-value) !important;
+  font-weight: 700;
+  font-size: 15px;
+  min-height: 64px;
+  box-shadow: none !important;
+}
+
+.bar :global(.form-control:focus),
+.bar :global(.form-select:focus) {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.bar :global(.search-field-icon) {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--pm-pink-soft);
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  color: var(--pm-pink) !important;
+  flex-shrink: 0;
+  pointer-events: none;
+  top: 50% !important;
+  transform: translateY(-50%);
+  left: 12px !important;
+}
+
+.bar :global(.search-field-icon svg) {
+  width: 18px;
+  height: 18px;
+}
+
+.bar :global(.position-relative:has(.search-field-icon) .form-floating > .form-control:not(.hotel-date-range)),
+.bar :global(.position-relative:has(.search-field-icon) .form-floating > label),
+.bar :global(.form-floating.position-relative:has(.search-field-icon) > .form-control:not(.hotel-date-range)),
+.bar :global(.form-floating.position-relative:has(.search-field-icon) > label) {
+  padding-left: 58px !important;
+}
+
+.bar :global(.position-relative:has(.search-field-icon) .hotel-date-range.form-control) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.bar :global(.position-relative:has(.search-field-icon) .hotel-date-range input),
+.bar :global(.position-relative:has(.search-field-icon) .hotel-date-range .mantine-Input-input),
+.bar :global(.position-relative:has(.search-field-icon) .mantine-DateTimePicker-input),
+.bar :global(.position-relative:has(.search-field-icon) .mantine-DateInput-input) {
+  padding-left: 58px !important;
+  font-weight: 700;
+  color: var(--pm-value);
+  border: none !important;
+  background: transparent !important;
+}
+
+.bar :global(.hotel-date-range input::placeholder),
+.bar :global(.mantine-Input-input::placeholder),
+.bar :global(.form-control::placeholder) {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+  font-weight: 500;
+}
+
+/* Page hero shell (used by transfers listing) */
+.pageRoot {
+  width: 100%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.01) 100%),
+    linear-gradient(102.17deg, #fff5fa 0%, #ffe0ee 100%);
+  padding: 48px 0 56px;
+  box-sizing: border-box;
+  overflow: visible;
+  position: relative;
+  z-index: 4;
+}
+
+.pageInner {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.intro {
+  margin: 0 0 28px;
+  max-width: 920px;
+  text-align: start;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-weight: 700;
+  font-size: clamp(22px, 3.2vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #131423;
+  text-align: start;
+}
+
+.subtitle {
+  margin: 0;
+  max-width: 640px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: #e7247a;
+  text-align: start;
+}
+
+@media (max-width: 1199px) {
+  .bar {
+    flex-wrap: wrap;
+    border-radius: 28px;
+    padding: 12px;
+  }
+
+  .field {
+    flex: 1 1 calc(50% - 12px);
+  }
+
+  .fieldDivider {
+    display: none;
+  }
+
+  .searchAction {
+    flex: 1 1 100%;
+    padding-left: 0;
+  }
+
+  .searchBtn {
+    width: 100%;
+    min-height: 52px;
+  }
+}
+
+@media (max-width: 767px) {
+  .tripToggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tripOption {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 0.55rem 0.45rem;
+    font-size: 0.8rem;
+  }
+
+  .pageRoot {
+    padding: 24px 0 28px;
+  }
+
+  .title {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .topRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .travelerBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .bar {
+    border-radius: 22px;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .field {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .bar :global(.form-control),
+  .bar :global(.hotel-date-range.form-control) {
+    min-height: 56px;
+  }
+}
+
+@media (max-width: 420px) {
+  .tripOption {
+    font-size: 0.74rem;
+    padding: 0.5rem 0.3rem;
+  }
+}

@@ -1,0 +1,518 @@
+/* ── Modal shell ─────────────────────────────────────────────── */
+.modalContent {
+    overflow: hidden !important;
+}
+
+.modalBody {
+    padding: 0 !important;
+    overflow-y: auto !important;
+    max-height: 100dvh;
+    background: #f4f6f8;
+}
+
+.modalShell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    background: #f4f6f8;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #fff;
+    border-bottom: 1px solid #e8ecef;
+    padding: 14px 18px;
+    flex-shrink: 0;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.headerIcon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #e8f5f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #E7247A;
+    flex-shrink: 0;
+}
+
+.headerText {
+    min-width: 0;
+    flex: 1;
+}
+
+.headerTitle {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.2;
+}
+
+.headerSub {
+    margin: 3px 0 0;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.closeBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #e8ecef;
+    background: #f8f9fa;
+    color: #374151;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.closeBtn:hover {
+    background: #fff;
+    border-color: #E7247A;
+    color: #E7247A;
+}
+
+/* ── Route bar ───────────────────────────────────────────────── */
+.routeBar {
+    background: #fff;
+    border-bottom: 1px solid #e8ecef;
+    padding: 12px 18px;
+    flex-shrink: 0;
+}
+
+.routeBarInner {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.routeBlock {
+    min-width: 0;
+}
+
+.routeLabel {
+    margin: 0 0 6px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8c9096;
+}
+
+.routeValue {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #f4f6f8;
+    border: 1px solid #e8ecef;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #E7247A;
+}
+
+.routeValue svg {
+    color: #94a3b8;
+    flex-shrink: 0;
+}
+
+.routeDivider {
+    display: none;
+    color: #cbd5e1;
+    flex-shrink: 0;
+}
+
+.returnOptions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 4px;
+    background: #f4f6f8;
+    border: 1px solid #e8ecef;
+    border-radius: 12px;
+}
+
+.returnOption {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 9px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+}
+
+.returnOption:hover {
+    background: #fff;
+    color: #E7247A;
+}
+
+.returnOptionActive {
+    background: #fff !important;
+    color: #E7247A !important;
+    font-weight: 700 !important;
+    border-color: #c5e4da !important;
+    box-shadow: 0 1px 4px rgba(0, 76, 76, 0.08);
+}
+
+.swapIcon {
+    color: #94a3b8;
+    flex-shrink: 0;
+}
+
+/* ── Page layout ─────────────────────────────────────────────── */
+.pageContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 14px 16px 28px;
+}
+
+.layoutRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.filterCol {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.resultsCol {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+@media (min-width: 768px) {
+    .routeBarInner {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .routeDivider {
+        display: block;
+    }
+
+    .filterCol {
+        flex: 0 0 260px;
+        max-width: 260px;
+    }
+
+    .resultsCol {
+        flex: 1 1 calc(100% - 278px);
+    }
+}
+
+/* ── Filters ─────────────────────────────────────────────────── */
+.filterwrapper {
+    border: 1px solid #e8ecef;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    position: sticky;
+    top: 12px;
+}
+
+.filterHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    border-bottom: 1px solid #eef2f6;
+    background: #fafbfc;
+}
+
+.filterHeader svg {
+    color: #E7247A;
+}
+
+.resetFiltersBtn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid #dde3e8;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.resetFiltersBtn:hover {
+    border-color: #E7247A;
+    color: #E7247A;
+    background: #f0fafa;
+}
+
+.filterBody {
+    padding: 8px 16px 14px;
+}
+
+.filterBody hr {
+    margin: 12px 0;
+    border: none;
+    border-top: 1px solid #eef2f6;
+    opacity: 1;
+}
+
+.filterBody :global(p.small.fw-bold) {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #1a1a2e !important;
+    margin-bottom: 0.45rem !important;
+}
+
+.filterBody :global(.small) {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.filterBody :global(.form-check-label) {
+    font-size: 0.84rem;
+    color: #334155;
+    font-weight: 500;
+}
+
+.filterBody :global(.form-check-input:checked) {
+    background-color: #E7247A;
+    border-color: #E7247A;
+}
+
+/* ── Results header ──────────────────────────────────────────── */
+.resultsHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid #e8ecef;
+    border-radius: 12px;
+}
+
+.resultsCount {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.resultsCount svg {
+    color: #E7247A;
+    flex-shrink: 0;
+}
+
+.resultsCountNum {
+    font-weight: 800;
+    color: #E7247A;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.sortSelect {
+    flex: 0 0 auto;
+}
+
+.sortSelect :global(.mantine-Select-root) {
+    width: 190px;
+}
+
+.sortSelect :global(.mantine-Select-input),
+.sortSelect :global(.mantine-Input-input) {
+    border: 1px solid #e5e7eb !important;
+    background: #fff !important;
+    font-size: 0.84rem !important;
+    font-weight: 600 !important;
+    color: #E7247A !important;
+    padding: 8px 36px 8px 16px !important;
+    min-height: unset !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.sortSelect :global(.mantine-Select-input:focus),
+.sortSelect :global(.mantine-Input-input:focus) {
+    border-color: #c5a059 !important;
+}
+
+.sortSelect :global(.mantine-Select-section[data-position="right"]) {
+    display: flex !important;
+    color: #E7247A;
+    pointer-events: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .sortSelect :global(.mantine-Select-input),
+    .sortSelect :global(.mantine-Input-input) {
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .sortSelect :global(.mantine-Select-input),
+    .sortSelect :global(.mantine-Input-input) {
+        font-size: 16px !important;
+    }
+}
+
+.mobileFilterBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e8ecef;
+    border-radius: 10px;
+    background: #f8f9fa;
+    color: #E7247A;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.mobileFilterBtn:hover,
+.mobileFilterBtn:focus-visible {
+    background: #e8f5f0;
+    border-color: #E7247A;
+    outline: none;
+}
+
+.mobileFilterDrawer {
+    padding-bottom: 0.5rem;
+}
+
+.drawerDoneBtn {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #E7247A;
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.drawerDoneBtn:hover {
+    background: #003838;
+}
+
+/* ── Skeletons ───────────────────────────────────────────────── */
+.skeletonGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.skeletonCard {
+    height: 56px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #eef2f6 25%, #f8fafb 50%, #eef2f6 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease infinite;
+}
+
+.skeletonFlight {
+    height: 140px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #eef2f6 25%, #f8fafb 50%, #eef2f6 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@media (min-width: 768px) {
+    .skeletonGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 575px) {
+    .header {
+        padding: 12px 14px;
+    }
+
+    .headerTitle {
+        font-size: 1rem;
+    }
+
+    .routeBar {
+        padding: 10px 14px;
+    }
+
+    .resultsHeader {
+        align-items: stretch;
+    }
+
+    .resultsCount {
+        font-size: 0.85rem;
+    }
+
+    .headerActions {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .sortSelect {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .sortSelect :global(.mantine-Select-root) {
+        width: 100%;
+    }
+}

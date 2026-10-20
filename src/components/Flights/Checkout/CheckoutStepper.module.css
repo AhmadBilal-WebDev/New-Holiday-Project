@@ -1,0 +1,260 @@
+.wrap {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 14px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #131423;
+    font-family: Inter, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.backLink:hover {
+    color: #e7247a;
+}
+
+.backIcon {
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.stepper {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 20px 16px;
+    border-radius: 999px;
+    background: #e7247a;
+    box-shadow:
+        0px 1px 2px 0px #0000000d,
+        0px 18px 48px -18px #613dff59;
+    overflow: hidden;
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0;
+}
+
+.item {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+}
+
+.connector {
+    position: absolute;
+    top: 18px;
+    right: calc(50% + 20px);
+    left: calc(-50% + 20px);
+    height: 2px;
+    background: rgba(255, 255, 255, 0.55);
+    z-index: 0;
+}
+
+.connectorDone {
+    background: #ffffff;
+}
+
+.stepBtn {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 0 6px;
+    cursor: pointer;
+}
+
+.stepBtn:disabled {
+    cursor: default;
+}
+
+.circleWrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.active .circleWrap {
+    box-shadow: 0px 0px 0px 4px #def0ea80;
+}
+
+.circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Inter, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: #ffffff;
+    color: #131423;
+    line-height: 1;
+    box-shadow: 0px 1px 2px 0px #0000000d;
+}
+
+.completed .circle {
+    background: #ffffff;
+    color: #e7247a;
+    font-size: 0.75rem;
+}
+
+.active .circle {
+    background: #ffffff;
+    color: #131423;
+}
+
+.upcoming .circle {
+    background: #ffffff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.label {
+    font-family: Inter, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
+    text-align: center;
+    line-height: 1.25;
+    max-width: 120px;
+    word-break: break-word;
+}
+
+.completed .label,
+.active .label {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.upcoming .label {
+    color: rgba(255, 255, 255, 0.78);
+    font-weight: 500;
+}
+
+@media (max-width: 991px) {
+    .stepper {
+        padding: 16px 14px 14px;
+        border-radius: 28px;
+    }
+
+    .label {
+        font-size: 0.72rem;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .wrap {
+        margin-bottom: 18px;
+    }
+
+    .backLink {
+        margin-bottom: 10px;
+        font-size: 0.84rem;
+    }
+
+    .stepper {
+        padding: 14px 10px 12px;
+        border-radius: 22px;
+        box-shadow:
+            0px 1px 2px 0px #0000000d,
+            0px 12px 32px -14px #613dff59;
+    }
+
+    .stepBtn {
+        gap: 6px;
+        padding: 0 2px;
+    }
+
+    .circleWrap {
+        width: 32px;
+        height: 32px;
+    }
+
+    .active .circleWrap {
+        box-shadow: 0px 0px 0px 3px #def0ea80;
+    }
+
+    .circle {
+        width: 28px;
+        height: 28px;
+        font-size: 0.7rem;
+    }
+
+    .completed .circle {
+        font-size: 0.6rem;
+    }
+
+    .connector {
+        top: 14px;
+        right: calc(50% + 16px);
+        left: calc(-50% + 16px);
+        height: 1.5px;
+    }
+
+    .label {
+        font-size: 0.58rem;
+        max-width: 100%;
+        padding: 0 1px;
+        line-height: 1.2;
+    }
+}
+
+@media (max-width: 400px) {
+    .stepper {
+        padding: 12px 8px 10px;
+        border-radius: 18px;
+    }
+
+    .circleWrap {
+        width: 28px;
+        height: 28px;
+    }
+
+    .circle {
+        width: 24px;
+        height: 24px;
+        font-size: 0.64rem;
+    }
+
+    .connector {
+        top: 12px;
+        right: calc(50% + 14px);
+        left: calc(-50% + 14px);
+    }
+
+    .label {
+        font-size: 0.52rem;
+    }
+}

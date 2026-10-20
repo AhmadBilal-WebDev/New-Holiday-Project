@@ -1,0 +1,365 @@
+.widget {
+  --av-pink: #e7247a;
+  --av-pink-soft: #fef5f7;
+  --av-border: #e8e5ea;
+  --av-text: #111827;
+  --av-muted: #6b7280;
+  border: 1px solid var(--av-border);
+  border-radius: 24px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(19, 20, 35, 0.06);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 1.15rem 1.2rem 1rem;
+  border-bottom: 1px solid #f3f0f2;
+  background:
+    linear-gradient(180deg, #fff8fa 0%, #ffffff 100%);
+}
+
+.headerTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--av-text);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.headerSub {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  color: var(--av-muted);
+  line-height: 1.4;
+}
+
+.body {
+  padding: 1rem 1.15rem 1.2rem;
+}
+
+.monthNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 0.85rem;
+}
+
+.monthNavBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 36px;
+  border: 1px solid #eee8ec;
+  background: #fff;
+  color: #374151;
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.monthNavBtn:hover:not(:disabled) {
+  background: var(--av-pink-soft);
+  border-color: #f3b6ce;
+  color: var(--av-pink);
+}
+
+.monthNavBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.monthLabel {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--av-text);
+  letter-spacing: -0.01em;
+}
+
+.dateStripWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 -2px;
+}
+
+.dateStrip {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 8px 34px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.dateStrip::-webkit-scrollbar {
+  display: none;
+}
+
+.dateCard {
+  flex: 0 0 auto;
+  width: 70px;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 12px 6px;
+  border: 1.5px solid #eee8ec;
+  border-radius: 18px;
+  background: #fff;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+  user-select: none;
+}
+
+.dateCard:hover:not(.dateCardDisabled) {
+  border-color: #f3b6ce;
+  background: var(--av-pink-soft);
+  transform: translateY(-1px);
+}
+
+.dateCardSelected {
+  border-color: var(--av-pink);
+  background: var(--av-pink-soft);
+  box-shadow: 0 0 0 1px var(--av-pink), 0 8px 18px rgba(231, 36, 122, 0.16);
+}
+
+.dateCardDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: #f7f7f8;
+  border-color: #eceff3;
+  pointer-events: none;
+}
+
+.dateCardDisabled .dayName,
+.dateCardDisabled .dayNumber,
+.dateCardDisabled .monthName {
+  color: #9ca3af;
+}
+
+.dayName {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #9ca3af;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dayNumber {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--av-text);
+  line-height: 1.05;
+}
+
+.monthName {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #9ca3af;
+  line-height: 1;
+}
+
+.dateCardSelected .dayName,
+.dateCardSelected .dayNumber,
+.dateCardSelected .monthName {
+  color: var(--av-pink);
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #eee8ec;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(19, 20, 35, 0.1);
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease, color 0.15s ease;
+  padding: 0;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: var(--av-pink-soft);
+  color: var(--av-pink);
+  border-color: #f3b6ce;
+  box-shadow: 0 8px 18px rgba(231, 36, 122, 0.14);
+}
+
+.navBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.navBtnPrev {
+  left: 0;
+}
+
+.navBtnNext {
+  right: 0;
+}
+
+.emptyDates {
+  text-align: center;
+  padding: 1.75rem 0.85rem;
+  color: var(--av-muted);
+  font-size: 0.9rem;
+  background: #fafafa;
+  border-radius: 16px;
+  border: 1px dashed #e5e7eb;
+}
+
+.timingSection {
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f0f2;
+}
+
+.timingHeading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.timingIcon {
+  color: var(--av-pink);
+}
+
+.timingTitle {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--av-text);
+}
+
+.timingBox {
+  border: 1px solid #f0e8ec;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fff8fa 0%, #ffffff 100%);
+  padding: 0.95rem 0.85rem;
+}
+
+.timingRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.timingCol {
+  text-align: center;
+  flex: 1 1 auto;
+  min-width: 72px;
+}
+
+.timingLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--av-muted);
+  margin-bottom: 0.3rem;
+}
+
+.timingValue {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--av-text);
+  letter-spacing: -0.01em;
+}
+
+.durationBadge {
+  flex-shrink: 0;
+  background: var(--av-pink-soft);
+  color: var(--av-pink);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(231, 36, 122, 0.12);
+}
+
+@media (max-width: 767px) {
+  .widget {
+    border-radius: 20px;
+  }
+
+  .header {
+    padding: 1rem 1rem 0.85rem;
+  }
+
+  .body {
+    padding: 0.9rem 0.95rem 1.05rem;
+  }
+
+  .dateCard {
+    width: 62px;
+    min-height: 84px;
+    padding: 10px 4px;
+    border-radius: 16px;
+  }
+
+  .dayNumber {
+    font-size: 1.25rem;
+  }
+
+  .dateStrip {
+    gap: 8px;
+    padding: 6px 30px;
+  }
+
+  .navBtn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .monthNavBtn {
+    min-height: 34px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .timingRow {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .durationBadge {
+    order: -1;
+  }
+
+  .timingCol {
+    width: 100%;
+  }
+}

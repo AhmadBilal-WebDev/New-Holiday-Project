@@ -1,0 +1,416 @@
+/* ─── Wrapper & Container ─────────────────────────────────────── */
+.invoicecontainerwrap {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    background-color: #e8eaed;
+}
+
+.invoicecontainer {
+    width: 860px;
+    padding: 20px 15px;
+    margin: 20px auto;
+    position: relative;
+    z-index: 5;
+}
+
+.themeholyinvoice {
+    position: relative;
+    z-index: 4;
+    background-color: #ffffff;
+    border: 1px solid #d0d5dd;
+}
+
+.downloadinner {
+    padding: 28px 32px;
+}
+
+/* ─── Voucher Reference Header Row ───────────────────────────── */
+.infobox2 {
+    padding: 10px 16px;
+    background: #f2f4f7;
+    border: 1px solid #d0d5dd;
+    border-top: 3px solid #0a6b6b;
+}
+
+.infobox2 b {
+    color: #0a6b6b;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.infobox2 span {
+    color: #222;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* ─── Section Label ───────────────────────────────────────────── */
+.downloadinner h6 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: #0a6b6b;
+    padding: 7px 14px;
+    margin-bottom: 0 !important;
+    border-left: 4px solid #c9a84c;
+    letter-spacing: 0.3px;
+}
+
+/* ─── Tables ──────────────────────────────────────────────────── */
+.invoicetable {
+    border: 1px solid #d0d5dd;
+    margin-bottom: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoicetable thead th,
+.invoicetable thead td {
+    background-color: #f2f4f7;
+    color: #0a6b6b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border: none;
+    border-bottom: 2px solid #0a6b6b;
+    padding: 10px 16px;
+}
+
+.invoicetable th,
+.invoicetable td {
+    padding: 10px 16px;
+    border: none;
+    border-bottom: 1px solid #e8eaed;
+    color: #333;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.invoicetable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.invoicetable tbody tr:nth-child(even) td {
+    background-color: #f8f9fb;
+}
+
+/* tablestripe3 overrides — keep consistent with invoicetable style */
+.tablestripe3 {
+    border: 1px solid #d0d5dd !important;
+}
+
+.tablestripe3 thead tr {
+    border: none !important;
+}
+
+.tablestripe3 tbody tr {
+    border: none !important;
+    border-bottom: 1px solid #e8eaed !important;
+}
+
+.tablestripe3 thead th,
+.tablestripe3 thead td {
+    border-radius: 0 !important;
+    border-top: none !important;
+}
+
+.tablestripe3 tr th,
+.tablestripe3 tr td {
+    border-right: none !important;
+}
+
+/* ─── Total Table ─────────────────────────────────────────────── */
+.totaltable {
+    border: none;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.totaltable th,
+.totaltable td {
+    border: none;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: #333;
+}
+
+.totaltable tfoot tr td,
+.totaltable tfoot tr th {
+    font-weight: 700;
+    color: #0a6b6b;
+    border-top: 2px solid #0a6b6b;
+}
+
+/* ─── Footer Note ─────────────────────────────────────────────── */
+.invoicenote {
+    border-top: 1px solid #d0d5dd;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    font-size: 11px;
+    color: #666;
+    margin-top: 24px;
+}
+
+.invoicenote b {
+    color: #0a6b6b;
+}
+
+/* ─── Print Button ────────────────────────────────────────────── */
+.invoiceprintbutton {
+    position: absolute;
+    right: -3em;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media screen and (max-width: 998px) {
+    .invoiceprintbutton {
+        position: fixed;
+        z-index: 7;
+        right: 5px;
+    }
+
+    .invoicecontainer {
+        width: 99%;
+    }
+
+    .invmobile100 {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .bookedBytable {
+        overflow-x: auto;
+    }
+}
+
+/* ─── Mobile responsive tables ────────────────────────────────── */
+.tableResponsive {
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .tableResponsive {
+        overflow-x: visible;
+    }
+
+    .mobileTable,
+    .mobileTable thead,
+    .mobileTable tbody,
+    .mobileTable th,
+    .mobileTable td,
+    .mobileTable tr {
+        display: block;
+        width: 100%;
+    }
+
+    .mobileTable thead {
+        display: none;
+    }
+
+    .mobileTable tbody tr {
+        margin-bottom: 12px;
+        border: 1px solid #e0e3e8;
+        background: #f8f9fb;
+        padding: 4px 0;
+    }
+
+    .mobileTable tbody tr:last-child {
+        margin-bottom: 0;
+    }
+
+    .mobileTable td {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 14px !important;
+        border: none !important;
+        border-bottom: 1px solid #e8eaed !important;
+        text-align: right;
+        word-break: break-word;
+    }
+
+    .mobileTable td:last-child {
+        border-bottom: none !important;
+    }
+
+    .mobileTable td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #E7247A;
+        text-align: left;
+        flex-shrink: 0;
+        max-width: 45%;
+    }
+}
+
+/* ─── Activity Information long text ──────────────────────────── */
+.infoRow {
+    align-items: flex-start;
+}
+
+.infoLabel {
+    min-width: 170px;
+    max-width: 170px;
+    padding-top: 2px;
+}
+
+.infoContent {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+}
+
+.infoBlockText {
+    margin: 0;
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    text-align: left;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.infoBlockList {
+    margin: 0;
+    padding-left: 18px;
+    width: 100%;
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.infoBlockList li {
+    margin-bottom: 4px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.infoBlockList li:last-child {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .infoRow {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .infoLabel {
+        min-width: 100%;
+        max-width: 100%;
+        font-weight: 700;
+        color: #0a6b6b;
+    }
+}
+
+@media print {
+    .infoBlockText,
+    .infoBlockList {
+        word-break: break-word !important;
+        overflow-wrap: anywhere !important;
+    }
+}
+
+/* ─── Print ───────────────────────────────────────────────────── */
+@media print {
+    .mobileTable {
+        display: table !important;
+        width: 100% !important;
+    }
+
+    .mobileTable thead {
+        display: table-header-group !important;
+    }
+
+    .mobileTable tbody {
+        display: table-row-group !important;
+    }
+
+    .mobileTable tr {
+        display: table-row !important;
+        margin-bottom: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+
+    .mobileTable th,
+    .mobileTable td {
+        display: table-cell !important;
+        text-align: left !important;
+        border-bottom: none !important;
+    }
+
+    .mobileTable td::before {
+        content: none !important;
+    }
+}
+
+@media print {
+    .invoicecontainerwrap {
+        width: 100% !important;
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .invoicecontainer {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .themeholyinvoice {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+    }
+
+    .downloadinner {
+        padding: 20px !important;
+    }
+
+    .invoiceprintbutton {
+        display: none !important;
+    }
+
+    .downloadinner h6 {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background: #0a6b6b !important;
+    }
+
+    .invoicetable thead th,
+    .invoicetable thead td {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #f2f4f7 !important;
+    }
+
+    .infobox2 {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .invoicecontainerwrap :global(button) {
+        display: none !important;
+    }
+
+    .invoicecontainerwrap :global(.mt-2.text-center) {
+        display: none !important;
+    }
+}

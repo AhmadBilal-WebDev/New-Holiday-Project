@@ -1,0 +1,599 @@
+.drawerContent {
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    max-width: min(720px, 100vw) !important;
+    width: 100% !important;
+    height: 100% !important;
+    box-shadow: -8px 0 28px rgba(15, 23, 42, 0.12) !important;
+}
+
+.drawerInner {
+    padding: 0 !important;
+}
+
+.drawerBody {
+    padding: 0 !important;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100dvh;
+    overflow: hidden;
+    background: #fff;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px 14px;
+    flex-shrink: 0;
+    background: #fff;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+.closeBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: #666;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.closeBtn:hover {
+    background: #f5f5f5;
+    color: #1a1a1a;
+}
+
+.tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 24px;
+    border-bottom: 1px solid #e5e7eb;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #fff;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab {
+    flex-shrink: 0;
+    padding: 12px 14px 11px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6b7280;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.tab:hover {
+    color: #111827;
+}
+
+.tabActive {
+    color: #E7247A;
+    border-bottom-color: #E7247A;
+    font-weight: 700;
+}
+
+.content {
+    padding: 20px 24px 24px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.flightBlock + .flightBlock {
+    margin-top: 16px;
+}
+
+/* ── Baggage cards (Trip-style) ─────────────────────────────── */
+.baggageCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: #fff;
+}
+
+.baggageCardHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.legBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.badgeDepart {
+    background: #E7247A;
+    color: #fff;
+}
+
+.badgeReturn {
+    background: #1d4ed8;
+    color: #fff;
+}
+
+.badgeOther {
+    background: #374151;
+    color: #fff;
+}
+
+.routeText {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.baggageRows {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.baggageRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.baggageIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.baggageIconCabin {
+    background: #fef9c3;
+    color: #ca8a04;
+}
+
+.baggageIconChecked {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.baggageBody {
+    min-width: 0;
+    flex: 1;
+}
+
+.baggageTypeTitle {
+    margin: 0 0 6px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.baggageList {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.baggageList li {
+    font-size: 0.84rem;
+    color: #374151;
+    line-height: 1.5;
+}
+
+.baggageList strong {
+    font-weight: 600;
+    color: #111827;
+}
+
+.baggageFootnote {
+    margin: 14px 0 0;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    line-height: 1.45;
+}
+
+.extraBagBox {
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+}
+
+.extraBagHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.extraBagBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    background: #d97706;
+    color: #fff;
+}
+
+.extraBagTitle {
+    margin: 0;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #92400e;
+}
+
+.extraBagList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.extraBagItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+}
+
+.extraBagMain {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+}
+
+.extraBagTag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.extraBagTagCabin {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.extraBagTagChecked {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.extraBagText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.extraBagName {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.25;
+}
+
+.extraBagMeta {
+    font-size: 0.74rem;
+    color: #6b7280;
+    line-height: 1.35;
+}
+
+.extraBagPrice {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #E7247A;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.extraBagSummaryNote {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    font-size: 0.78rem;
+    color: #4b5563;
+    line-height: 1.45;
+}
+
+.emptyBaggage {
+    margin: 0;
+    font-size: 0.84rem;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.specialBox {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 4px;
+}
+
+.specialIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ecf7f5;
+    color: #E7247A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.95rem;
+    margin-top: 2px;
+}
+
+.specialTitle {
+    margin: 0 0 6px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.specialText {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #4b5563;
+    line-height: 1.55;
+}
+
+/* ── Policy tabs ────────────────────────────────────────────── */
+.infoBanner {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.policySection {
+    margin-bottom: 8px;
+}
+
+.policySection + .policySection {
+    margin-top: 28px;
+}
+
+.sectionTitle {
+    margin: 0 0 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.tableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.policyTable {
+    width: 100%;
+    min-width: 520px;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.policyTable th,
+.policyTable td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.policyTable th:last-child,
+.policyTable td:last-child {
+    border-right: none;
+}
+
+.policyTable tr:last-child td {
+    border-bottom: none;
+}
+
+.policyTable th {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #4b5563;
+    background: #f3f4f6;
+    white-space: nowrap;
+}
+
+.statusCell {
+    width: 28%;
+    vertical-align: top !important;
+    background: #fafafa;
+}
+
+.statusMain {
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.4;
+}
+
+.statusRoute {
+    margin-top: 4px;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.requestCell {
+    width: 34%;
+    color: #374151;
+    line-height: 1.45;
+}
+
+.feeCell {
+    color: #111827;
+    line-height: 1.45;
+    min-width: 120px;
+}
+
+.feeFree {
+    color: #E7247A;
+    font-weight: 700;
+}
+
+.feeBlocked {
+    color: #c2410c;
+    font-weight: 600;
+    font-size: 0.78rem;
+}
+
+.feeAmount {
+    font-weight: 600;
+    color: #111827;
+}
+
+.feeMuted {
+    color: #9ca3af;
+}
+
+.penaltyTextBlock {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.penaltyText {
+    margin: 0 0 8px;
+    font-size: 0.82rem;
+    color: #374151;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.readMoreBtn {
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #E7247A;
+    text-decoration: underline;
+}
+
+.readMoreBtn:hover {
+    color: #003838;
+}
+
+@media (max-width: 575px) {
+    .drawerContent {
+        max-width: 100vw !important;
+    }
+
+    .header {
+        padding: 16px 16px 10px;
+    }
+
+    .title {
+        font-size: 1.05rem;
+    }
+
+    .tabs {
+        padding: 0 12px;
+    }
+
+    .tab {
+        padding: 11px 10px 10px;
+        font-size: 0.74rem;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .baggageCard {
+        padding: 14px;
+    }
+
+    .baggageIcon {
+        width: 38px;
+        height: 38px;
+        font-size: 1.05rem;
+    }
+
+    .policyTable th,
+    .policyTable td {
+        padding: 10px 8px;
+        font-size: 0.8rem;
+    }
+}

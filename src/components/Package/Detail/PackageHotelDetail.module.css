@@ -1,0 +1,338 @@
+.section {
+  --ff-pink: #e7247a;
+  --ff-text: #131423;
+  --ff-muted: #6b7280;
+  --ff-border: #eee8ec;
+  --ff-soft: #fff5f9;
+  width: 100%;
+  margin: 1.5rem 0 1.35rem;
+}
+
+.sectionTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.48px;
+  color: var(--ff-text);
+}
+
+.sectionIcon {
+  color: var(--ff-pink);
+  flex-shrink: 0;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  background: #ffffff;
+  border: 1px solid var(--ff-border);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0px 8px 32px -12px #74302024;
+  margin-bottom: 0.9rem;
+}
+
+.media {
+  position: relative;
+  min-height: 260px;
+  height: 100%;
+  background: #f3f4f6;
+}
+
+.mediaPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #fff0f6 0%, #fce7f0 55%, #f3f4f6 100%);
+}
+
+.placeholderInner {
+  color: var(--ff-pink);
+  opacity: 0.45;
+}
+
+.hotelImage {
+  object-fit: cover;
+}
+
+.body {
+  padding: 1.35rem 1.45rem 1.4rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.titleLeft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.65rem;
+  min-width: 0;
+}
+
+.hotelName {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ff-text);
+  word-break: break-word;
+}
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  color: var(--ff-pink);
+  flex-shrink: 0;
+}
+
+.nights {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ff-pink);
+  white-space: nowrap;
+  padding-top: 0.15rem;
+}
+
+.address {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.addressIcon {
+  color: var(--ff-pink);
+  flex-shrink: 0;
+  margin-top: 0.18rem;
+}
+
+.datesRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.datePill {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: var(--ff-soft);
+  border: 1px solid #f3d5e3;
+  min-width: 0;
+}
+
+.dateIcon {
+  color: var(--ff-pink);
+  flex-shrink: 0;
+}
+
+.dateLabel {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ff-text);
+  line-height: 1.2;
+  margin-bottom: 0.15rem;
+}
+
+.dateValue {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ff-text);
+}
+
+.amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.amenityTag,
+.amenityMore {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.2;
+}
+
+.amenityMore {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #eceff3;
+  margin: 0.15rem 0 0;
+}
+
+.roomsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.roomsLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ff-text);
+}
+
+.roomsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.75rem 1.75rem;
+}
+
+.roomItem {
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.roomName {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ff-text);
+}
+
+.roomMeta {
+  margin: 0.15rem 0 0;
+  font-size: 0.86rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #6b7280;
+}
+
+@media (max-width: 991px) {
+  .card {
+    grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+    border-radius: 24px;
+  }
+
+  .body {
+    padding: 1.15rem 1.2rem 1.2rem;
+    gap: 0.75rem;
+  }
+
+  .hotelName {
+    font-size: 1.1rem;
+  }
+
+  .datePill {
+    padding: 0.65rem 0.85rem;
+    gap: 0.55rem;
+  }
+
+  .dateValue {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .sectionTitle {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+    border-radius: 22px;
+  }
+
+  .media {
+    min-height: 200px;
+    aspect-ratio: 16 / 10;
+  }
+
+  .titleRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .datesRow {
+    grid-template-columns: 1fr;
+  }
+
+  .datePill {
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .sectionTitle {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .card {
+    border-radius: 20px;
+  }
+
+  .body {
+    padding: 1rem;
+  }
+
+  .hotelName {
+    font-size: 1.02rem;
+  }
+
+  .address {
+    font-size: 0.8rem;
+  }
+
+  .nights {
+    font-size: 0.85rem;
+  }
+
+  .amenityTag,
+  .amenityMore {
+    font-size: 0.74rem;
+    padding: 0.3rem 0.65rem;
+  }
+
+  .roomName {
+    font-size: 0.98rem;
+  }
+}

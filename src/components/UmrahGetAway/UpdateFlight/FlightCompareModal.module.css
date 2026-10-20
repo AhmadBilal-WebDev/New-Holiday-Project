@@ -1,0 +1,307 @@
+.modalContent {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+}
+
+.modalHeader {
+    border-radius: 16px 16px 0 0;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.modalBody {
+    max-height: min(72vh, 640px);
+    overflow-y: auto;
+    padding: 16px 20px 20px !important;
+    scrollbar-gutter: stable;
+}
+
+.modalBody::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modalBody::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 4px 0;
+}
+
+.modalBody::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 999px;
+}
+
+.confirmHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.confirmIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e8f5f0;
+    color: #E7247A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.compareCard {
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid;
+}
+
+.compareCurrent {
+    background: #fff5f5;
+    border-color: #fecaca;
+}
+
+.compareNew {
+    background: #f0fdf4;
+    border-color: #86efac;
+}
+
+.compareLabel {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+}
+
+.compareVs {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #9ca3af;
+    padding: 4px 0;
+}
+
+.legBlock {
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+}
+
+.legBlock:last-child {
+    margin-bottom: 0;
+}
+
+.legHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.legBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.legBadgeDeparture {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+
+.legBadgeReturn {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+
+.legDate {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.legBody {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.airlineInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+}
+
+.airlineLogo {
+    object-fit: contain;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.airlineText {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.airlineName {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #1a202c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cabinClass {
+    font-size: 0.68rem;
+    color: #94a3b8;
+}
+
+.routeInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.endpoint {
+    text-align: center;
+}
+
+.flightTime {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+.airportCode {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.routeMiddle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 60px;
+}
+
+.stopsPill {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.duration {
+    font-size: 0.68rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.priceSection {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.compareRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    margin-bottom: 4px;
+}
+
+.priceDiffBox {
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.priceDiffIncrease {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #c2410c;
+}
+
+.priceDiffDecrease {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    color: #15803d;
+}
+
+.priceDiffSame {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+}
+
+.confirmActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cancelBtn {
+    padding: 10px 18px;
+    border: 1px solid #dde3e8;
+    border-radius: 50px;
+    background: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.updateBtn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    background: #E7247A;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.updateBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 575px) {
+    .legBody {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .routeInfo {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

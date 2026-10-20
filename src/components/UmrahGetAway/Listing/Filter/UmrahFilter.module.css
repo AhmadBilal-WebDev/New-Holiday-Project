@@ -1,0 +1,338 @@
+/* Umrah GetAway listing filters — search page only */
+
+/* ── Panel header (used in page.js) ─────────────────────────────── */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #f0ede8;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #E7247A;
+    margin: 0;
+}
+
+.titleIcon {
+    color: #c5a059;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.resetLink {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #4f5152;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.resetLink:hover {
+    color: #E7247A;
+}
+
+/* ── Filter box container (used in page.js) ─────────────────────── */
+.filterBox {
+    background: #fff;
+    border: 1px solid #e8e4de;
+    border-radius: 18px;
+    padding: 20px 18px 18px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Sections ─────────────────────────────────────────────────────── */
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.section {
+    padding: 14px 0;
+}
+
+.sectionLabel {
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    /* text-transform: uppercase; */
+    color: #4f5152;
+    margin: 0 0 10px;
+}
+
+.divider {
+    height: 1px;
+    background: #f0ede8;
+    margin: 0;
+    border: none;
+}
+
+/* ── City collapse headers ────────────────────────────────────────── */
+.cityToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+    padding: 14px 0 10px;
+    cursor: pointer;
+}
+
+.cityToggle:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.chevron {
+    color: #4f5152;
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.cityToggle[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+}
+
+.cityPanel {
+    padding-bottom: 4px;
+}
+
+.cityPanel > * + * {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #f5f3ef;
+}
+
+/* ── Sort / price pill controls (Mantine SegmentedControl) ────────── */
+.pillControl :global(.mantine-SegmentedControl-root) {
+    background: transparent;
+    gap: 6px;
+    flex-wrap: wrap;
+    border: none;
+    padding: 0;
+}
+
+.pillControl :global(.mantine-SegmentedControl-controls) {
+    gap: 6px;
+}
+
+.pillControl :global(.mantine-SegmentedControl-control) {
+    border: 1px solid #e5e7eb !important;
+    border-radius: 999px !important;
+    /* background: #fff !important; */
+    min-height: 34px;
+    flex: 1;
+}
+
+.pillControl :global(.mantine-SegmentedControl-label) {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6b7280;
+    padding: 4px 14px;
+}
+
+.pillControl :global(.mantine-SegmentedControl-indicator) {
+    background: #E7247A !important;
+    border-radius: 999px !important;
+    box-shadow: 0 2px 6px rgba(6, 51, 33, 0.2);
+}
+
+.pillControl :global(.mantine-SegmentedControl-control[data-active] .mantine-SegmentedControl-label) {
+    color: #fff !important;
+}
+
+/* Price toggle — cream inactive background */
+.priceToggle :global(.mantine-SegmentedControl-control:not([data-active])) {
+    background: #f5f1e8 !important;
+}
+
+/* ── Price range slider ───────────────────────────────────────────── */
+.priceSlider :global(.mantine-Slider-track) {
+    background-color: #e8e0d0;
+    height: 4px;
+}
+
+.priceSlider :global(.mantine-Slider-bar) {
+    background-color: #c5a059;
+}
+
+.priceSlider :global(.mantine-Slider-thumb) {
+    width: 16px;
+    height: 16px;
+    background: #c5a059;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.priceLabels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+}
+
+.priceLabel {
+    font-size: 0.75rem;
+    color: #4f5152;
+    margin: 0;
+}
+
+/* ── Hotel search input ─────────────────────────────────────────────── */
+.searchInput {
+    width: 100%;
+    padding: 10px 32px 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: #374151;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* iOS Safari auto-zooms inputs with font-size < 16px */
+@media (max-width: 767px) {
+    .searchInput {
+        font-size: 16px;
+    }
+}
+
+.searchInput::placeholder {
+    color: #c4c9d0;
+    font-style: italic;
+}
+
+.searchInput:focus {
+    border-color: #c5a059;
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.12);
+}
+
+.searchDropdown {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    top: calc(100% + 4px);
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    border: 1px solid #e8e4de;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.searchOption {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    color: #374151;
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+
+.searchOption:hover {
+    background: #f5f3ef;
+}
+
+.searchClear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #4f5152;
+    display: flex;
+    align-items: center;
+}
+
+/* ── Checkboxes ───────────────────────────────────────────────────── */
+.checkboxGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 10px;
+}
+
+.checkboxList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filterCheckbox :global(.mantine-Checkbox-root) {
+    --checkbox-color: #E7247A;
+}
+
+.filterCheckbox :global(.mantine-Checkbox-input) {
+    border-radius: 5px;
+    border-color: #d1d5db;
+    cursor: pointer;
+}
+
+.filterCheckbox :global(.mantine-Checkbox-input:checked) {
+    background-color: #E7247A;
+    border-color: #E7247A;
+}
+
+.filterCheckbox :global(.mantine-Checkbox-label) {
+    font-size: 0.82rem;
+    color: #4b5563;
+    cursor: pointer;
+    padding-left: 8px;
+}
+
+/* ── Mobile filter pills ──────────────────────────────────────────── */
+.mobilePill {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #4b5563;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.mobilePill:hover {
+    border-color: #E7247A;
+    color: #E7247A;
+}
+
+.mobilePillActive {
+    border-color: #dc3545;
+    background: #dc3545;
+    color: #fff;
+}
+
+.mobilePillActive:hover {
+    border-color: #c82333;
+    background: #c82333;
+    color: #fff;
+}
+
+.mobilePillActive .mobilePillArrow {
+    color: #fff;
+}
+
+.mobilePillArrow {
+    font-size: 0.7rem;
+    color: #4f5152;
+}

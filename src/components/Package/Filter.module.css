@@ -1,0 +1,333 @@
+.sidebar {
+  --pf-pink: #e7247a;
+  --pf-pink-bright: #ff3f93;
+  --pf-pink-soft: #fef5f7;
+  --pf-border: #eee8ec;
+  --pf-label: #131423;
+  --pf-muted: #9ca3af;
+  --pf-text: #374151;
+  background: #fff;
+  border: 1px solid var(--pf-border);
+  border-radius: 28px;
+  box-shadow: 0px 8px 32px -12px #74302024;
+  overflow: hidden;
+  margin-bottom: 25px;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.15rem 1.35rem 1rem;
+  border-bottom: 1px solid #f0ecee;
+}
+
+.title {
+  margin: 0;
+  color: #131423;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.headerIcon {
+  color: var(--pf-pink);
+  flex-shrink: 0;
+}
+
+.section {
+  padding: 1rem 1.35rem;
+  border-bottom: 1px solid #f0ecee;
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.label {
+  margin: 0 0 0.75rem;
+  color: var(--pf-label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dateWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.dateWrap :global(.mantine-DatePicker-root),
+.dateWrap :global(.mantine-DatePicker-levelsGroup),
+.dateWrap :global(.mantine-DatePicker-month) {
+  width: 100%;
+}
+
+.dateWrap :global(.mantine-DatePicker-calendarHeader) {
+  margin-bottom: 12px;
+  max-width: 100%;
+}
+
+.dateWrap :global(.mantine-DatePicker-monthThead),
+.dateWrap :global(.mantine-DatePicker-monthTbody) {
+  width: 100%;
+}
+
+.dateWrap :global(.mantine-DatePicker-monthRow) {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.dateWrap :global(.mantine-DatePicker-weekdaysRow) {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.dateWrap :global(.mantine-DatePicker-weekday) {
+  flex: 1 1 0;
+  width: auto !important;
+  min-width: 0;
+  padding: 0;
+  color: #9ca3af;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dateWrap :global(.mantine-DatePicker-monthCell) {
+  flex: 1 1 0;
+  width: auto !important;
+  min-width: 0;
+  padding: 3px 2px !important;
+  text-align: center;
+}
+
+.dateWrap :global(.mantine-DatePicker-day) {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px;
+  margin: 0 auto;
+  border-radius: 10px !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.dateWrap :global(.mantine-DatePicker-day:hover) {
+  background: #fef5f7;
+}
+
+.dateWrap :global(.mantine-DatePicker-day[data-selected]),
+.dateWrap :global(.mantine-DatePicker-day[data-selected]:hover) {
+  background-color: #e7247a !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+}
+
+.dateWrap :global(.mantine-DatePicker-day[data-weekend]) {
+  color: #e7247a;
+}
+
+.dateWrap :global(.mantine-DatePicker-day[data-outside]) {
+  color: #d1d5db;
+}
+
+.dateWrap :global(.mantine-DatePicker-calendarHeaderLevel),
+.dateWrap :global(.mantine-DatePicker-calendarHeaderControl) {
+  color: #131423;
+}
+
+.priceValues {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.priceMin,
+.priceMax {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--pf-text);
+}
+
+.slider {
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem !important;
+}
+
+.slider :global(.mantine-Slider-bar) {
+  background: linear-gradient(90deg, var(--pf-pink) 0%, var(--pf-pink-bright) 100%);
+}
+
+.slider :global(.mantine-Slider-thumb) {
+  background: #fff;
+  border: 3px solid var(--pf-pink);
+  width: 18px;
+  height: 18px;
+}
+
+.slider :global(.mantine-Slider-track) {
+  background-color: #f3e8ee;
+}
+
+.starsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.starRow {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.starIcon {
+  color: var(--pf-pink-bright);
+  flex-shrink: 0;
+}
+
+.starsGroup :global(.mantine-Checkbox-input) {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px !important;
+  border-color: #d1d5db !important;
+  cursor: pointer;
+  background: #fff;
+}
+
+.starsGroup :global(.mantine-Checkbox-input:checked) {
+  background-color: var(--pf-pink) !important;
+  border-color: var(--pf-pink) !important;
+}
+
+.starsGroup :global(.mantine-Checkbox-label) {
+  cursor: pointer;
+  padding-left: 0.55rem;
+}
+
+.select :global(.mantine-Input-input),
+.select :global(.mantine-Select-input) {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 999px !important;
+  min-height: 48px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--pf-text) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.select :global(.mantine-Input-input:focus),
+.select :global(.mantine-Select-input:focus) {
+  border-color: var(--pf-pink) !important;
+  box-shadow: 0 0 0 3px rgba(231, 36, 122, 0.12) !important;
+}
+
+.footer {
+  padding: 0.85rem 1.35rem 1.35rem;
+}
+
+/* Mobile pills */
+.mobilePills {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0 2px 8px;
+  margin-bottom: 0.75rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.mobilePills::-webkit-scrollbar {
+  display: none;
+}
+
+.pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid #e8e5ea;
+  background: #fff;
+  color: #374151;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(19, 20, 35, 0.04);
+}
+
+.pillApplied {
+  border-color: rgba(231, 36, 122, 0.35);
+  background: var(--pf-pink-soft);
+  color: var(--pf-pink);
+}
+
+.pillArrow {
+  display: inline-flex;
+  color: #9ca3af;
+}
+
+.pillApplied .pillArrow {
+  color: var(--pf-pink);
+}
+
+.drawerBody {
+  padding-bottom: 0.5rem;
+}
+
+.drawerSection {
+  margin-bottom: 0.5rem;
+}
+
+.drawerActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0ecee;
+}
+
+.doneBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 50px;
+  padding: 0.8rem 1.15rem;
+  border: none;
+  border-radius: 999px;
+  background: #e7247a;
+  color: #ffffff !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  box-shadow: 0 10px 24px rgba(231, 36, 122, 0.28);
+  cursor: pointer;
+}
+
+.doneBtn:hover,
+.doneBtn:focus {
+  background: #d61b6c;
+  color: #ffffff !important;
+}
+
+@media (max-width: 767px) {
+  .select :global(.mantine-Input-input),
+  .select :global(.mantine-Select-input) {
+    font-size: 16px !important;
+  }
+}

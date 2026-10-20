@@ -1,0 +1,804 @@
+/* ── Flight Details trigger button (listing cards) ───────────── */
+.detailsTrigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 9px 14px;
+    background: #fef5f7;
+    border: 1px solid #f0d6e2;
+    border-radius: 10px;
+    color: #e7247a;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    line-height: 1.2;
+}
+
+.detailsTrigger:hover {
+    background: #fff;
+    border-color: #e7247a;
+    box-shadow: 0 2px 10px rgba(231, 36, 122, 0.12);
+}
+
+.detailsTrigger:active {
+    transform: scale(0.99);
+}
+
+.detailsTriggerIcon {
+    font-size: 0.72rem;
+    color: #e7247a;
+    flex-shrink: 0;
+}
+
+.detailsTriggerChevron {
+    font-size: 0.65rem;
+    opacity: 0.65;
+    flex-shrink: 0;
+}
+
+/* ── Modal shell ─────────────────────────────────────────────── */
+.modalInner {
+    padding: 16px;
+    align-items: center;
+}
+
+.modalContent {
+    overflow: hidden !important;
+    border-radius: 20px !important;
+    display: flex !important;
+    flex-direction: column;
+    max-height: min(92vh, 100%);
+    height: auto;
+    box-shadow: 0 24px 64px rgba(19, 20, 35, 0.18) !important;
+}
+
+.modalBody {
+    padding: 0 !important;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modalWrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    max-height: 100%;
+    background: #fff;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #e7247a;
+    padding: 16px 20px;
+    flex-shrink: 0;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.headerIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e7247a;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.headerTitle {
+    margin: 0;
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.2px;
+}
+
+.closeBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+}
+
+.closeBtn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Scrollable body ─────────────────────────────────────────── */
+.body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 20px;
+    background: #fff;
+}
+
+/* ── Flight group ────────────────────────────────────────────── */
+.flightGroup {
+    margin-bottom: 22px;
+}
+
+.flightGroup:last-child {
+    margin-bottom: 0;
+}
+
+.groupLabel {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #fef5f7;
+    color: #e7247a;
+}
+
+/* ── Airline row ─────────────────────────────────────────────── */
+.airlineRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.airlineLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.airlineLogoWrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    color: #6b7280;
+}
+
+.airlineLogo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.airlineName {
+    margin: 0;
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #131423;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+.airlineMeta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #9ca3af;
+    white-space: nowrap;
+}
+
+.airlineMetaIcon {
+    color: #e7247a;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+}
+
+/* ── Itinerary gray box ──────────────────────────────────────── */
+.itineraryBox {
+    background: #f5f5f7;
+    border-radius: 18px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.timelineItem {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 14px;
+    align-items: stretch;
+}
+
+.timelineRail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4px;
+}
+
+.timelineDot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid #e7247a;
+    background: #fff;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.timelineLine {
+    flex: 1;
+    width: 2px;
+    min-height: 28px;
+    margin: 6px 0;
+    background: #e7247a;
+    border-radius: 2px;
+    opacity: 0.85;
+}
+
+.timelineContent {
+    min-width: 0;
+    padding-bottom: 18px;
+}
+
+.timelineItem:last-child .timelineContent {
+    padding-bottom: 0;
+}
+
+.pointLabel {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 4px;
+}
+
+.pointCodeTime {
+    margin: 0 0 4px;
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #131423;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+.pointLocation {
+    margin: 0 0 6px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.pointDate {
+    margin: 0 0 4px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+.pointDate strong {
+    color: #e7247a;
+    font-weight: 700;
+}
+
+.pointMeta {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #9ca3af;
+    line-height: 1.4;
+}
+
+.dayDiff {
+    font-size: 0.62em;
+    font-weight: 700;
+    color: #e7247a;
+    margin-left: 3px;
+}
+
+/* ── Layover ─────────────────────────────────────────────────── */
+.layoverBox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 12px;
+}
+
+.layoverIconWrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #fb923c;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.layoverContent {
+    min-width: 0;
+}
+
+.layoverTitle {
+    margin: 0;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #131423;
+    line-height: 1.35;
+}
+
+.layoverTitle strong {
+    font-weight: 700;
+}
+
+.layoverHint {
+    margin: 2px 0 0;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: #9a3412;
+    line-height: 1.35;
+}
+
+/* ── Info pills ──────────────────────────────────────────────── */
+.pillsRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.infoPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: #f3f4f6;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4b5563;
+    line-height: 1.2;
+}
+
+.pillIcon {
+    color: #6b7280;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+}
+
+/* ── Baggage (multi passenger) ───────────────────────────────── */
+.baggageSection {
+    margin-top: 12px;
+    padding: 12px;
+    background: #fafafa;
+    border: 1px solid #eceff3;
+    border-radius: 12px;
+}
+
+.baggageHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #131423;
+}
+
+.baggageHeaderIcon {
+    color: #e7247a;
+    font-size: 0.85rem;
+}
+
+.baggageList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.baggageItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 10px;
+    background: #fff;
+    border: 1px solid #eceff3;
+    border-radius: 9px;
+}
+
+.baggageLabel {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6b7280;
+    flex-shrink: 0;
+}
+
+.baggageValue {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #131423;
+    text-align: right;
+    line-height: 1.35;
+}
+
+/* ── Penalties ───────────────────────────────────────────────── */
+.penaltiesSection {
+    margin-top: 18px;
+}
+
+.penaltiesTitle {
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #c2185b;
+    margin: 0 0 4px;
+}
+
+.penaltiesHint {
+    margin: 0 0 12px;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: #9ca3af;
+}
+
+.policyPassengerList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.policyPassengerGroup {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.policyPassengerToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 14px;
+    background: #fafafa;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #131423;
+}
+
+.policyPassengerToggle:hover {
+    background: #f3f4f6;
+}
+
+.policyPassengerChevron {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: #9ca3af;
+    transition: transform 0.2s ease;
+}
+
+.policyPassengerChevronOpen {
+    transform: rotate(180deg);
+}
+
+.policyPassengerBody {
+    padding: 12px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.penaltiesGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.penaltyCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.penaltyCardAllowed,
+.penaltyCardBlocked {
+    background: #fff;
+}
+
+.penaltyCardHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.penaltyIconWrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.95rem;
+}
+
+.penaltyIconAllowed {
+    background: #fef5f7;
+    color: #e7247a;
+}
+
+.penaltyIconBlocked {
+    background: #fdecea;
+    color: #dc2626;
+}
+
+.penaltyCardHeading {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.penaltyLabel {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #131423;
+    line-height: 1.3;
+}
+
+.penaltyBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 999px;
+}
+
+.badgeAllowed {
+    color: #059669;
+    background: #ecfdf5;
+}
+
+.badgeBlocked {
+    color: #dc2626;
+    background: #fef2f2;
+}
+
+.penaltyText {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #6b7280;
+}
+
+.penaltyText strong {
+    color: #131423;
+    font-weight: 700;
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px calc(16px + env(safe-area-inset-bottom, 0px));
+    background: #fef5f7;
+    border-top: 1px solid #fce7f0;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+}
+
+.footerPrice {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.footerPriceLabel {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.footerPriceValue {
+    margin: 0;
+    font-family: Outfit, Inter, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #131423;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.footerPriceNote {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #9ca3af;
+}
+
+.selectFlightBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+    min-width: 140px;
+    min-height: 48px;
+    padding: 12px 22px;
+    border: 1.5px solid #e7247a;
+    border-radius: 999px;
+    background: #fff;
+    color: #e7247a;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+.selectFlightBtn:hover:not(:disabled) {
+    background: #e7247a;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(231, 36, 122, 0.28);
+}
+
+.selectFlightBtn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.selectFlightBtn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .modalInner {
+        padding: 0;
+        align-items: stretch;
+    }
+
+    .modalContent {
+        max-height: 100dvh !important;
+        height: 100dvh !important;
+        border-radius: 0 !important;
+    }
+
+    .modalWrapper {
+        height: 100%;
+        max-height: 100dvh;
+    }
+
+    .body {
+        padding: 16px;
+    }
+
+    .footer {
+        padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+@media (max-width: 576px) {
+    .header {
+        padding: 14px 16px;
+    }
+
+    .headerTitle {
+        font-size: 1.05rem;
+    }
+
+    .airlineName {
+        font-size: 1.05rem;
+    }
+
+    .airlineMeta {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .pointCodeTime {
+        font-size: 1.05rem;
+    }
+
+    .itineraryBox {
+        padding: 14px 12px;
+        border-radius: 14px;
+    }
+
+    .penaltiesGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .footerPriceValue {
+        font-size: 1.2rem;
+    }
+
+    .selectFlightBtn {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .pillsRow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .infoPill {
+        justify-content: flex-start;
+    }
+}

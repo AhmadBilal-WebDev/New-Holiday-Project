@@ -1,0 +1,103 @@
+/* ===================================
+   HERO SECTION SWIPER CAROUSEL STYLES
+   =================================== */
+.heroSwiperWrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.heroSwiper {
+    width: 100%;
+    height: 100%;
+}
+
+.heroSlide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Swiper Pagination Customization */
+.heroSwiper :global(.swiper-pagination) {
+    bottom: 30px !important;
+    z-index: 10;
+}
+
+.heroSwiper :global(.swiper-pagination-bullet) {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.heroSwiper :global(.swiper-pagination-bullet-active) {
+    background-color: #fdb714;
+    width: 30px;
+    border-radius: 6px;
+}
+
+.heroSwiper :global(.swiper-pagination-bullet):hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Image zoom animation on slide */
+.heroSlide :global(img) {
+    animation: kenBurns 10s ease-out infinite alternate;
+}
+
+@keyframes kenBurns {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+/* Tablet (max 991px) */
+@media (max-width: 991px) {
+    .heroSwiper :global(.swiper-pagination) {
+        bottom: 25px !important;
+    }
+
+    .heroSwiper :global(.swiper-pagination-bullet) {
+        width: 10px;
+        height: 10px;
+    }
+
+    .heroSwiper :global(.swiper-pagination-bullet-active) {
+        width: 25px;
+    }
+}
+
+/* Mobile (max 767px) */
+@media (max-width: 767px) {
+    .heroSwiper :global(.swiper-pagination) {
+        bottom: 80px !important;
+    }
+
+    .heroSwiper :global(.swiper-pagination-bullet) {
+        width: 8px;
+        height: 8px;
+    }
+
+    .heroSwiper :global(.swiper-pagination-bullet-active) {
+        width: 20px;
+    }
+}
+
+/* Mobile Small (max 575px) */
+@media (max-width: 575px) {
+    .heroSwiper :global(.swiper-pagination) {
+        bottom: 60px !important;
+    }
+}

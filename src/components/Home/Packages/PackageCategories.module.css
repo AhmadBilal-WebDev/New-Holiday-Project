@@ -1,0 +1,283 @@
+/* Normal section spacing — not oversized */
+.section {
+  padding: 3rem 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.headerLeft {
+  flex: 1;
+  min-width: 0;
+  max-width: 700px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fce8f1;
+  color: #E7247A;
+  font-family: inherit;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.tagIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: inherit;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 48px;
+  line-height: 60px;
+  letter-spacing: -0.96px;
+  vertical-align: middle;
+  color: #0a0a0a;
+  margin: 0 0 12px;
+  max-width: 656px;
+}
+
+.subtitle {
+  font-size: 17px;
+  line-height: 1.55;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 400;
+  max-width: 560px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-bottom: 2px;
+}
+
+.scrollBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #E7247A;
+  background: #ffffff;
+  color: #E7247A;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scrollBtn:hover {
+  background: #E7247A;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(231, 36, 122, 0.28);
+}
+
+.scrollBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ─── Skeleton ───────────────────────────────────────────── */
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.skeletonCard {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+}
+
+.skeletonBlock {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e8ecef 25%, #f5f6f8 50%, #e8ecef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skeletonImage {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  min-height: 160px;
+  border-radius: 0;
+}
+
+.skeletonBody {
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.skeletonTitle {
+  height: 22px;
+  width: 78%;
+}
+
+.skeletonLine {
+  height: 14px;
+  width: 42%;
+}
+
+.skeletonLineShort {
+  height: 14px;
+  width: 68%;
+}
+
+.skeletonTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.skeletonTag {
+  height: 24px;
+  width: 64px;
+  border-radius: 999px;
+}
+
+.skeletonFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.skeletonPrice {
+  height: 22px;
+  width: 110px;
+  margin-bottom: 6px;
+}
+
+.skeletonNote {
+  height: 11px;
+  width: 120px;
+}
+
+.skeletonBtn {
+  height: 42px;
+  width: 110px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1199px) {
+  .title {
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+  }
+}
+
+@media (max-width: 991px) {
+  .section {
+    padding: 2.25rem 0;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .title {
+    font-size: 36px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .headerActions {
+    margin-left: auto;
+  }
+
+  .skeletonGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .section {
+    padding: 1.75rem 0;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1rem;
+  }
+
+  .tag {
+    margin-bottom: 12px;
+  }
+
+  .title {
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .headerActions {
+    margin-left: 0;
+  }
+
+  .scrollBtn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .skeletonGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

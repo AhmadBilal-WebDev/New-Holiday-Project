@@ -1,0 +1,271 @@
+.passengerList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 4px 0 2px;
+}
+
+.passengerCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.passengerCardHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, #f4faf9 0%, #f8fafc 100%);
+    border-bottom: 1px solid #eef1f4;
+}
+
+.passengerIdentity {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+}
+
+.passengerIndex {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #E7247A;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+}
+
+.passengerNameBlock {
+    min-width: 0;
+}
+
+.passengerName {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.passengerTicket {
+    margin: 4px 0 0;
+    font-size: 0.78rem;
+    color: #64748b;
+    word-break: break-all;
+}
+
+.typeBadge {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #e8f3f2;
+    color: #E7247A;
+    border: 1px solid #cfe3e1;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.passengerMetaGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+}
+
+.metaItem {
+    padding: 10px 14px;
+    border-right: 1px solid #f0f2f5;
+    border-top: 1px solid #f0f2f5;
+    min-width: 0;
+}
+
+.metaItem:nth-child(3n) {
+    border-right: none;
+}
+
+.metaLabel {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 3px;
+}
+
+.metaValue {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #334155;
+    word-break: break-word;
+    line-height: 1.35;
+}
+
+.metaValueMuted {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.passengerExtras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.65rem 14px 0.85rem;
+    border-top: 1px solid #f0f2f5;
+    background: #fafafa;
+}
+
+.extraChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #E7247A;
+    background: #e8f3f2;
+    border: 1px solid #cfe3e1;
+    border-radius: 4px;
+    padding: 0.28rem 0.55rem;
+}
+
+.ancillaryList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 12px 8px 10px;
+}
+
+.ancillaryGroupTitle {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #E7247A;
+    margin: 0 0 0.7rem;
+}
+
+.ancillaryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.ancillaryCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    background: #fafafa;
+    min-width: 0;
+}
+
+.ancillaryCardTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.ancillaryName {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    word-break: break-word;
+}
+
+.ancillaryPrice {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #E7247A;
+    white-space: nowrap;
+}
+
+.ancillaryDesc {
+    font-size: 0.78rem;
+    color: #444;
+    margin: 0 0 0.15rem;
+}
+
+.ancillaryMeta {
+    font-size: 0.72rem;
+    color: #777;
+    margin: 0;
+    word-break: break-word;
+}
+
+@media screen and (max-width: 700px) {
+    .passengerCardHeader {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .typeBadge {
+        align-self: flex-start;
+    }
+
+    .passengerMetaGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .metaItem {
+        border-right: 1px solid #f0f2f5;
+    }
+
+    .metaItem:nth-child(3n) {
+        border-right: 1px solid #f0f2f5;
+    }
+
+    .metaItem:nth-child(2n) {
+        border-right: none;
+    }
+
+    .ancillaryGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .passengerMetaGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .metaItem,
+    .metaItem:nth-child(2n),
+    .metaItem:nth-child(3n) {
+        border-right: none;
+    }
+}
+
+@media print {
+    .passengerCard {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none;
+    }
+
+    .passengerCardHeader {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .passengerIndex,
+    .typeBadge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}

@@ -1,0 +1,341 @@
+/* ─── Footer shell ────────────────────────────────────────── */
+.footer {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 3.5rem 0 1.75rem;
+  color: #0a0a0a;
+  border-top: 1px solid #AFAFAF;
+  border-bottom: 1px solid #AFAFAF;
+
+}
+
+/* Soft pink blobs — top-left & bottom-right (Figma blur) */
+.glowLeft,
+.glowRight {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: #E7247A;
+  opacity: 0.22;
+  filter: blur(64px);
+  -webkit-backdrop-filter: blur(64px);
+  backdrop-filter: blur(64px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glowLeft {
+  top: -180px;
+  left: -160px;
+}
+
+.glowRight {
+  right: -160px;
+  bottom: -200px;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Top grid ────────────────────────────────────────────── */
+.top {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.15fr) minmax(0, 2.6fr) auto;
+  gap: 2.5rem 2rem;
+  align-items: start;
+}
+
+.brandCol {
+  max-width: 280px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 14px;
+}
+
+.brand:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #0a0a0a;
+  line-height: 1;
+}
+
+.tagline {
+  margin: 0 0 1.25rem;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #6b7280;
+}
+
+.appButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.appBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #e5e7eb;
+  background: #ffffff;
+  color: #0a0a0a;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.appBtn:hover {
+  border-color: #E7247A;
+  color: #E7247A;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(231, 36, 122, 0.12);
+}
+
+/* ─── Link columns ────────────────────────────────────────── */
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem 1.75rem;
+  min-width: 0;
+}
+
+.column {
+  min-width: 0;
+}
+
+.columnTitle {
+  margin: 0 0 1rem;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  line-height: 1.3;
+}
+
+.linkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.linkList a {
+  font-size: 14px;
+  font-weight: 400;
+  color: #374151;
+  text-decoration: none;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.linkList a:hover {
+  color: #E7247A;
+  text-decoration: none;
+}
+
+/* ─── Scroll top ──────────────────────────────────────────── */
+.scrollTop {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #E7247A;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  align-self: center;
+  box-shadow: 0 8px 24px rgba(231, 36, 122, 0.35);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scrollTop:hover {
+  background: #c91d66;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(231, 36, 122, 0.42);
+}
+
+/* ─── Divider + bottom ────────────────────────────────────── */
+.divider {
+  border: none;
+  height: 1px;
+  background: #e8eaed;
+  margin: 2.25rem 0 1.35rem;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  flex-wrap: wrap;
+}
+
+.copyright {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: #9ca3af;
+  line-height: 1.4;
+}
+
+.payments {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.paymentsLabel {
+  font-size: 13px;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.paymentList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+
+.paymentItem {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a0a0a;
+  letter-spacing: -0.1px;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1199px) {
+  .top {
+    grid-template-columns: minmax(200px, 1fr) minmax(0, 2.2fr) auto;
+    gap: 2rem 1.5rem;
+  }
+
+  .linksGrid {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .footer {
+    padding: 2.75rem 0 1.5rem;
+  }
+
+  .top {
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+  }
+
+  .brandCol {
+    max-width: none;
+    grid-column: 1 / 2;
+  }
+
+  .scrollTop {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    align-self: start;
+  }
+
+  .linksGrid {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .footer {
+    padding: 2.25rem 0 1.35rem;
+  }
+
+  .top {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .scrollTop {
+    position: fixed;
+    right: 16px;
+    bottom: 20px;
+    z-index: 40;
+    grid-column: auto;
+    grid-row: auto;
+    width: 44px;
+    height: 44px;
+  }
+
+  .linksGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 1.25rem;
+  }
+
+  .divider {
+    margin: 1.75rem 0 1.15rem;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .linksGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.35rem 1rem;
+  }
+
+  .appButtons {
+    width: 100%;
+  }
+
+  .appBtn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .paymentList {
+    gap: 6px 12px;
+  }
+
+  .paymentItem {
+    font-size: 12px;
+  }
+}
