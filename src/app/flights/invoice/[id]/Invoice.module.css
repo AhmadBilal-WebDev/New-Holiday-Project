@@ -1,1674 +1,1588 @@
-/* ============================================================
-   PROFESSIONAL FLIGHT INVOICE — Invoice.module.css
-   ============================================================ */
+/* ── Flight Invoice — pink theme (own file) ── */
 
-/* ── Page background ────────────────────────────────────────── */
-.invoicePageBg {
-  background: #eef2f7;
-  min-height: 100vh;
-  padding: 2rem 1rem;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+.pageWrapper {
+    background: #e7e7e7;
+    min-height: 100vh;
+    padding: 1rem 0 0;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* ── Invoice document card ──────────────────────────────────── */
+.invoiceContainer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5px;
+    position: relative;
+    font-family: "Helvetica", Arial, sans-serif;
+    color: #000;
+}
+
 .invoiceCard {
-  background: #ffffff;
-  max-width: 960px;
-  margin: 0 auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,.08), 0 20px 50px -12px rgba(0,0,0,.15);
-  overflow: hidden;
-}
-
-/* ── Header image ───────────────────────────────────────────── */
-.headerImageWrap {
-  line-height: 0;
-}
-.headerImageWrap img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* ── Title strip ────────────────────────────────────────────── */
-.titleStrip {
-  background: linear-gradient(135deg, #E7247A 0%, #E7247Ac5 100%);
-  padding: 1.25rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.titleLeft {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-  color: #ffffff;
-}
-
-.titleIcon {
-  font-size: 2rem;
-  color: #f0b429;
-  flex-shrink: 0;
-}
-
-.titleLabel {
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #ffffff;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.titleSub {
-  font-size: 0.78rem;
-  color: #94c2e8;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin: 2px 0 0;
-}
-
-.titleRight {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  flex-wrap: wrap;
-}
-
-/* ── Status pills ───────────────────────────────────────────── */
-.statusPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.pillGreen {
-  background: rgba(16, 185, 129, 0.18);
-  color: #6ee7b7;
-  border: 1px solid rgba(52, 211, 153, 0.4);
-}
-
-.pillAmber {
-  background: rgba(245, 158, 11, 0.18);
-  color: #fcd34d;
-  border: 1px solid rgba(251, 191, 36, 0.4);
-}
-
-/* ── Meta info bar ──────────────────────────────────────────── */
-.metaBar {
-  display: flex;
-  align-items: stretch;
-  border-bottom: 2px solid #e2e8f0;
-  background: #f8fafc;
-  flex-wrap: wrap;
-}
-
-.metaItem {
-  flex: 1;
-  min-width: 160px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding: 1rem 1.5rem;
-}
-
-.metaDivider {
-  width: 1px;
-  background: #e2e8f0;
-  margin: 0.75rem 0;
-}
-
-.metaLabel {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-}
-
-.metaValue {
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: #E7247A;
-  word-break: break-all;
-}
-
-/* ── Generic section wrapper ────────────────────────────────── */
-.section {
-  padding: 1.75rem 2rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-
-.sectionHead {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  margin-bottom: 1.25rem;
-}
-
-.sectionHeadBar {
-  display: block;
-  width: 4px;
-  height: 1.5rem;
-  background: linear-gradient(180deg, #E7247A, #E7247Aa2);
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.sectionHeadIcon {
-  font-size: 1.15rem;
-  color: #E7247Aa2;
-}
-
-.sectionHeadTitle {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #E7247A;
-  margin: 0;
-  letter-spacing: 0.3px;
-}
-
-/* ── Segment card ───────────────────────────────────────────── */
-.segCard {
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 1.25rem;
-}
-
-.segCard:last-child {
-  margin-bottom: 0;
-}
-
-/* Airline header row */
-.segAirlineRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.875rem 1.25rem;
-  background: #f0f6ff;
-  border-bottom: 1px solid #dbe9fa;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.segAirlineLeft {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-}
-
-.segAirlineLogo {
-  width: 56px;
-  height: 56px;
-  object-fit: contain;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid #dbe9fa;
-  padding: 4px;
-}
-
-.segAirlineName {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #E7247A;
-  margin: 0 0 2px;
-}
-
-.segFlightNo {
-  font-size: 0.82rem;
-  color: #64748b;
-  margin: 0;
-  font-weight: 600;
-}
-
-.segClassBadge {
-  background: linear-gradient(135deg, #E7247A, #E7247Aa2);
-  color: #ffffff;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* ── Route timeline ─────────────────────────────────────────── */
-.routeTimeline {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 0;
-  padding: 1.5rem 1.25rem 1rem;
-}
-
-.routeNode {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-}
-
-.routeNodeRight {
-  justify-content: flex-end;
-  text-align: right;
-}
-
-.routeNodeRight .routeNodeInfo {
-  align-items: flex-end;
-}
-
-.routeNodeDot {
-  background: linear-gradient(135deg, #E7247A, #E7247Aa2);
-  color: #ffffff;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.routeNodeInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.routeNodeCity {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #E7247A;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.routeNodeAirport {
-  font-size: 0.78rem;
-  color: #64748b;
-  margin: 0;
-  max-width: 220px;
-}
-
-.routeNodeCode {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #E7247Aa2;
-  margin: 0;
-}
-
-.routeNodeTime {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.35rem;
-  background: #eef6ff;
-  border: 1px solid #dbe9fa;
-  border-radius: 6px;
-  padding: 0.3rem 0.65rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #E7247A;
-}
-
-.timeIconSm {
-  color: #E7247Aa2;
-  font-size: 0.75rem;
-}
-
-/* Duration connector */
-.routeConnector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 1rem;
-  gap: 0.25rem;
-  flex-shrink: 0;
-}
-
-.connectorLine {
-  width: 2px;
-  height: 20px;
-  background: linear-gradient(180deg, #cbd5e1, #94a3b8);
-  border-radius: 1px;
-}
-
-.connectorDuration {
-  background: linear-gradient(135deg, #E7247A, #E7247Aa2);
-  color: #ffffff;
-  border-radius: 8px;
-  padding: 0.5rem 0.875rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(13, 43, 69, 0.25);
-  min-width: 80px;
-}
-
-.connectorPlane {
-  font-size: 0.9rem;
-  color: #f0b429;
-}
-
-.connectorDuration span {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-/* ── Baggage row ────────────────────────────────────────────── */
-.baggageRow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.875rem 1.25rem;
-  background: #f8fafc;
-  border-top: 1px dashed #e2e8f0;
-  font-size: 0.82rem;
-  color: #334155;
-}
-
-.baggageRowIcon {
-  color: #E7247Aa2;
-  font-size: 0.95rem;
-  flex-shrink: 0;
-}
-
-.baggageRowTitle {
-  font-weight: 700;
-  color: #E7247A;
-  margin-right: 0.25rem;
-}
-
-.baggagePill {
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  padding: 0.25rem 0.65rem;
-  font-weight: 600;
-  color: #334155;
-  white-space: nowrap;
-}
-
-/* ── Passenger table ────────────────────────────────────────── */
-.passengerTable {
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  overflow: hidden;
-  font-size: 0.85rem;
-}
-
-.passengerTableHead {
-  display: grid;
-  grid-template-columns: 40px 1.8fr 0.8fr 0.8fr 1fr 1.2fr;
-  gap: 0;
-  background: linear-gradient(135deg, #E7247A, #1a4a6e);
-  color: #ffffff;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-}
-
-.passengerTableHead span,
-.passengerTableRow span {
-  padding: 0.7rem 0.875rem;
-}
-
-.passengerTableRow {
-  display: grid;
-  grid-template-columns: 40px 1.8fr 0.8fr 0.8fr 1fr 1.2fr;
-  gap: 0;
-  border-top: 1px solid #e2e8f0;
-  color: #334155;
-  transition: background 0.15s;
-}
-
-.passengerTableRow:nth-child(even) {
-  background: #f8fafc;
-}
-
-.passengerTableRow:hover {
-  background: #eef6ff;
-}
-
-.passengerIdx {
-  font-weight: 700;
-  color: #E7247Aa2;
-  display: flex;
-  align-items: center;
-}
-
-.passengerFullName {
-  font-weight: 700;
-  color: #E7247A;
-}
-
-.typeBadge {
-  display: inline-block;
-  background: #eef6ff;
-  color: #E7247Aa2;
-  border: 1px solid #dbe9fa;
-  border-radius: 4px;
-  padding: 0.15rem 0.55rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.passengerContact {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 0.8rem;
-  color: #64748b;
-}
-
-/* ── Pricing summary ────────────────────────────────────────── */
-.pricingWrap {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.pricingBox {
-  width: 100%;
-  max-width: 420px;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.pricingLine {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 1.25rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.pricingLine:last-child {
-  border-bottom: none;
-}
-
-.pricingLineLabel {
-  font-size: 0.88rem;
-  color: #64748b;
-  font-weight: 500;
-}
-
-.pricingLineVal {
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: #E7247A;
-}
-
-.pricingDivider {
-  border-top: 2px solid #E7247A;
-  margin: 0;
-}
-
-.pricingTotal {
-  background: linear-gradient(135deg, #E7247A, #1a4a6e);
-  color: #ffffff;
-}
-
-.pricingTotal .pricingLineLabel {
-  color: #94c2e8;
-  font-size: 0.92rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.pricingTotal .pricingLineVal {
-  color: #f0b429;
-  font-size: 1.2rem;
-  font-weight: 800;
-}
-
-/* ── Notice / Important info box ────────────────────────────── */
-.noticeBox {
-  margin: 0 2rem 1.75rem;
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  border-left: 4px solid #f59e0b;
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
-}
-
-.noticeHeader {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  margin-bottom: 0.875rem;
-}
-
-.noticeIcon {
-  color: #d97706;
-  font-size: 1.1rem;
-}
-
-.noticeTitle {
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: #92400e;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.noticeList {
-  margin: 0;
-  padding-left: 1.1rem;
-  list-style: none;
-}
-
-.noticeList li {
-  position: relative;
-  padding-left: 1.2rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.82rem;
-  color: #78350f;
-  line-height: 1.6;
-}
-
-.noticeList li:last-child {
-  margin-bottom: 0;
-}
-
-.noticeList li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: #f59e0b;
-  font-weight: 700;
-}
-
-/* ── Footer image ───────────────────────────────────────────── */
-.footerImageWrap {
-  line-height: 0;
-}
-.footerImageWrap img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* ── Action buttons (hidden on print) ───────────────────────── */
-.actionBar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.actionBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.6rem 1.4rem;
-  border-radius: 8px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
-
-.actionBtnPrimary {
-  background: linear-gradient(135deg, #E7247A, #E7247Aa2);
-  color: #ffffff;
-  border-color: transparent;
-}
-
-.actionBtnPrimary:hover {
-  background: linear-gradient(135deg, #0a2238, #155c94);
-  box-shadow: 0 4px 14px rgba(13, 43, 69, 0.35);
-  color: #ffffff;
-}
-
-.actionBtnOutline {
-  background: #ffffff;
-  color: #E7247A;
-  border-color: #E7247A;
-}
-
-.actionBtnOutline:hover {
-  background: #E7247A;
-  color: #ffffff;
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media screen and (max-width: 768px) {
-  .invoicePageBg {
-    padding: 1rem 0;
-  }
-
-  .invoiceCard {
-    border-radius: 0;
-  }
-
-  .titleStrip {
-    padding: 1rem 1.25rem;
-  }
-
-  .titleLabel {
-    font-size: 1.1rem;
-  }
-
-  .metaBar {
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.08);
+}
+
+.errorCard {
+    background: #fff;
+    border-radius: 14px;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    color: #45556c;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.08);
+}
+
+/* Header */
+.invHeader {
+    display: flex;
     flex-direction: column;
-  }
+    background: #fff;
+    overflow: hidden;
+}
 
-  .metaDivider {
-    display: none;
-  }
+.invHeaderBand {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1.1rem 1.25rem;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
 
-  .metaItem {
-    padding: 0.6rem 1.25rem;
-    border-bottom: 1px solid #e2e8f0;
-  }
+.invHeaderCircle {
+    position: absolute;
+    top: -80px;
+    right: -60px;
+    width: 288px;
+    height: 288px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0.05;
+    pointer-events: none;
+}
 
-  .section {
-    padding: 1.25rem;
-  }
+.invHeaderBrand {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+}
 
-  .routeTimeline {
-    grid-template-columns: 1fr;
-    gap: 0.625rem;
-    padding: 1rem;
-  }
+.invHeaderDocTitle {
+    margin: 0;
+    font-size: clamp(1.25rem, 3vw, 1.85rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #1a1a1a;
+}
 
-  .routeConnector {
-    flex-direction: row;
-    padding: 0 0.5rem;
-    justify-content: center;
-  }
+.invHeaderContacts {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.45rem;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: right;
+}
 
-  .connectorLine {
-    width: 40px;
-    height: 2px;
-  }
+.invHeaderContacts span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
 
-  .routeNodeRight {
-    justify-content: flex-start;
-    text-align: left;
-  }
-
-  .routeNodeRight .routeNodeInfo {
+.invHeaderSub {
+    display: flex;
     align-items: flex-start;
-  }
-
-  .passengerTableHead,
-  .passengerTableRow {
-    grid-template-columns: 36px 1fr 1fr;
-    font-size: 0.78rem;
-  }
-
-  /* Hide less critical columns on small screens */
-  .passengerTableHead span:nth-child(4),
-  .passengerTableHead span:nth-child(5),
-  .passengerTableHead span:nth-child(6),
-  .passengerTableRow span:nth-child(4),
-  .passengerTableRow span:nth-child(5),
-  .passengerTableRow span:nth-child(6) {
-    display: none;
-  }
-
-  .pricingWrap {
-    justify-content: stretch;
-  }
-
-  .pricingBox {
-    max-width: 100%;
-  }
-
-  .noticeBox {
-    margin: 0 1rem 1.25rem;
-  }
+    justify-content: space-between;
+    gap: 0.85rem 1.25rem;
+    flex-wrap: wrap;
+    padding: 1.1rem 1.25rem 1.2rem;
+    background: #fef5f7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 }
 
-/* ============================================================
-   PRINT
-   ============================================================ */
-@media print {
-  @page {
-    size: A4;
-    margin: 10mm 12mm;
-  }
+.invForBlock {
+    flex: 1 1 240px;
+    min-width: 0;
+}
 
-  .invoicePageBg {
-    background: white !important;
-    padding: 0 !important;
-  }
+.invForLabel {
+    margin-bottom: 0.35rem;
+    color: #e7247a;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
 
-  .invoiceCard {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    max-width: 100% !important;
+.invGuestName {
+    margin: 0 0 0.35rem !important;
+    color: #1a1a1a;
+    font-size: clamp(1.45rem, 3.5vw, 32px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0;
+    text-transform: capitalize;
+}
+
+.invForDesc {
     margin: 0 !important;
-  }
-
-  .actionBar {
-    display: none !important;
-  }
-
-  .segCard:hover,
-  .passengerTableRow:hover {
-    background: inherit;
-    box-shadow: none;
-  }
-
-  .section {
-    page-break-inside: avoid;
-  }
-
-  .metaBar {
-    flex-direction: row !important;
-  }
-
-  .routeTimeline {
-    grid-template-columns: 1fr auto 1fr !important;
-  }
-
-  .passengerTableHead span:nth-child(4),
-  .passengerTableHead span:nth-child(5),
-  .passengerTableHead span:nth-child(6),
-  .passengerTableRow span:nth-child(4),
-  .passengerTableRow span:nth-child(5),
-  .passengerTableRow span:nth-child(6) {
-    display: revert !important;
-  }
+    max-width: 36rem;
+    color: #6b7280;
+    font-size: 0.88rem;
+    line-height: 1.4;
 }
 
-
-.actionButtons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
+.invMetaBlock {
+    flex: 0 0 auto;
+    text-align: right;
+    min-width: 0;
 }
 
-.actionBtn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.invStatusRow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
 }
 
-.actionBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.invStatusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.voucherCard {
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-  max-width: 1000px;
-  margin: 0 auto;
+.statusConfirmed {
+    background-color: #dcfce7;
+    color: #166534 !important;
+    border: 1px solid #bbf7d0;
 }
 
-/* Header Styles */
-.voucherHeader {
-  /* background: linear-gradient(135deg, #E7247A 0%, #006666 100%); */
-  /* color: white; */
-  /* padding: 2rem; */
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center; */
+.statusCancelled {
+    background-color: #fee2e2;
+    color: #991b1b !important;
+    border: 1px solid #fecaca;
 }
 
-.headerLeft {
-  flex: 1;
+.statusPending {
+    background-color: #fef3c7;
+    color: #92400e !important;
+    border: 1px solid #fde68a;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.payment_paid {
+    background-color: #dcfce7;
+    color: #166534 !important;
+    border: 1px solid #bbf7d0;
 }
 
-.logoIcon {
-  font-size: 3rem;
-  color: #ffd700;
+.payment_pending,
+.payment_tentative {
+    background-color: #fef3c7;
+    color: #92400e !important;
+    border: 1px solid #fde68a;
 }
 
-.companyName {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0;
-  color: white;
+.payment_unpaid,
+.payment_failed {
+    background-color: #fee2e2;
+    color: #991b1b !important;
+    border: 1px solid #fecaca;
 }
 
-.tagline {
-  margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.9;
-  color: #e0e0e0;
+.payment_partial {
+    background-color: rgba(253, 126, 20, 0.2);
+    color: #c2410c !important;
+    border: 1px solid rgba(253, 126, 20, 0.45);
 }
 
-.headerRight {
-  display: flex;
-  align-items: center;
+.invBookingRef {
+    color: #e7247a;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
 }
 
-.bookingStatus {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: #74747445;
-  padding: 0.75rem 1.5rem;
-  border-radius: 50px;
-  backdrop-filter: blur(10px);
+.invBookingDate {
+    color: #9ca3af;
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
-.confirmedIcon {
-  font-size: 1.5rem;
-  color: #4ade80;
+/* Body */
+.bodyInner {
+    padding: 0.35rem clamp(0.85rem, 2.5vw, 1.35rem) 0.5rem;
 }
 
-.confirmedText {
-  font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
+.detailCard {
+    background: #fff;
+    border: 1px solid #e8e5ea;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.06);
+    padding: clamp(1.15rem, 3vw, 1.75rem);
+    margin: 1.05rem 0;
 }
 
-/* Booking Bar */
-.bookingBar {
-  background: linear-gradient(to right, #f8fafc, #e2e8f0);
-  padding: 1.5rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  border-bottom: 3px solid #E7247A;
+.detailCardHead {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.15rem;
 }
 
-.bookingInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+.detailStep {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7247a;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
-.bookingLabel {
-  font-size: 0.8rem;
-  color: #64748b;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.detailCardTitle {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+    font-weight: 700;
+    line-height: 1.2;
 }
 
-.bookingValue {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #E7247A;
+.detailGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.75rem;
+    row-gap: 1.1rem;
 }
 
-/* Segment Styles */
-.segmentGroup {
-  padding: 2rem;
-  border-bottom: 2px dashed #e2e8f0;
+.detailItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    min-width: 0;
 }
 
-.segmentGroup:last-of-type {
-  border-bottom: none;
+.detailLabel {
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.segmentHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #E7247A;
+.detailValue {
+    color: #1e1e1e;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
 }
 
-.segmentIcon {
-  font-size: 1.5rem;
-  color: #E7247A;
+/* Activity card */
+.activityCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
 }
 
-.segmentTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #E7247A;
-  margin: 0;
+.activityCardHead {
+    background: #fef5f7;
+    padding: clamp(0.95rem, 2.5vw, 1.25rem);
 }
 
-.flightSegment {
-  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-  border: 2px solid #e2e8f0;
-  border-radius: 15px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  transition: all 0.3s ease;
+.activityCardTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
-.flightSegment:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+.activityName {
+    margin: 0;
+    color: #45556c;
+    font-size: clamp(0.98rem, 2.2vw, 1.12rem);
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
+    flex: 1;
+    min-width: 0;
 }
 
-.flightSegment:last-child {
-  margin-bottom: 0;
+.ratingRow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex-shrink: 0;
 }
 
-.segmentTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e2e8f0;
+.star {
+    color: #e7247a;
+    font-size: 0.85rem;
 }
 
-.airlineInfo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.starMuted {
+    color: #d4b8c4;
+    font-size: 0.85rem;
 }
 
-.airlineDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+.ratingValue {
+    margin-left: 0.25rem;
+    color: #8a92a6;
+    font-size: 0.78rem;
 }
 
-.airlineName {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0;
+.activityAddress {
+    margin: 0.55rem 0 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    color: #8a92a6;
+    font-size: 0.84rem;
+    line-height: 1.45;
 }
 
-.flightNumber {
-  font-size: 0.9rem;
-  color: #64748b;
-  margin: 0;
-  font-weight: 600;
+.activityAddress span {
+    word-break: break-word;
 }
 
-.aircraftType {
-  font-size: 0.8rem;
-  color: #94a3b8;
-  margin: 0;
+.stayGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem 1rem;
+    margin-top: 1rem;
 }
 
-.classInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  background: linear-gradient(135deg, #E7247A, #006666);
-  padding: 0.75rem 1.25rem;
-  border-radius: 10px;
-  color: white;
+.stayValue {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
 }
 
-.classLabel {
-  font-size: 0.75rem;
-  opacity: 0.9;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* Guests */
+.guestList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-.classValue {
-  font-size: 1rem;
-  font-weight: 700;
+.guestRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    background: #fef5f7;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
 }
 
-/* Flight Route */
-.flightRoute {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+.guestLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
 }
 
-.routePoint {
-  flex: 1;
-  display: flex;
-  gap: 1rem;
+.guestIndex {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #45556c;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
-.routeIcon {
-  font-size: 2rem;
-  color: #E7247A;
-  background: #e0f2f1;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
-  flex-shrink: 0;
+.guestInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
 }
 
-.routeDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+.guestName {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.guestSub {
+    color: #8a92a6;
+    font-size: 0.8rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.guestMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.guestGender {
+    color: #8a92a6;
+    font-size: 0.86rem;
+    font-weight: 500;
+}
+
+.guestType {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: #f8e6ee;
+    color: #45556c;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* Activity info remarks */
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #eee4ea;
+}
+
+.infoItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.infoBlockText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.infoBlockList {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #45556c;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.infoBlockList li {
+    margin-bottom: 0.35rem;
+}
+
+/* Pricing */
+.priceTable {
+    width: 100%;
+}
+
+.priceRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr) auto;
+    gap: 0.75rem 1rem;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid #eee4ea;
+}
+
+.priceHead {
+    padding-top: 0;
+    border-bottom: 1px solid #e8e5ea;
+}
+
+.priceHead span {
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.priceType {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.priceQty {
+    color: #8a92a6;
+    font-size: 0.88rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.priceTotal {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.extraServices {
+    margin-top: 0.75rem;
+}
+
+.extraTitle {
+    margin: 0 0 0.35rem;
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.priceSummary {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    margin-top: 1rem;
+}
+
+.priceSummaryRow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    min-width: min(100%, 260px);
+    color: #8a92a6;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.priceSummaryRow span:last-child {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 600;
+}
+
+.priceVatNote {
+    margin: 0.15rem 0 0;
+    color: #a0a7b5;
+    font-size: 0.75rem;
+}
+
+.totalAmountBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.95rem 1.15rem;
+    border-radius: 12px;
+    background: #e7247a;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.totalAmountValue {
+    font-size: clamp(1rem, 2.4vw, 1.2rem);
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+.specialRequestText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.cancelList {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #6b7280;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.cancelList strong {
+    color: #45556c;
+}
+
+.policyNote {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.nonRefundable {
+    display: inline-flex;
+    align-items: flex-start;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid #f1b4b4;
+    background: #fff5f5;
+    color: #c62828;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.infoBullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.infoBullets li {
+    position: relative;
+    padding-left: 1.15rem;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+.infoBullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e7247a;
+}
+
+/* Thanks footer */
+.thanksFooter {
+    position: relative;
+    overflow: hidden;
+    margin: 1rem 0 0;
+    padding: clamp(1.35rem, 3.5vw, 1.85rem) 1.25rem;
+    border-radius: 18px 18px 0 0;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    text-align: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.thanksFooterContent {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.thanksFooterTitle {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.25;
+}
+
+.thanksFooterContacts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem 1.35rem;
+    color: #1a1a1a;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.thanksFooterContacts span,
+.thanksFooterAddress {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.thanksFooterAddress {
+    color: #1a1a1a;
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: 1.4;
+    max-width: 100%;
+}
+
+.thanksFooterAddress span {
+    word-break: break-word;
+}
+
+/* Actions */
+.actionRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem 3rem;
+}
+
+.btnPrint,
+.btnVoucher,
+.btnHome {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    border: 1.5px solid transparent;
+    white-space: nowrap;
+}
+
+.btnPrint:hover,
+.btnVoucher:hover,
+.btnHome:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.btnPrint {
+    background: #e7247a;
+    color: #fff;
+    border-color: #e7247a;
+}
+
+.btnVoucher {
+    background: #fef5f7;
+    color: #e7247a;
+    border-color: #e7247a;
+}
+
+.btnHome {
+    background: #f4f6f9;
+    color: #45556c;
+    border-color: #d7dde7;
+}
+
+/* Responsive */
+@media screen and (max-width: 760px) {
+    .invoiceContainer {
+        width: 98%;
+        max-width: 98%;
+    }
+
+    .invHeaderBand {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.95rem 1rem;
+        border-radius: 0 0 14px 14px;
+    }
+
+    .invHeaderContacts {
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+    }
+
+    .invHeaderSub {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0.65rem;
+        flex-wrap: nowrap;
+        padding: 0.95rem 1rem 1.05rem;
+        min-height: 0;
+    }
+
+    .invForBlock,
+    .invMetaBlock {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .invMetaBlock {
+        text-align: left;
+        margin-top: 0;
+    }
+
+    .invStatusRow {
+        justify-content: flex-start;
+        margin-bottom: 0.35rem;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .pageWrapper {
+        padding: 0.5rem 0 0;
+        min-height: auto;
+    }
+
+    .invoiceContainer {
+        width: 100%;
+        max-width: 100%;
+        padding: 6px;
+    }
+
+    .invHeaderSub {
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0.55rem;
+        padding: 0.85rem 0.95rem 0.95rem;
+    }
+
+    .invForBlock,
+    .invMetaBlock {
+        flex: 0 0 auto;
+    }
+
+    .detailCard {
+        padding: 1rem;
+        margin: 0.85rem 0;
+        border-radius: 14px;
+    }
+
+    .detailGrid {
+        grid-template-columns: 1fr;
+        row-gap: 0.85rem;
+    }
+
+    .stayGrid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .guestRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.55rem;
+    }
+
+    .guestMeta {
+        padding-left: 2.35rem;
+        justify-content: flex-start;
+    }
+
+    .priceRow,
+    .priceHead {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+
+    .priceHead span:nth-child(2),
+    .priceHead span:nth-child(3) {
+        display: none;
+    }
+
+    .priceTotal {
+        text-align: left;
+    }
+
+    .priceSummary {
+        align-items: stretch;
+    }
+
+    .priceSummaryRow {
+        justify-content: space-between;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .priceSummaryRow span:last-child {
+        min-width: 0;
+    }
+
+    .totalAmountBar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
+    .thanksFooter {
+        padding: 1.2rem 0.9rem;
+        border-radius: 14px 14px 0 0;
+    }
+
+    .thanksFooterContacts {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .actionRow {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1.1rem 0.85rem 2.75rem;
+    }
+
+    .btnPrint,
+    .btnVoucher,
+    .btnHome {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+/* Print */
+@media print {
+    @page {
+        size: A4;
+        margin: 8mm 10mm;
+    }
+
+    .pageWrapper {
+        background: #fff !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+    }
+
+    .invoiceContainer {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .invoiceCard {
+        box-shadow: none !important;
+        overflow: visible !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    .bodyInner {
+        padding: 4px 10px 0 !important;
+    }
+
+    .detailCard,
+    .activityCard,
+    .invHeader,
+    .infoList,
+    .priceTable,
+    .infoBullets {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    .detailCard {
+        box-shadow: none !important;
+        margin: 0.5rem 0 !important;
+        padding: 0.8rem 0.9rem !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .detailCardHead {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    .detailStep {
+        background: #e7247a !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .detailGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .activityCardHead {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .stayGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .guestRow {
+        background: #fef5f7 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .guestIndex {
+        background: #45556c !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .priceRow {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr) auto !important;
+    }
+
+    .totalAmountBar {
+        background: #e7247a !important;
+        color: #fff !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .infoBullets li::before {
+        background: #e7247a !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .invHeaderBand {
+        display: flex !important;
+        flex-direction: row !important;
+        background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .invHeaderSub {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .invMetaBlock {
+        text-align: right !important;
+    }
+
+    .invStatusRow {
+        justify-content: flex-end !important;
+    }
+
+    .invStatusBadge,
+    .statusConfirmed,
+    .statusCancelled,
+    .statusPending,
+    .payment_paid,
+    .payment_pending,
+    .star {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .thanksFooter {
+        margin: 0.65rem 0 0 !important;
+        border-radius: 14px 14px 0 0 !important;
+        background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%) !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .thanksFooterContacts {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    .actionRow {
+        display: none !important;
+    }
+
+    .legCard,
+    .flightSegmentCard,
+    .passengerCard,
+    .ancillaryCard {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+        page-break-before: auto !important;
+        page-break-after: auto !important;
+    }
+
+    .routeGrid {
+        grid-template-columns: 1fr auto 1fr !important;
+    }
+
+    .segmentMetaRow {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 0.4rem !important;
+    }
+
+    .segmentMetaChip {
+        width: 100% !important;
+        min-width: 0 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .layoverBanner {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+}
+
+/* ── Flight-specific ────────────────────────────────────────── */
+.legCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 0.85rem;
+    background: #fff;
+}
+
+.legHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 0.85rem 1rem;
+    background: #fef5f7;
+}
+
+.legTitle {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.legRoute {
+    color: #8a92a6;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.flightSegmentCard {
+    padding: 1rem;
+    border-top: 1px solid #eee4ea;
+}
+
+.airlineRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.airlineLogo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #eee4ea;
+}
+
+.airlineMeta {
+    flex: 1;
+    min-width: 0;
+}
+
+.airlineNameText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.flightNumberText {
+    margin: 0.2rem 0 0;
+    color: #8a92a6;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.pnrBadge {
+    display: inline-flex;
+    padding: 0.28rem 0.65rem;
+    border-radius: 999px;
+    background: #f8e6ee;
+    color: #e7247a;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.routeGrid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+}
+
+.routeStation {
+    min-width: 0;
+}
+
+.routeStationRight {
+    text-align: right;
 }
 
 .routeCity {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0;
+    margin: 0;
+    color: #1a1a1a;
+    font-size: 1.05rem;
+    font-weight: 700;
 }
 
 .routeAirport {
-  font-size: 0.85rem;
-  color: #64748b;
-  margin: 0;
-  max-width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    margin: 0.2rem 0 0;
+    color: #6b7280;
+    font-size: 0.8rem;
+    line-height: 1.35;
 }
 
 .routeCode {
-  font-size: 0.9rem;
-  color: #E7247A;
-  font-weight: 600;
-  margin: 0;
+    margin: 0.15rem 0 0;
+    color: #8a92a6;
+    font-size: 0.78rem;
 }
 
 .routeTime {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  background: #f1f5f9;
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  width: fit-content;
+    margin: 0.35rem 0 0;
+    color: #45556c;
+    font-size: 0.88rem;
+    font-weight: 600;
 }
 
-.timeIcon {
-  color: #E7247A;
-  font-size: 1rem;
+.routeArrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding-top: 0.35rem;
+    min-width: 72px;
 }
 
-.timeValue {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #1e293b;
+.durationLabel {
+    color: #e7247a;
+    font-size: 0.75rem;
+    font-weight: 700;
 }
 
-.routeLine {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  position: relative;
-  padding: 0 1rem;
-}
-
-.durationBox {
-  background: linear-gradient(135deg, #E7247A, #006666);
-  color: white;
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  white-space: nowrap;
-  z-index: 2;
-  box-shadow: 0 4px 10px rgba(0, 76, 76, 0.2);
+.arrowLine {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #f0d6e2, #e7247a);
+    position: relative;
+    border-radius: 2px;
 }
 
 .planeIcon {
-  font-size: 1.2rem;
-  transform: rotate(90deg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    color: #e7247a;
+    background: #fff;
+    font-size: 1rem;
 }
 
-.duration {
-  font-size: 0.85rem;
-  font-weight: 600;
+.segmentMetaRow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.85rem;
 }
 
-.line {
-  width: 3px;
-  height: 100%;
-  background: linear-gradient(to bottom, #E7247A, #006666);
-  border-radius: 2px;
-  position: absolute;
-  top: 0;
-  z-index: 1;
+.segmentMetaChip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.75rem;
+    align-items: center;
+    padding: 0.45rem 0.7rem;
+    border-radius: 10px;
+    background: #fef5f7;
+    border: 1px solid #f0d6e2;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Baggage Info */
-.baggageInfo {
-  display: flex;
-  gap: 2rem;
-  padding: 1rem;
-  background: #f8fafc;
-  border-radius: 10px;
-  border-left: 4px solid #E7247A;
+.segmentMetaName {
+    color: #45556c;
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 
-.baggageItem {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.segmentMetaItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #8a92a6;
+    font-size: 0.75rem;
 }
 
-.baggageIcon {
-  font-size: 1.5rem;
-  color: #E7247A;
+.baggageRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
 }
 
-.baggageLabel {
-  font-size: 0.85rem;
-  color: #64748b;
-  margin-right: 0.5rem;
+.baggageTitle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #45556c;
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 
-.baggageValue {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #1e293b;
+.baggageChip {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #eee4ea;
+    color: #6b7280;
+    font-size: 0.75rem;
 }
 
-/* Passengers Section */
-.passengersSection {
-  padding: 2rem;
-  background: #f8fafc;
-  border-top: 3px solid #E7247A;
+.layoverBanner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    background: #fef5f7;
+    color: #e7247a;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-top: 1px dashed #f0d6e2;
 }
 
-.sectionHeader {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.sectionIcon {
-  font-size: 1.5rem;
-  color: #E7247A;
-}
-
-.sectionTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #E7247A;
-  margin: 0;
-}
-
-.passengersSummary {
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-  color: #1e293b;
-}
-
-.passengersList {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.layoverDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e7247a;
+    flex-shrink: 0;
 }
 
 .passengerCard {
-  background: white;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1.25rem;
-  display: flex;
-  gap: 1rem;
-  transition: all 0.3s ease;
+    border: 1px solid #f0d6e2;
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    background: #fff;
+    margin-bottom: 0.75rem;
 }
 
-.passengerCard:hover {
-  border-color: #E7247A;
-  box-shadow: 0 4px 12px rgba(0, 76, 76, 0.1);
-}
-
-.passengerNumber {
-  background: linear-gradient(135deg, #E7247A, #006666);
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.passengerInfo {
-  flex: 1;
-}
-
-.passengerName {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 0.75rem 0;
-}
-
-.passengerDetails {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.passengerDetail {
-  font-size: 0.9rem;
-  color: #64748b;
-}
-
-.passengerDetail strong {
-  color: #1e293b;
-  margin-right: 0.25rem;
-}
-
-/* Pricing Section */
-.pricingSection {
-  padding: 2rem;
-  background: white;
-}
-
-.pricingDetails {
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1.5rem;
-}
-
-.pricingRow {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.pricingRow:last-child {
-  border-bottom: none;
-}
-
-.totalRow {
-  margin-top: 1rem;
-  padding-top: 1.5rem;
-  border-top: 3px solid #E7247A;
-  font-size: 1.2rem;
-}
-
-.pricingLabel {
-  font-weight: 600;
-  color: #64748b;
-}
-
-.pricingValue {
-  font-weight: 700;
-  color: #1e293b;
-}
-
-.totalRow .pricingLabel,
-.totalRow .pricingValue {
-  color: #E7247A;
-  font-size: 1.3rem;
-}
-
-/* Important Info */
-.importantInfo {
-  padding: 2rem;
-  background: #fff8e1;
-  border-left: 5px solid #ffa726;
-}
-
-.infoTitle {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #e65100;
-  margin: 0 0 1rem 0;
-}
-
-.infoList {
-  margin: 0;
-  padding-left: 1.5rem;
-  list-style: none;
-}
-
-.infoList li {
-  position: relative;
-  padding-left: 1.5rem;
-  margin-bottom: 0.75rem;
-  color: #5d4037;
-  line-height: 1.6;
-}
-
-.infoList li:before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: #ff9800;
-  font-weight: 700;
-}
-
-/* Contact Section */
-.contactSection {
-  padding: 2rem;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.contactTitle {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #E7247A;
-  margin: 0 0 1rem 0;
-  text-align: center;
-}
-
-.contactInfo {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  flex-wrap: wrap;
-}
-
-.contactItem {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #1e293b;
-  font-weight: 500;
-}
-
-.contactIcon {
-  color: #E7247A;
-  font-size: 1.2rem;
-}
-
-/* Footer */
-.voucherFooter {
-  /* background: linear-gradient(135deg, #E7247A 0%, #006666 100%);
-  color: white;
-  padding: 2rem;
-  text-align: center; */
-}
-
-.footerText {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin: 0 0 0.5rem 0;
-}
-
-.footerNote {
-  font-size: 0.85rem;
-  opacity: 0.8;
-  margin: 0;
-  font-style: italic;
-}
-
-/* Responsive Styles */
-@media screen and (max-width: 768px) {
-  .voucherHeader {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-
-  .logo {
-    justify-content: center;
-  }
-
-  .bookingBar {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .bookingInfo {
-    align-items: center;
-    text-align: center;
-  }
-
-  .flightRoute {
-    flex-direction: column;
-  }
-
-  .routeLine {
-    width: 100%;
-    flex-direction: row;
-    padding: 1rem 0;
-  }
-
-  .line {
-    width: 100%;
-    height: 3px;
-  }
-
-  .durationBox {
-    flex-direction: row;
-    gap: 0.5rem;
-  }
-
-  .planeIcon {
-    transform: rotate(0deg);
-  }
-
-  .segmentTop {
-    flex-direction: column;
-    gap: 1rem;
+.passengerCardHeader {
+    display: flex;
     align-items: flex-start;
-  }
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
 
-  .classInfo {
-    align-self: stretch;
+.passengerIdentity {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.passengerTicket {
+    margin: 0.2rem 0 0;
+    color: #8a92a6;
+    font-size: 0.78rem;
+}
+
+.passengerMetaGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem 1rem;
+}
+
+.metaItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.metaLabel {
+    color: #8a92a6;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.metaValue {
+    color: #45556c;
+    font-size: 0.88rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.metaValueMuted {
+    color: #a0a7b5;
+}
+
+.passengerExtras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+}
+
+.extraChip {
+    display: inline-flex;
     align-items: center;
-  }
-
-  .baggageInfo {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .contactInfo {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .passengerDetails {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .actionButtons {
-    justify-content: center;
-  }
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 8px;
+    background: #fef5f7;
+    color: #45556c;
+    font-size: 0.78rem;
 }
 
-/* Baggage Section Styles */
-.baggageSection {
-  padding: 2rem;
-  border-bottom: 1px solid #e5e7eb;
+.ancillaryGroup {
+    margin-bottom: 1rem;
 }
 
-.baggageGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
+.ancillaryGroup:last-child {
+    margin-bottom: 0;
 }
 
-.baggageCard {
-  background: #f9fafb;
-  padding: 1rem;
-  border-radius: 10px;
-  border-left: 4px solid #006666;
+.ancillaryGroupTitle {
+    margin: 0 0 0.55rem;
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-.baggageCard h5 {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #E7247A;
-  margin-bottom: 0.5rem;
+.ancillaryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
 }
 
-.baggageCard p {
-  margin: 0;
-  color: #374151;
-  font-weight: 500;
+.ancillaryCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 12px;
+    padding: 0.8rem 0.9rem;
+    background: #fef5f7;
 }
 
-/* Deadlines Section Styles */
-.deadlinesSection {
-  padding: 2rem;
-  border-bottom: 1px solid #e5e7eb;
+.ancillaryCardTop {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.65rem;
+    align-items: flex-start;
 }
 
-.deadlinesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
+.ancillaryName {
+    color: #45556c;
+    font-size: 0.88rem;
+    font-weight: 700;
+    word-break: break-word;
 }
 
-.deadlineCard {
-  background: #fff7ed;
-  padding: 1rem;
-  border-radius: 10px;
-  border-left: 4px solid #f59e0b;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.ancillaryPrice {
+    color: #e7247a;
+    font-size: 0.88rem;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
-.deadlineCard strong {
-  color: #92400e;
-  font-size: 0.9rem;
+.ancillaryDesc {
+    margin: 0.35rem 0 0;
+    color: #6b7280;
+    font-size: 0.82rem;
 }
 
-.deadlineCard span {
-  color: #374151;
-  font-weight: 500;
+.ancillaryMeta {
+    margin: 0.25rem 0 0;
+    color: #8a92a6;
+    font-size: 0.75rem;
 }
 
-/* Penalties Section Styles */
-.penaltiesSection {
-  padding: 2rem;
-  border-bottom: 1px solid #e5e7eb;
-}
+@media screen and (max-width: 640px) {
+    .routeGrid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
 
-.penaltiesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
+    .segmentMetaRow {
+        grid-template-columns: 1fr;
+    }
 
-.penaltyCard {
-  background: #fef2f2;
-  padding: 1.5rem;
-  border-radius: 10px;
-  border-left: 4px solid #ef4444;
-}
+    .routeStationRight {
+        text-align: left;
+    }
 
-.penaltyCard h5 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #991b1b;
-  margin-bottom: 0.75rem;
-}
+    .routeArrow {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding-top: 0;
+    }
 
-.penaltyCard p {
-  margin: 0.5rem 0 0 0;
-  color: #374151;
-}
+    .planeIcon {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
 
-.penaltyCard strong {
-  color: #991b1b;
-}
+    .passengerMetaGrid,
+    .ancillaryGrid {
+        grid-template-columns: 1fr;
+    }
 
-/* Operating Carrier Styles */
-.operatingCarrier {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: #f0fdf4;
-  border-radius: 8px;
-  border-left: 4px solid #10b981;
-}
-
-.operatingCarrier p {
-  margin: 0;
-  color: #065f46;
-  font-size: 0.9rem;
-}
-
-/* Airline Logo Styles */
-.airlineLogo {
-  margin-right: 1rem;
-}
-
-/* Print Styles */
-@media print {
-  @page {
-    size: A4;
-    margin: 10mm 12mm;
-  }
-
-  .actionButtons {
-    display: none !important;
-  }
-
-  .voucherPrintHide {
-    display: none !important;
-  }
-
-  .voucherContainer {
-    background: white !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    min-height: auto !important;
-  }
-
-  .voucherCard {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .voucherHeader {
-    flex-direction: row !important;
-    text-align: left !important;
-  }
-
-  .bookingBar {
-    flex-direction: row !important;
-  }
-
-  .flightRoute {
-    flex-direction: row !important;
-  }
+    .passengerCardHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }

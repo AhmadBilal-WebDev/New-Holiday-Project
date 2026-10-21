@@ -664,7 +664,7 @@ export default function Summery({ activityDetail }) {
           <div className={styles.trustItemDesc} style={{ marginTop: '0.25rem' }}>
             Our travel experts are available 24/7
           </div>
-          <a href="tel:01217772522" className={styles.supportBtn}>
+          <a href="tel:00000000000" className={styles.supportBtn}>
             Contact Support
           </a>
         </div>

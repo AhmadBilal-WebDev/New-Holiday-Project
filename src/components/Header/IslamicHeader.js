@@ -32,7 +32,7 @@ export default function IslamicHeader() {
     const [isMobilePackagesOpen, setIsMobilePackagesOpen] = useState(false);
 
     // Always go to dashboard; middleware redirects to /login if not authenticated
-    const myBookingsHref = "/dashboard";
+    const myBookingsHref = "/login";
 
     const isDashboardPage = DASHBOARD_PATHS.some(
         (path) => pathname === path || pathname?.startsWith(`${path}/`)
@@ -301,7 +301,7 @@ export default function IslamicHeader() {
                         Contact Us
                         <FaArrowRight size={12} aria-hidden="true" />
                     </Link>
-                    <a href="tel:01217772522" className={styles.islamicMobileCallBtn} onClick={closeMobileMenu}>
+                    <a href="tel:00000000000" className={styles.islamicMobileCallBtn} onClick={closeMobileMenu}>
                         <FaPhoneAlt size={14} />
                         0121 777 2522
                     </a>

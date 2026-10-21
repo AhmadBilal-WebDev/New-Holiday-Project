@@ -94,7 +94,7 @@ export default function TermsAndConditions() {
                 <span className={styles.metaValuePink}>info@alhijaztours.com</span>
               </div>
             </a>
-            <a href="tel:01217772522" className={styles.metaCard}>
+            <a href="tel:00000000000" className={styles.metaCard}>
               <span className={styles.metaIcon} aria-hidden="true">
                 <FaHeadset />
               </span>
@@ -303,7 +303,7 @@ export default function TermsAndConditions() {
                 </p>
                 <p className={styles.contactLine}>
                   <FaPhoneAlt aria-hidden="true" />
-                  <a href="tel:01217772522">0121 777 2522</a>
+                  <a href="tel:00000000000">0121 777 2522</a>
                 </p>
                 <p className={styles.contactLine}>
                   <FaEnvelope aria-hidden="true" />

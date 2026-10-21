@@ -1,521 +1,1274 @@
-/* ═══════════════════════════════════════════════════════════════
-   ACTIVITY BOOKING VOUCHER — confirmation receipt style
-   Palette: teal #0a6b6b · amber #d4a017 · white · soft grey
-   ═══════════════════════════════════════════════════════════════ */
+/* ── Activity Voucher — pink theme (own file) ── */
 
-/* ─── Wrapper & Container ─────────────────────────────────────── */
-.invoicecontainerwrap {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: #333;
-    line-height: 1.6;
-    overflow-x: hidden;
+.pageWrapper {
+    background: #e7e7e7;
+    min-height: 100vh;
+    padding: 1rem 0 0;
     -webkit-font-smoothing: antialiased;
-    background-color: #dce8e8;
 }
 
-.invoicecontainer {
-    width: 860px;
-    padding: 20px 15px;
-    margin: 20px auto;
+.voucherContainer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5px;
     position: relative;
-    z-index: 5;
+    font-family: "Helvetica", Arial, sans-serif;
+    color: #000;
 }
 
-.themeholyinvoice {
+.voucherCard {
     position: relative;
-    z-index: 4;
-    background-color: #ffffff;
-    border: 1px solid #b2d0d0;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.08);
 }
 
-.downloadinner {
-    padding: 28px 32px;
+.errorCard {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.08);
+    text-align: center;
+    padding: 3rem 1.5rem;
 }
 
-/* ─── Confirmation Banner ─────────────────────────────────────── */
-.confirmBanner {
-    background: #0a6b6b;
-    padding: 20px 28px;
-    margin: -28px -32px 24px -32px;
+.errorIcon {
+    color: #e6a800;
+}
+
+.errorText {
+    margin: 1rem 0 0;
+    color: #45556c;
+    font-size: 1.05rem;
+}
+
+.brandImageWrap {
+    width: 100%;
+    line-height: 0;
+}
+
+.brandImage {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+    object-fit: contain;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.vchHeader {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+.vchHeaderBand {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
     flex-wrap: wrap;
-    gap: 12px;
-    border-bottom: 3px solid #d4a017;
+    padding: 1.1rem 1.25rem;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 }
 
-.confirmLeft h2 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 2px 0;
-    letter-spacing: 0.4px;
+.vchHeaderCircle {
+    position: absolute;
+    top: -80px;
+    right: -60px;
+    width: 288px;
+    height: 288px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0.05;
+    pointer-events: none;
 }
 
-.confirmLeft p {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.65);
+.vchHeaderBrand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 0.25rem;
+}
+
+.vchHeaderDocTitle {
     margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-}
-
-.confirmBadge {
-    background: #d4a017;
-    color: #fff;
-    font-size: 11px;
+    font-size: clamp(1.25rem, 3vw, 1.85rem);
     font-weight: 700;
-    padding: 6px 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    line-height: 1.15;
+    color: #1a1a1a;
+}
+
+.vchHeaderTagline {
+    margin: 0;
+    color: rgba(26, 26, 26, 0.75);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.vchHeaderContacts {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* ─── Voucher Ref Row ──────────────────────────────────────────── */
-.refRow {
-    display: flex;
-    gap: 0;
-    margin-bottom: 22px;
-    border: 1px solid #b2d0d0;
-}
-
-.refBox {
-    flex: 1;
-    padding: 12px 18px;
-    background: #f4fafa;
-    border-right: 1px solid #b2d0d0;
-}
-
-.refBox:last-child {
-    border-right: none;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.45rem;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
     text-align: right;
 }
 
-.refBox small {
-    display: block;
-    font-size: 10px;
-    color: #0a6b6b;
+.vchHeaderContacts span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.vchHeaderSub {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem 1.2rem;
+    background: #fef5f7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.vchHeaderMain {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.vchForBlock {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.vchForLabel {
+    margin-bottom: 0.35rem;
+    color: #e7247a;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.6px;
-    margin-bottom: 2px;
-    font-weight: 600;
 }
 
-.refBox strong {
-    font-size: 14px;
-    color: #111;
+.vchGuestName {
+    margin: 0 0 0.35rem !important;
+    color: #1a1a1a;
+    font-size: clamp(1.45rem, 3.5vw, 32px);
     font-weight: 700;
+    line-height: 1.15;
 }
 
-/* ─── Activity Highlight Card ─────────────────────────────────── */
-.activityCard {
-    background: #f4fafa;
-    border: 1px solid #b2d0d0;
-    border-left: 4px solid #0a6b6b;
-    padding: 18px 20px;
-    margin-bottom: 20px;
+.vchForDesc {
+    margin: 0 !important;
+    max-width: 36rem;
+    color: #6b7280;
+    font-size: 0.88rem;
+    line-height: 1.4;
 }
 
-.activityTitle {
-    font-size: 16px;
+.vchMetaBlock {
+    flex: 0 0 auto;
+    text-align: right;
+    min-width: 0;
+}
+
+.vchStatusRow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+.vchStatusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
     font-weight: 700;
-    color: #0a6b6b;
-    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.statusConfirmed {
+    background-color: #dcfce7;
+    color: #166534 !important;
+    border: 1px solid #bbf7d0;
+}
+
+.statusCancelled {
+    background-color: #fee2e2;
+    color: #991b1b !important;
+    border: 1px solid #fecaca;
+}
+
+.statusPending {
+    background-color: #fef3c7;
+    color: #92400e !important;
+    border: 1px solid #fde68a;
+}
+
+.payment_paid {
+    background-color: #dcfce7;
+    color: #166534 !important;
+    border: 1px solid #bbf7d0;
+}
+
+.payment_pending,
+.payment_tentative {
+    background-color: #fef3c7;
+    color: #92400e !important;
+    border: 1px solid #fde68a;
+}
+
+.payment_unpaid,
+.payment_failed {
+    background-color: #fee2e2;
+    color: #991b1b !important;
+    border: 1px solid #fecaca;
+}
+
+.vchBookingRef {
+    color: #e7247a;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.vchBookingDate {
+    color: #9ca3af;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Activity extras */
+.ratingRow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex-shrink: 0;
+}
+
+.star {
+    color: #e7247a;
+    font-size: 0.85rem;
+}
+
+.starMuted {
+    color: #d4b8c4;
+    font-size: 0.85rem;
+}
+
+.ratingValue {
+    margin-left: 0.25rem;
+    color: #8a92a6;
+    font-size: 0.78rem;
 }
 
 .activityAddress {
-    font-size: 12px;
-    color: #666;
+    margin: 0.55rem 0 0;
     display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    color: #8a92a6;
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.activityAddress span {
+    word-break: break-word;
+}
+
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #eee4ea;
+}
+
+.infoItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.infoBlockText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.serviceRow {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    gap: 0.75rem;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 14px;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee4ea;
 }
 
-.activityMeta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.metaPill {
-    background: #fff;
-    border: 1px solid #b2d0d0;
-    padding: 6px 14px;
-    font-size: 12px;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border-radius: 2px;
-}
-
-.metaPill strong {
-    color: #0a6b6b;
-}
-
-.starRow {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    margin-top: 2px;
-}
-
-/* ─── Section Header ──────────────────────────────────────────── */
-.sectionHeader {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    margin-bottom: 0;
-}
-
-.sectionHeader h6 {
-    font-size: 11px;
+.serviceIndex {
+    color: #e7247a;
     font-weight: 700;
-    color: #ffffff;
-    background: #0a6b6b;
-    padding: 7px 16px;
-    margin: 0 !important;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    border-left: 4px solid #d4a017;
+}
+
+.serviceName {
+    color: #45556c;
+    font-weight: 600;
+}
+
+.serviceQty {
+    color: #8a92a6;
+    font-size: 0.88rem;
+}
+
+.policyNote {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.nonRefundable {
+    display: inline-flex;
+    max-width: 100%;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid #f1b4b4;
+    background: #fff5f5;
+    color: #c62828;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+/* QR card — voucher-only */
+.qrCard {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: #fff;
+    border: 1.5px solid #f0d6e2;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(231, 36, 122, 0.06);
+}
+
+.qrBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 108px;
+    height: 108px;
+    padding: 0.4rem;
+    background: #fef5f7;
+    border: 1px solid #f0d6e2;
+    border-radius: 12px;
+    line-height: 0;
+}
+
+.qrText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
     flex: 1;
 }
 
-/* ─── Passenger Info Grid ─────────────────────────────────────── */
-.passengerBlock {
-    border: 1px solid #b2d0d0;
-    border-top: none;
-    margin-bottom: 20px;
-}
-
-.passengerGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-}
-
-.passengerGridWide {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-}
-
-.passengerCell {
-    padding: 12px 16px;
-    border-right: 1px solid #e0eded;
-    border-bottom: 1px solid #e0eded;
-}
-
-.passengerCell:nth-child(3n) {
-    border-right: none;
-}
-
-.passengerCellWide {
-    padding: 12px 16px;
-    border-right: 1px solid #e0eded;
-    border-bottom: none;
-}
-
-.passengerCellWide:last-child {
-    border-right: none;
-}
-
-.passengerCell small,
-.passengerCellWide small {
-    display: block;
-    font-size: 10px;
-    color: #0a6b6b;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 2px;
-    font-weight: 600;
-}
-
-.passengerCell strong,
-.passengerCellWide strong {
-    font-size: 13px;
-    color: #222;
-    font-weight: 600;
-}
-
-.statusPill {
-    display: inline-block;
-    background: #e6f4f0;
-    color: #0a6b6b;
-    border: 1px solid #a3d4c6;
-    font-size: 11px;
+.qrTitle {
+    color: #e7247a;
+    font-size: 0.92rem;
     font-weight: 700;
-    padding: 2px 10px;
-    letter-spacing: 0.3px;
+    line-height: 1.25;
 }
 
-/* ─── Guest List ──────────────────────────────────────────────── */
-.guestBlock {
-    border: 1px solid #b2d0d0;
-    border-top: none;
-    margin-bottom: 20px;
+.qrLabel {
+    color: #8a92a6;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: left;
+    line-height: 1.4;
+    max-width: none;
+}
+
+/* ── Body ───────────────────────────────────────────────────── */
+.bodyInner {
+    padding: 0.35rem clamp(0.85rem, 2.5vw, 1.35rem) 0.5rem;
+}
+
+.detailCard {
+    background: #fff;
+    border: 1px solid #e8e5ea;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.06);
+    padding: clamp(1.15rem, 3vw, 1.75rem);
+    margin: 1.05rem 0;
+}
+
+.detailCardHead {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.15rem;
+}
+
+.detailStep {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7247a;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.detailCardTitle {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.detailGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.75rem;
+    row-gap: 1.1rem;
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    min-width: 0;
+}
+
+.detailLabel {
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.detailValue {
+    color: #1e1e1e;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* Hotel card */
+.hotelCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.hotelCardHead {
+    background: #fef5f7;
+    padding: clamp(0.95rem, 2.5vw, 1.25rem);
+}
+
+.hotelCardTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.hotelNameWrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.hotelIcon {
+    display: inline-flex;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+.hotelName {
+    margin: 0;
+    color: #45556c;
+    font-size: clamp(0.98rem, 2.2vw, 1.12rem);
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.hotelCity {
+    color: #8a92a6;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.hotelAddress {
+    margin: 0.45rem 0 0;
+    padding-left: 1.4rem;
+    color: #8a92a6;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.stayGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem 1rem;
+    margin-top: 1rem;
+    padding-left: 1.4rem;
+}
+
+.stayValue {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.roomList {
+    background: #fff;
+}
+
+.roomItem {
+    padding: 0.9rem clamp(0.95rem, 2.5vw, 1.25rem);
+    border-top: 1px solid #eee4ea;
+}
+
+.roomItemRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) auto;
+    gap: 0.65rem 1rem;
+    align-items: center;
+}
+
+.roomType {
+    color: #45556c;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.roomBoard {
+    color: #8a92a6;
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.roomOccupancy {
+    color: #8a92a6;
+    font-size: 0.84rem;
+    font-weight: 500;
+    white-space: nowrap;
+    justify-self: end;
+}
+
+.roomMeta {
+    margin-top: 0.55rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.cancelList {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #6b7280;
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+.cancelList strong {
+    color: #45556c;
+}
+
+.nonRefundable {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #f1b4b4;
+    background: #fff5f5;
+    color: #c62828;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Guests */
+.guestList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .guestRow {
     display: flex;
     align-items: center;
-    padding: 10px 16px;
-    border-bottom: 1px solid #e0eded;
-    gap: 16px;
+    justify-content: space-between;
+    gap: 0.75rem;
+    background: #fef5f7;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
 }
 
-.guestRow:last-child {
-    border-bottom: none;
-}
-
-.guestAvatar {
-    width: 32px;
-    height: 32px;
-    background: #0a6b6b;
-    border-radius: 50%;
+.guestLeft {
     display: flex;
     align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.guestIndex {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    color: #d4a017;
-    font-size: 14px;
+    background: #45556c;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
     flex-shrink: 0;
 }
 
+.guestInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
 .guestName {
-    font-size: 13px;
+    color: #45556c;
+    font-size: 0.95rem;
     font-weight: 600;
-    color: #222;
-    flex: 1;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.guestSub {
+    color: #8a92a6;
+    font-size: 0.8rem;
+    font-weight: 500;
+    word-break: break-word;
 }
 
 .guestMeta {
-    font-size: 11px;
-    color: #777;
-}
-
-.guestTypeBadge {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    background: #e6f4f0;
-    color: #0a6b6b;
-    border: 1px solid #a3d4c6;
-}
-
-/* ─── Traveler Count Block ────────────────────────────────────── */
-.travelerBlock {
-    border: 1px solid #b2d0d0;
-    border-top: none;
-    margin-bottom: 20px;
-    padding: 16px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.travelerPill {
-    background: #f4fafa;
-    border: 1px solid #b2d0d0;
-    padding: 10px 20px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    min-width: 140px;
+    gap: 0.55rem;
+    flex-shrink: 0;
 }
 
-.travelerPill .count {
-    font-size: 16px;
-    font-weight: 700;
-    color: #0a6b6b;
-    line-height: 1;
+.guestGender {
+    color: #8a92a6;
+    font-size: 0.86rem;
+    font-weight: 500;
 }
 
-.travelerPill .label {
-    font-size: 11px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-}
-
-/* ─── Additional Services ─────────────────────────────────────── */
-.servicesBlock {
-    border: 1px solid #b2d0d0;
-    border-top: none;
-    margin-bottom: 20px;
-}
-
-.serviceRow {
-    display: flex;
+.guestType {
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px;
-    border-bottom: 1px solid #e0eded;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: #f8e6ee;
+    color: #45556c;
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 
-.serviceRow:last-child {
-    border-bottom: none;
+.specialRequestText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    word-break: break-word;
 }
 
-.serviceRow:nth-child(even) {
-    background: #f9fdfd;
+.infoBullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
 }
 
-.serviceName {
-    font-size: 13px;
-    color: #333;
+.infoBullets li {
+    position: relative;
+    padding-left: 1.15rem;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.55;
 }
 
-.serviceQty {
-    font-size: 12px;
-    font-weight: 600;
-    color: #0a6b6b;
-    background: #e6f4f0;
-    border: 1px solid #a3d4c6;
-    padding: 2px 10px;
+.infoBullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e7247a;
 }
 
-/* ─── Footer Note ─────────────────────────────────────────────── */
-.invoicenote {
-    border-top: 1px solid #b2d0d0;
-    padding-top: 12px;
-    padding-bottom: 12px;
+/* Thanks footer */
+.thanksFooter {
+    position: relative;
+    overflow: hidden;
+    margin: 1rem 0 0;
+    padding: clamp(1.35rem, 3.5vw, 1.85rem) 1.25rem;
+    border-radius: 18px 18px 0 0;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
     text-align: center;
-    font-size: 11px;
-    color: #666;
-    margin-top: 24px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 }
 
-.invoicenote b {
-    color: #0a6b6b;
+.thanksFooterContent {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
 }
 
-/* ─── Responsive ──────────────────────────────────────────────── */
-@media screen and (max-width: 998px) {
-    .invoicecontainer {
-        width: 99%;
-    }
-
-    .invmobile100 {
-        width: 100% !important;
-    }
-
-    .passengerGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .passengerCell:nth-child(3n) {
-        border-right: 1px solid #e0eded;
-    }
-
-    .passengerCell:nth-child(2n) {
-        border-right: none;
-    }
+.thanksFooterTitle {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.25;
 }
 
-@media screen and (max-width: 768px) {
-    .confirmBanner {
+.thanksFooterContacts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem 1.35rem;
+    color: #1a1a1a;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.thanksFooterContacts span,
+.thanksFooterAddress {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.thanksFooterAddress {
+    color: #1a1a1a;
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: 1.4;
+    max-width: 100%;
+}
+
+.thanksFooterAddress span {
+    word-break: break-word;
+}
+
+/* Actions */
+.actionRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem 3rem;
+}
+
+.btnPrint,
+.btnInvoice,
+.btnHome {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    border: 1.5px solid transparent;
+    white-space: nowrap;
+}
+
+.btnPrint:hover,
+.btnInvoice:hover,
+.btnHome:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.btnPrint {
+    background: #e7247a;
+    color: #fff;
+    border-color: #e7247a;
+}
+
+.btnInvoice {
+    background: #fef5f7;
+    color: #e7247a;
+    border-color: #e7247a;
+}
+
+.btnHome {
+    background: #f4f6f9;
+    color: #45556c;
+    border-color: #d7dde7;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media screen and (max-width: 760px) {
+    .voucherContainer {
+        width: 98%;
+        max-width: 98%;
+        padding: 4px;
+    }
+
+    .vchHeaderBand {
         flex-direction: column;
         align-items: flex-start;
+        padding: 0.95rem 1rem;
+        border-radius: 0 0 14px 14px;
+        gap: 0.75rem;
     }
 
-    .passengerGrid,
-    .passengerGridWide {
-        grid-template-columns: 1fr;
+    .vchHeaderDocTitle {
+        font-size: 1.25rem;
     }
 
-    .passengerCell,
-    .passengerCellWide {
-        border-right: none;
+    .vchHeaderContacts {
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+        gap: 0.35rem;
+        font-size: 0.84rem;
     }
 
-    .travelerBlock {
+    .vchHeaderSub {
+        gap: 0.75rem;
+        padding: 0.95rem 1rem 1.05rem;
+        justify-content: flex-start;
+        min-height: 0;
+    }
+
+    .vchHeaderMain {
         flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0.65rem;
+        flex-wrap: nowrap;
+    }
+
+    .vchForBlock,
+    .vchMetaBlock {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .vchMetaBlock {
+        text-align: left;
+        margin-top: 0;
+    }
+
+    .vchStatusRow {
+        justify-content: flex-start;
+        margin-bottom: 0.35rem;
+    }
+
+    .serviceRow {
+        grid-template-columns: 28px 1fr;
+    }
+
+    .serviceQty {
+        grid-column: 2;
+    }
+
+    .qrCard {
+        width: 100%;
+        gap: 0.85rem;
+        padding: 0.85rem 0.9rem;
+    }
+
+    .qrBox {
+        width: 96px;
+        height: 96px;
     }
 }
 
-/* ─── Print ───────────────────────────────────────────────────── */
-@media print {
-
-    #voucher,
-    #voucher * {
-        visibility: visible;
+@media screen and (max-width: 400px) {
+    .qrCard {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.7rem;
     }
 
-    #voucher {
-        position: absolute;
-        left: 0;
-        top: 0;
+    .qrText {
+        align-items: center;
+    }
+
+    .qrLabel {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .pageWrapper {
+        padding: 0.5rem 0 0;
+    }
+
+    .voucherContainer {
         width: 100%;
+        max-width: 100%;
+        padding: 6px;
     }
 
-    .invoicecontainerwrap {
-        width: 100% !important;
-        background: white !important;
+    .vchGuestName {
+        font-size: 1.35rem;
+    }
+
+    .qrCard {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .qrTitle {
+        font-size: 0.88rem;
+    }
+
+    .qrLabel {
+        font-size: 0.78rem;
+    }
+
+    .detailCard {
+        padding: 1rem;
+        margin: 0.85rem 0;
+        border-radius: 14px;
+    }
+
+    .detailGrid {
+        grid-template-columns: 1fr;
+        row-gap: 0.85rem;
+    }
+
+    .hotelCardTop {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .hotelCity {
+        padding-left: 1.4rem;
+        white-space: normal;
+    }
+
+    .hotelAddress,
+    .stayGrid {
+        padding-left: 0;
+    }
+
+    .stayGrid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .roomItemRow {
+        grid-template-columns: 1fr;
+        gap: 0.28rem;
+    }
+
+    .roomOccupancy {
+        justify-self: start;
+    }
+
+    .guestRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.55rem;
+    }
+
+    .guestMeta {
+        padding-left: 2.35rem;
+        flex-wrap: wrap;
+    }
+
+    .thanksFooter {
+        padding: 1.2rem 0.9rem;
+        border-radius: 14px 14px 0 0;
+    }
+
+    .thanksFooterContacts {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .actionRow {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+        padding: 1.1rem 0.85rem 2.75rem;
+    }
+
+    .btnPrint,
+    .btnInvoice,
+    .btnHome {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+/* ── Print ──────────────────────────────────────────────────── */
+@media print {
+    @page {
+        size: A4;
+        margin: 8mm 10mm;
+    }
+
+    .pageWrapper {
+        background: #fff !important;
         padding: 0 !important;
-        margin: 0 !important;
+        min-height: 0 !important;
     }
 
-    .invoicecontainer {
-        width: 100% !important;
+    .voucherContainer {
         max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
         padding: 0 !important;
-        margin: 0 !important;
     }
 
-    .themeholyinvoice {
+    .voucherCard {
         box-shadow: none !important;
-        border: none !important;
-        margin: 0 !important;
+        overflow: visible !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
     }
 
-    .downloadinner {
-        padding: 20px !important;
+    .bodyInner {
+        padding: 4px 10px 0 !important;
     }
 
-    .confirmBanner {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        background: #0a6b6b !important;
+    .detailCard,
+    .hotelCard,
+    .vchHeader,
+    .roomList,
+    .infoBullets {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
     }
 
-    .confirmBadge {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        background: #d4a017 !important;
-    }
-
-    .sectionHeader h6 {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        background: #0a6b6b !important;
-    }
-
-    .guestAvatar {
+    .detailCard {
+        box-shadow: none !important;
+        margin: 0.5rem 0 !important;
+        padding: 0.8rem 0.9rem !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
 
-    .premiumTable thead th {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        background: #d4a84b !important;
-        color: #1a1a1a !important;
+    .detailCardHead {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
     }
 
-    .invoicecontainerwrap :global(button) {
-        display: none !important;
+    .detailStep {
+        background: #e7247a !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
-    .invoicecontainerwrap :global(.mt-2.text-center) {
+    .detailGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .hotelCardHead {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .stayGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .roomItemRow {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) auto !important;
+    }
+
+    .roomItem,
+    .guestRow {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .guestRow {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .guestIndex {
+        background: #45556c !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .guestType {
+        background: #f8e6ee !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .infoBullets li::before {
+        background: #e7247a !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .vchHeaderBand {
+        display: flex !important;
+        flex-direction: row !important;
+        background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .vchHeaderCircle {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .vchHeaderSub {
+        display: flex !important;
+        flex-direction: column !important;
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .vchHeaderMain {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+    }
+
+    .vchMetaBlock {
+        text-align: right !important;
+    }
+
+    .vchStatusRow {
+        justify-content: flex-end !important;
+    }
+
+    .qrCard {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        width: 100% !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        border: 1.5px solid #f0d6e2 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .qrBox {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .qrTitle {
+        color: #e7247a !important;
+    }
+
+    .vchStatusBadge,
+    .statusConfirmed,
+    .statusCancelled,
+    .statusPending,
+    .payment_paid,
+    .payment_pending {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .thanksFooter {
+        margin: 0.65rem 0 0 !important;
+        border-radius: 14px 14px 0 0 !important;
+        background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%) !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .thanksFooterContacts {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    .actionRow {
         display: none !important;
     }
 }

@@ -628,11 +628,12 @@ export default function Page() {
                                 <div className={styles.invFooterLeft}>
                                     <span className={styles.invFooterItem}>
                                         <FaPhone size={13} className={styles.invFooterIcon} />
-                                        01217772522
+                                        00000000000
                                     </span>
                                     <span className={styles.invFooterItem}>
                                         <FaEnvelope size={13} className={styles.invFooterIcon} />
-                                        info@alhijaztours.net
+                                        info@example.com
+
                                     </span>
                                 </div>
                                 <div className={styles.invFooterRight}>

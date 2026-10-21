@@ -1,21 +1,13 @@
 ﻿"use client";
-import React, { useState, useEffect } from "react";
-import styles from "../Bookings.module.css";
-import { FaEye, FaHotel, FaArrowRight, FaRegFileAlt } from "react-icons/fa";
-import { Menu, Pagination } from "@mantine/core";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { FaHotel, FaRegFileAlt } from "react-icons/fa";
+import { Menu } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
 import { CgCalendar } from "react-icons/cg";
-import { Popover } from "@mantine/core";
-import { DatePicker } from "@mantine/dates";
-import { LiaAngleDownSolid } from "react-icons/lia";
-import { IoMdCheckmark } from "react-icons/io";
+import { FaCheckCircle, FaClock, FaTimesCircle } from "react-icons/fa";
+import { FiSearch, FiDownload } from "react-icons/fi";
 import moment from "moment";
 import Link from "next/link";
-import {
-  FaCalendarAlt,
-  FaCheckCircle,
-  FaClock,
-  FaTimesCircle,
-} from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import CancelBookingModal from "@/dashboard_components/CancelBookingModal/CancelBookingModal";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -27,6 +19,30 @@ function formatStatusLabel(status) {
     .toLowerCase()
     .replace(/_/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+/** pending + tentative treated as one group so cards/filters match the table */
+function normalizeBookingStatus(status) {
+  const s = (status || "").toLowerCase().trim().replace(/\s+/g, "_");
+  if (s === "pending" || s === "tentative") return "tentative";
+  return s;
+}
+
+function getStayNights(checkIn, checkOut) {
+  const nights = moment(checkOut).diff(moment(checkIn), "days");
+  return Number.isFinite(nights) && nights > 0 ? nights : 0;
+}
+
+function formatStayRange(checkIn, checkOut) {
+  if (!checkIn || !checkOut) return "-";
+  return `${moment(checkIn).format("MMM DD")} - ${moment(checkOut).format("MMM DD")}`;
+}
+
+function formatDuration(checkIn, checkOut) {
+  const nights = getStayNights(checkIn, checkOut);
+  if (!nights) return "-";
+  const days = nights;
+  return `${days} day${days !== 1 ? "s" : ""} / ${nights} Night${nights !== 1 ? "s" : ""}`;
 }
 
 export default function HotelBookingsPage() {
@@ -43,30 +59,14 @@ export default function HotelBookingsPage() {
     supplierToDisplayRate: 1,
   });
   const [bookings, setBookings] = useState([]);
-  const [meta, setMeta] = useState({});
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [dateRange, setDateRange] = useState([null, null]);
-  const [activePage, setActivePage] = useState(1);
-  const ITEMS_PER_PAGE = 7;
-  const [calendarColumns, setCalendarColumns] = useState(2);
 
-  useEffect(() => {
-    const update = () => setCalendarColumns(window.innerWidth < 768 ? 1 : 2);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  useEffect(() => {
-    const { email, otp } = session.user;
-    if (!email || !otp) return;
-    fetchBookings();
-  }, []);
-
-  async function fetchBookings() {
-    const { email, otp } = session.user;
+  const fetchBookings = useCallback(async () => {
+    const email = session?.user?.email;
+    const otp = session?.user?.otp;
     if (!email || !otp) return;
     setLoading(true);
     try {
@@ -74,33 +74,37 @@ export default function HotelBookingsPage() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/b2c/dashboard/hotel/bookings`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // "ngrok-skip-browser-warning": "true",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, otp }),
         },
       );
       const data = await response.json();
-      if (!data?.success && data?.message?.toLowerCase().includes('otp')) {
-        router.push(`/verify-otp?email=${encodeURIComponent(session?.user?.email || '')}`);
+      if (!data?.success && data?.message?.toLowerCase().includes("otp")) {
+        router.push(
+          `/verify-otp?email=${encodeURIComponent(session?.user?.email || "")}`,
+        );
         return;
       }
       setBookings(data?.data || []);
-      setMeta(data?.meta || {});
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [session, router]);
 
-  // Filter bookings based on search, status, and date range
+  useEffect(() => {
+    if (!session?.user?.email || !session?.user?.otp) return;
+    fetchBookings();
+  }, [session, fetchBookings]);
+
   const filteredBookings = bookings.filter((booking) => {
-    // Search filter
     const matchesSearch =
       searchQuery === "" ||
       booking?.invoice_number
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      booking?.booking_reference
         ?.toLowerCase()
         .includes(searchQuery.toLowerCase()) ||
       booking?.holder_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -110,14 +114,15 @@ export default function HotelBookingsPage() {
       booking?.holder_email
         ?.toLowerCase()
         .includes(searchQuery.toLowerCase()) ||
-      booking?.hotel_details?.name?.toLowerCase().includes(searchQuery.toLowerCase());
+      booking?.hotel_details?.name
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
-    // Status filter
     const matchesStatus =
       selectedStatus === "all" ||
-      booking?.booking_status?.toLowerCase() === selectedStatus.toLowerCase();
+      normalizeBookingStatus(booking?.booking_status) ===
+        selectedStatus.toLowerCase();
 
-    // Date range filter
     let matchesDateRange = true;
     if (dateRange[0] && dateRange[1]) {
       const checkInDate = moment(booking?.check_in);
@@ -131,52 +136,125 @@ export default function HotelBookingsPage() {
     return matchesSearch && matchesStatus && matchesDateRange;
   });
 
-  // Reset to page 1 whenever filters change
-  useEffect(() => {
-    setActivePage(1);
-  }, [searchQuery, selectedStatus, dateRange]);
+  const hasActiveFilters =
+    selectedStatus !== "all" || Boolean(dateRange[0] && dateRange[1]);
 
-  const totalPages = Math.ceil(filteredBookings.length / ITEMS_PER_PAGE);
-  const paginatedBookings = filteredBookings.slice(
-    (activePage - 1) * ITEMS_PER_PAGE,
-    activePage * ITEMS_PER_PAGE
-  );
+  // Counts from loaded bookings so cards always match the table (API meta can disagree)
+  const statusCounts = useMemo(() => {
+    const counts = {
+      total: bookings.length,
+      confirmed: 0,
+      tentative: 0,
+      cancelled: 0,
+    };
+    bookings.forEach((booking) => {
+      const status = normalizeBookingStatus(booking?.booking_status);
+      if (status === "confirmed") counts.confirmed += 1;
+      else if (status === "tentative") counts.tentative += 1;
+      else if (status === "cancelled") counts.cancelled += 1;
+    });
+    return counts;
+  }, [bookings]);
 
   const statCards = [
     {
-      label: "Total Bookings",
-      value: meta?.total_count,
-      icon: <FaCalendarAlt size={18} />,
-      iconBg: "#00000057",
+      badge: "Total Bookings",
+      title: "Total Hotel Bookings",
+      value: statusCounts.total,
+      icon: <FaHotel size={18} />,
+      badgeTone: "",
     },
     {
-      label: "Confirmed",
-      value: meta?.confirmed_count,
+      badge: "Confirmed",
+      title: "Confirmed Hotel Bookings",
+      value: statusCounts.confirmed,
       icon: <FaCheckCircle size={18} />,
-      iconBg: "#00000057",
+      badgeTone: "",
     },
     {
-      label: "Tentative",
-      value: meta?.tentative_count,
+      badge: "Tentative",
+      title: "Tentative Hotel Bookings",
+      value: statusCounts.tentative,
       icon: <FaClock size={18} />,
-      iconBg: "#00000057",
+      badgeTone: "pending",
     },
     {
-      label: "Cancelled",
-      value: meta?.cancelled_count,
+      badge: "Cancelled",
+      title: "Cancelled Hotel Bookings",
+      value: statusCounts.cancelled,
       icon: <FaTimesCircle size={18} />,
-      iconBg: "#00000057",
+      badgeTone: "cancelled",
     },
   ];
 
   const statusBadgeClass = {
-    confirmed: "bk-badge-confirmed",
-    paid: "bk-badge-confirmed",
-    tentative: "bk-badge-tentative",
-    pending: "bk-badge-pending",
-    cancelled: "bk-badge-cancelled",
+    confirmed: "hb-badge-confirmed",
+    paid: "hb-badge-confirmed",
+    tentative: "hb-badge-tentative",
+    pending: "hb-badge-pending",
+    cancelled: "hb-badge-cancelled",
   };
-  
+
+  const downloadReport = () => {
+    const headers = [
+      "Booking Code",
+      "Reference",
+      "Booking Date",
+      "Guest Name",
+      "Guest Email",
+      "Hotel",
+      "Duration",
+      "Price",
+      "Booking Status",
+      "Payment Status",
+      "Issued Date",
+    ];
+
+    const rows = filteredBookings.map((booking) => [
+      booking?.invoice_number || "",
+      booking?.booking_reference || "",
+      formatStayRange(booking?.check_in, booking?.check_out),
+      `${booking?.holder_name || ""} ${booking?.holder_surname || ""}`.trim(),
+      booking?.holder_email || "",
+      booking?.hotel_details?.name || "",
+      formatDuration(booking?.check_in, booking?.check_out),
+      `${booking?.display_currency || ""} ${booking?.booking_amount ?? ""}`.trim(),
+      formatStatusLabel(booking?.booking_status),
+      formatStatusLabel(booking?.payment_status),
+      booking?.created_at
+        ? moment(booking.created_at, "DD-MM-YYYY HH:mm:ss").format("DD MMM YYYY")
+        : "",
+    ]);
+
+    const escapeCell = (value) => `"${String(value).replace(/"/g, '""')}"`;
+    const csv = [headers, ...rows]
+      .map((row) => row.map(escapeCell).join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `hotel-bookings-${moment().format("YYYY-MM-DD")}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const canCancelBooking = (booking) => {
+    const provider = booking?.provider?.toLowerCase();
+    if (
+      (provider === "custom" || provider === "synchtravel") &&
+      booking?.booking_status?.toLowerCase() !== "cancelled"
+    ) {
+      return moment(booking?.check_out).isAfter(moment(), "day");
+    }
+    return (
+      booking?.booking_status?.toLowerCase() === "confirmed" &&
+      booking?.payment_status?.toLowerCase() === "paid" &&
+      moment(booking?.check_in).isAfter(moment(), "day")
+    );
+  };
+
   return (
     <>
       <CancelBookingModal
@@ -201,120 +279,129 @@ export default function HotelBookingsPage() {
         displayCurrency={cancelModal.displayCurrency}
         supplierCurrency={cancelModal.supplierCurrency}
         supplierToDisplayRate={cancelModal.supplierToDisplayRate}
-        endPoint='/api/hotel/cancel-booking'
+        endPoint="/api/hotel/cancel-booking"
         onSuccess={() => fetchBookings()}
       />
-      <div className="bk-page-wrapper">
-        {/* Page Header */}
-        <div className="d-flex align-items-center gap-3 mb-4">
-          <div className="bk-header-icon d-flex align-items-center justify-content-center rounded-2 flex-shrink-0">
-            <FaHotel size={20} />
-          </div>
-          <div>
-            <h5 className="bk-header-title fw-bold">Hotel Bookings</h5>
-            <p className="bk-header-subtitle text-muted">
-              Manage all your hotel reservations in one place
-            </p>
-          </div>
-        </div>
 
-        {/* Stats */}
-        <div className="row g-3 mb-4">
+      <div className="hb-page">
+        <div className="hb-stats">
           {statCards.map((s) => (
-            <div className="col-12 col-md-6 col-lg-3" key={s.label}>
-              <div className="bk-stat-card rounded-3 p-3 h-100 text-white">
-                <div className="d-flex align-items-center justify-content-between mb-2">
-                  <span className="bk-stat-label text-white">{s.label}</span>
-                  <div className="bk-stat-icon rounded-2 d-flex align-items-center justify-content-center">
-                    {s.icon}
-                  </div>
-                </div>
-                <h4 className="fw-bold mb-0">{s.value ?? "-"}</h4>
+            <article className="hb-stat-card" key={s.title}>
+              <div className="hb-stat-top">
+                <span className="hb-stat-icon">{s.icon}</span>
+                <span className={`hb-stat-badge ${s.badgeTone}`.trim()}>
+                  {s.badge}
+                </span>
               </div>
-            </div>
+              <p className="hb-stat-title">{s.title}</p>
+              <h3 className="hb-stat-value">{s.value ?? "-"}</h3>
+            </article>
           ))}
         </div>
 
-        {/* Table Card */}
-        <div className="bk-table-card bg-white rounded-3">
-          {/* Filter Bar */}
-          <div className="bk-filter-bar">
-            <input
-              type="text"
-              placeholder="Search by name, email or invoice..."
-              className={`${styles.searchInput}`}
-              style={{ fontSize: 16 }}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Menu shadow="md" position="bottom-end" width="target">
-              <Menu.Target>
-                <button className={styles.filterBtn}>
-                  {selectedStatus === "all"
-                    ? "All Status"
-                    : selectedStatus.charAt(0).toUpperCase() + selectedStatus.slice(1)}{" "}
-                  <LiaAngleDownSolid />
-                </button>
-              </Menu.Target>
-              <Menu.Dropdown>
-                {["all", "confirmed", "tentative", "cancelled"].map((s) => (
-                  <Menu.Item
-                    key={s}
-                    leftSection={
-                      selectedStatus === s ? (
-                        <IoMdCheckmark size={14} />
-                      ) : (
-                        <span style={{ width: 14, display: "inline-block" }} />
-                      )
-                    }
-                    onClick={() => setSelectedStatus(s)}
-                  >
-                    {s === "all" ? "All Status" : s.charAt(0).toUpperCase() + s.slice(1)}
-                  </Menu.Item>
-                ))}
-              </Menu.Dropdown>
-            </Menu>
-            <Popover width="auto" position="bottom-end" withArrow shadow="md">
-              <Popover.Target>
-                <button className={styles.filterBtn}>
-                  <CgCalendar size={15} />
-                  {dateRange[0] && dateRange[1]
-                    ? `${moment(dateRange[0]).format("MMM DD")} ${moment(dateRange[1]).format("MMM DD")}`
-                    : "Date Range"}
-                </button>
-              </Popover.Target>
-              <Popover.Dropdown>
-                <div>
-                  <h6 className="fw-normal text-center">Check-in Date</h6>
-                </div>
-                <DatePicker
-                  type="range"
-                  numberOfColumns={calendarColumns}
-                  value={dateRange}
-                  onChange={setDateRange}
-                />
-                {dateRange[0] && dateRange[1] && (
-                  <div className="bk-date-clear-wrapper">
-                    <button className="bk-date-clear-btn" onClick={() => setDateRange([null, null])}>
-                      Clear
-                    </button>
-                  </div>
-                )}
-              </Popover.Dropdown>
-            </Popover>
-            <span className="bk-results-count text-muted">
-              {filteredBookings.length} of {bookings.length} result
-              {bookings.length !== 1 ? "s" : ""}
-            </span>
+        <section className="hb-panel">
+          <div className="hb-panel-head">
+            <h2 className="hb-panel-title">Hotel Bookings</h2>
           </div>
 
-          {/* Table */}
-          <div className="table-responsive">
-            <table className="bk-table">
+          <form
+            className="hb-toolbar"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <div className="hb-search">
+              <FiSearch className="hb-search-icon" size={16} />
+              <input
+                type="text"
+                className="hb-search-input"
+                placeholder="Search bookings..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search bookings"
+              />
+            </div>
+
+            <div className="hb-status-row" role="group" aria-label="Status filter">
+              {[
+                { key: "all", label: "All" },
+                { key: "confirmed", label: "Confirmed" },
+                { key: "tentative", label: "Tentative" },
+                { key: "cancelled", label: "Cancelled" },
+              ].map((s) => (
+                <button
+                  key={s.key}
+                  type="button"
+                  className={`hb-status-chip${selectedStatus === s.key ? " active" : ""}`}
+                  onClick={() => setSelectedStatus(s.key)}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
+            <DatePickerInput
+              type="range"
+              placeholder="Date Range"
+              value={dateRange}
+              onChange={setDateRange}
+              leftSection={<CgCalendar size={15} />}
+              clearable
+              className="hb-date-input"
+              classNames={{
+                input: "hb-date-input-field",
+              }}
+              valueFormat="MMM DD"
+              popoverProps={{
+                position: "bottom-start",
+                withinPortal: true,
+                middlewares: { flip: true, shift: true },
+              }}
+            />
+
+            {hasActiveFilters && (
+              <button
+                type="button"
+                className="hb-btn-clear"
+                onClick={() => {
+                  setSelectedStatus("all");
+                  setDateRange([null, null]);
+                }}
+              >
+                Clear
+              </button>
+            )}
+
+            <button
+              type="button"
+              className="hb-btn-download"
+              onClick={downloadReport}
+              disabled={loading || filteredBookings.length === 0}
+            >
+              <FiDownload size={15} />
+              Download Report
+            </button>
+          </form>
+
+          <div className="hb-results-meta">
+            {filteredBookings.length} of {bookings.length} result
+            {bookings.length !== 1 ? "s" : ""}
+            {hasActiveFilters ? " (filtered)" : ""}
+          </div>
+
+          <div className="hb-table-wrap">
+            <table className="hb-table">
               <thead>
-                <tr className="bk-thead-tr">
-                  {["Invoice No.", "Guest", "Hotel / Dates", "Issued Date", "Status", "Amount", "Actions"].map((h) => (
-                    <th key={h} className="bk-th">{h}</th>
+                <tr>
+                  {[
+                    "Booking Code",
+                    "Booking Date",
+                    "Guest Name",
+                    "Hotel",
+                    "Duration",
+                    "Price",
+                    "Status",
+                    "Actions",
+                  ].map((h) => (
+                    <th key={h}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -322,127 +409,152 @@ export default function HotelBookingsPage() {
                 {loading ? (
                   Array.from({ length: 6 }).map((_, i) => (
                     <tr key={i} className="mp-skeleton-row">
-                      {Array.from({ length: 6 }).map((_, j) => (
+                      {Array.from({ length: 8 }).map((_, j) => (
                         <td key={j}>
-                          <div className={`mp-skeleton-bar${j === 5 ? " mp-skeleton-bar-short" : ""}`} />
+                          <div
+                            className={`mp-skeleton-bar${j === 7 ? " mp-skeleton-bar-short" : ""}`}
+                          />
                         </td>
                       ))}
                     </tr>
                   ))
                 ) : filteredBookings.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="bk-empty-state">
+                    <td colSpan={8} className="hb-empty">
                       No bookings found matching your filters.
                     </td>
                   </tr>
                 ) : (
-                  paginatedBookings.map((booking, index) => {
+                  filteredBookings.map((booking, index) => {
                     const st = booking?.booking_status?.toLowerCase();
-                    const badgeClass = statusBadgeClass[st] || "bk-badge-default";
-                    const paymentBadgeClass = statusBadgeClass[booking?.payment_status?.toLowerCase()] || "bk-badge-default";
+                    const badgeClass =
+                      statusBadgeClass[st] || "hb-badge-default";
+                    const paymentBadgeClass =
+                      statusBadgeClass[
+                        booking?.payment_status?.toLowerCase()
+                      ] || "hb-badge-default";
+
                     return (
-                      <tr key={index} className="bk-tr">
-                        <td className="bk-td-ref">{booking?.invoice_number} <br/> Ref: {booking?.booking_reference}</td>
-                        <td className="bk-td-guest">
-                          <div className="bk-guest-name">
+                      <tr key={booking?.id || booking?.invoice_number || index}>
+                        <td>
+                          <span className="hb-code">
+                            {booking?.invoice_number || "-"}
+                          </span>
+                          {booking?.booking_reference && (
+                            <span className="hb-code-sub">
+                              Ref: {booking.booking_reference}
+                            </span>
+                          )}
+                        </td>
+                        <td style={{ whiteSpace: "nowrap" }}>
+                          {formatStayRange(
+                            booking?.check_in,
+                            booking?.check_out,
+                          )}
+                        </td>
+                        <td>
+                          <div className="hb-guest-name">
                             {booking?.holder_name} {booking?.holder_surname}
                           </div>
-                          <div className="bk-guest-email">{booking?.holder_email}</div>
-                        </td>
-                        <td className="bk-td-detail">
-                          <div className="bk-detail-primary">{booking?.hotel_details?.name}</div>
-                          <div className="bk-detail-secondary">
-                            {moment(booking?.check_in).format("MMM DD")}{" "}
-                            <FaArrowRight size={9} />{" "}
-                            {moment(booking?.check_out).format("MMM DD, YYYY")}
+                          <div className="hb-guest-email">
+                            {booking?.holder_email}
                           </div>
                         </td>
-                        <td className="bk-td-text-nowrap">
-                          {moment(booking?.created_at, "DD-MM-YYYY HH:mm:ss").format("DD MMM YYYY")}
+                        <td>
+                          <div className="hb-hotel">
+                            {booking?.hotel_details?.name || "-"}
+                          </div>
                         </td>
-                        <td className="bk-td-ref">
-                          <span className={`bk-status-badge ${badgeClass}`}>
-                            Status: {formatStatusLabel(booking?.booking_status)}
+                        <td style={{ whiteSpace: "nowrap" }}>
+                          {formatDuration(
+                            booking?.check_in,
+                            booking?.check_out,
+                          )}
+                        </td>
+                        <td className="hb-price">
+                          {booking?.display_currency} {booking?.booking_amount}
+                        </td>
+                        <td>
+                          <span className={`hb-badge ${badgeClass}`}>
+                           Status: {formatStatusLabel(booking?.booking_status)}
                           </span>
                           <br />
-                          <span className={`bk-status-badge mt-1 ${paymentBadgeClass}`}>
+                          <span className={`hb-badge mt-1 ${paymentBadgeClass}`}>
                             Payment: {formatStatusLabel(booking?.payment_status)}
                           </span>
                         </td>
-                         <td className="bk-td-status">
-                           {booking?.display_currency} {booking?.booking_amount}
-                         </td>
-                        <td className="bk-td-actions">
-                          <button className={styles.actionsBtn}>
-                            <Menu shadow="md" position="bottom-end" width={190}>
-                              <Menu.Target>
-                                <span className="bk-menu-dots">...</span>
-                              </Menu.Target>
-                              <Menu.Dropdown>
-                                <Menu.Item leftSection={<FaRegFileAlt size={13} />}>
-                                  <Link
-                                    href={`/hotels/invoice/${booking?.invoice_number}`}
-                                    target="_blank"
-                                    className="text-dark"
-                                  >
-                                    View Invoice
-                                  </Link>
+                        <td>
+                          <Menu shadow="md" position="bottom-end" width={190}>
+                            <Menu.Target>
+                              <button
+                                type="button"
+                                className="hb-actions-btn"
+                                aria-label="Booking actions"
+                              >
+                                ...
+                              </button>
+                            </Menu.Target>
+                            <Menu.Dropdown>
+                              <Menu.Item leftSection={<FaRegFileAlt size={13} />}>
+                                <Link
+                                  href={`/hotels/invoice/${booking?.invoice_number}`}
+                                  target="_blank"
+                                  className="text-dark"
+                                >
+                                  View Invoice
+                                </Link>
+                              </Menu.Item>
+                              <Menu.Item leftSection={<FaRegFileAlt size={13} />}>
+                                <Link
+                                  href={`/hotels/voucher/${booking?.invoice_number}`}
+                                  target="_blank"
+                                  className="text-dark"
+                                >
+                                  View Voucher
+                                </Link>
+                              </Menu.Item>
+                              {canCancelBooking(booking) && (
+                                <Menu.Item
+                                  leftSection={
+                                    <RiDeleteBin6Line color="red" size={13} />
+                                  }
+                                  color="red"
+                                  onClick={() =>
+                                    setCancelModal({
+                                      opened: true,
+                                      bookingReference:
+                                        booking?.booking_reference,
+                                      provider: booking?.provider,
+                                      bookingId: booking?.id,
+                                      hotelCancellationPolicies:
+                                        booking?.cancellation_policies ||
+                                        booking?.rooms ||
+                                        [],
+                                      displayCurrency:
+                                        booking?.display_currency ||
+                                        booking?.pricing?.display_currency ||
+                                        booking?.client_currency ||
+                                        "",
+                                      supplierCurrency:
+                                        booking?.currency ||
+                                        booking?.supplier_currency ||
+                                        booking?.pricing?.supplier_currency ||
+                                        "",
+                                      supplierToDisplayRate:
+                                        Number(
+                                          booking?.supplier_to_display_rate ||
+                                            booking?.pricing
+                                              ?.supplier_to_display_rate ||
+                                            1,
+                                        ) || 1,
+                                    })
+                                  }
+                                >
+                                  Cancel Booking
                                 </Menu.Item>
-                                <Menu.Item leftSection={<FaRegFileAlt size={13} />}>
-                                  <Link
-                                    href={`/hotels/voucher/${booking?.invoice_number}`}
-                                    target="_blank"
-                                    className="text-dark"
-                                  >
-                                    View Voucher
-                                  </Link>
-                                </Menu.Item>
-                                {(
-                                  (booking?.provider?.toLowerCase() === "custom" || booking?.provider?.toLowerCase() === "synchtravel") 
-                                  && booking?.booking_status?.toLowerCase() !== "cancelled"
-                                    ? moment(booking?.check_out).isAfter(moment(), "day")
-                                    : booking?.booking_status?.toLowerCase() === "confirmed" &&
-                                      booking?.payment_status?.toLowerCase() === "paid" &&
-                                      moment(booking?.check_in).isAfter(moment(), "day")
-                                ) && (
-                                    <Menu.Item
-                                      leftSection={<RiDeleteBin6Line color="red" size={13} />}
-                                      color="red"
-                                      onClick={() =>
-                                        setCancelModal({
-                                          opened: true,
-                                          bookingReference: booking?.booking_reference,
-                                          provider: booking?.provider,
-                                          bookingId: booking?.id,
-                                          hotelCancellationPolicies:
-                                            booking?.cancellation_policies ||
-                                            booking?.rooms ||
-                                            [],
-                                          displayCurrency:
-                                            booking?.display_currency ||
-                                            booking?.pricing?.display_currency ||
-                                            booking?.client_currency ||
-                                            "",
-                                          supplierCurrency:
-                                            booking?.currency ||
-                                            booking?.supplier_currency ||
-                                            booking?.pricing?.supplier_currency ||
-                                            "",
-                                          supplierToDisplayRate:
-                                            Number(
-                                              booking?.supplier_to_display_rate ||
-                                                booking?.pricing?.supplier_to_display_rate ||
-                                                1,
-                                            ) || 1,
-                                        })
-                                      }
-                                    >
-                                      Cancel Booking
-                                    </Menu.Item>
-                                  )} 
-                              </Menu.Dropdown>
-                            </Menu>
-                          </button>
+                              )}
+                            </Menu.Dropdown>
+                          </Menu>
                         </td>
                       </tr>
                     );
@@ -451,22 +563,8 @@ export default function HotelBookingsPage() {
               </tbody>
             </table>
           </div>
-          {!loading && totalPages > 1 && (
-            <div className="bk-pagination-wrapper d-flex flex-wrap justify-content-center align-items-center gap-2 py-3 px-2">
-              <span className="text-muted" style={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
-                Showing {(activePage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(activePage * ITEMS_PER_PAGE, filteredBookings.length)} of {filteredBookings.length}
-              </span>
-              <Pagination
-                total={totalPages}
-                value={activePage}
-                onChange={setActivePage}
-                size="sm"
-                color="#9b8357"
-                withEdges
-              />
-            </div>
-          )}
-        </div>
+
+        </section>
       </div>
     </>
   );

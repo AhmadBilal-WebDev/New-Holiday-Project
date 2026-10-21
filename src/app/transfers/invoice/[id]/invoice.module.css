@@ -1,771 +1,1374 @@
-.invoicecontainerwrap {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: #333;
-    line-height: 1.6;
-    overflow-x: hidden;
+/* Transfer Invoice - pink theme (own file) */
+
+.pageWrapper {
+    background: #e7e7e7;
+    min-height: 100vh;
+    padding: 1rem 0 0;
     -webkit-font-smoothing: antialiased;
-    background-color: #e8eaed;
 }
 
-.invoicecontainer {
-    width: 860px;
+.invoiceContainer {
+    max-width: 860px;
+    margin: 0 auto;
     padding: 5px;
-    margin: 20px auto;
     position: relative;
-    z-index: 5;
+    font-family: "Helvetica", Arial, sans-serif;
+    color: #000;
 }
 
-.themeholyinvoice {
+.invoiceCard {
     position: relative;
-    z-index: 4;
-    background-color: #ffffff;
-    border: 1px solid #d0d5dd;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.08);
 }
 
-.downloadinner {
-    padding: 28px 32px;
-}
-
-.invoicenote {
-    border-top: 1px solid #d0d5dd;
-    padding-top: 12px;
-    padding-bottom: 12px;
+.errorCard {
+    background: #fff;
+    border-radius: 14px;
+    padding: 2.5rem 1.5rem;
     text-align: center;
-    font-size: 11px;
-    color: #666;
-    margin-top: 24px;
+    color: #45556c;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.08);
 }
 
-.invoicenote b {
-    color: #E7247A;
-}
-
-.invoiceprintbutton {
-    position: absolute;
-    right: -3em;
-}
-
-@media screen and (max-width: 998px) {
-    .invoiceprintbutton {
-        position: fixed;
-        z-index: 7;
-        right: 5px;
-    }
-
-    .invoicecontainer {
-        width: 99%;
-    }
-
-    .invmobile100 {
-        width: 100% !important;
-    }
-}
-
-@media print {
-
-    #invoice,
-    #invoice * {
-        visibility: visible;
-    }
-
-    #printPageButton {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    #invoice {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-    }
-
-    .invoicecontainerwrap {
-        width: 100% !important;
-        background: white !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    .invoicecontainer {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    .themeholyinvoice {
-        box-shadow: none !important;
-        border: none !important;
-        margin: 0 !important;
-    }
-
-    .invoiceprintbutton {
-        display: none !important;
-    }
-
-    .downloadinner {
-        padding: 20px !important;
-    }
-
-    .sectionCard:hover,
-    .dateTimeCard:hover,
-    .travelerCard:hover {
-        box-shadow: none !important;
-        transform: none !important;
-    }
-
-    .invoiceHero {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        background: #E7247A !important;
-        color: white !important;
-    }
-
-    .infoCard {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        background: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    }
-
-    .infoIcon {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    .sectionHeader {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    .totalCard {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        background: #E7247A !important;
-    }
-
-    .invoicecontainerwrap :global(button) {
-        display: none !important;
-    }
-}
-
-
-/* ─── Invoice Hero / Header Bar ───────────────────────────────── */
-.invoiceHero {
-    background: #E7247A;
-    padding: 22px 28px;
-    margin: -28px -32px 28px -32px;
-    color: white;
-    border-bottom: 3px solid #c9a84c;
-}
-
-.invoiceTitle h2 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 3px;
-    letter-spacing: 0.3px;
-}
-
-.invoiceTitle p {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.65);
-    margin: 0;
-}
-
-.infoCard {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 10px 14px;
-    border-radius: 4px;
+/* Header */
+.invHeader {
     display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.infoIcon {
-    width: 32px;
-    height: 32px;
-    background: rgba(201, 168, 76, 0.25);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    color: #c9a84c;
-    flex-shrink: 0;
-}
-
-.infoCard small {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.55);
-    display: block;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-}
-
-.infoCard strong {
-    font-size: 13px;
-    color: #ffffff;
-}
-
-/* ─── Section Cards ───────────────────────────────────────────── */
-.sectionCard {
-    background: #ffffff;
-    border: 1px solid #d0d5dd;
-    border-radius: 0;
-    margin-bottom: 16px;
+    flex-direction: column;
+    background: #fff;
     overflow: hidden;
 }
 
-.sectionHeader {
-    background: #f2f4f7;
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #d0d5dd;
-}
-
-.sectionIcon {
-    width: 28px;
-    height: 28px;
-    background: #E7247A;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #c9a84c;
-    font-size: 13px;
-    flex-shrink: 0;
-}
-
-.sectionHeader h5 {
-    color: #E7247A;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0;
-    letter-spacing: 0.2px;
-}
-
-.cardBody {
-    padding: 16px;
-}
-
-/* ─── Detail Items ────────────────────────────────────────────── */
-.detailItem {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px;
-    background: #f8f9fb;
-    border: 1px solid #e8eaed;
-    border-radius: 3px;
-}
-
-.detailIcon {
-    color: #E7247A;
-    font-size: 14px;
-    margin-top: 3px;
-    flex-shrink: 0;
-    opacity: 0.7;
-}
-
-.detailItem small {
-    font-size: 10px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    display: block;
-}
-
-.detailItem strong {
-    color: #222;
-    font-size: 13px;
-}
-
-/* ─── Status Badge ────────────────────────────────────────────── */
-.statusBadge {
-    padding: 8px 14px;
-    border-radius: 3px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    font-size: 12px;
-}
-
-.statusSuccess {
-    background: #eaf5ec;
-    color: #1e6e35;
-    border: 1px solid #b6dfbc;
-}
-.statusPending {
-    background: #fff4e5;
-    color: #b36b00;
-    border: 1px solid #ffcc80;
-}
-.statusCancelled {
-    background: #fef0f0;
-    color: #c0392b;
-    border: 1px solid #f5b8b8;
-}
-.statusBadge strong {
-    font-weight: 600;
-}
-
-/* ─── Traveler Cards ──────────────────────────────────────────── */
-.travelerCard {
-    background: #f8f9fb;
-    padding: 12px;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #e0e3e8;
-}
-
-.travelerIcon {
-    width: 36px;
-    height: 36px;
-    background: #E7247A;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #c9a84c;
-    font-size: 16px;
-    flex-shrink: 0;
-}
-
-.travelerCard strong {
-    color: #222;
-    font-size: 13px;
-}
-
-.travelerCard small {
-    color: #777;
-    font-size: 11px;
-}
-
-/* ─── Route Display ───────────────────────────────────────────── */
-.routeDisplay {
-    background: #f8f9fb;
-    padding: 16px;
-    border: 1px solid #d0d5dd;
-    border-left: 3px solid #E7247A;
+.invHeaderBand {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 1rem;
     flex-wrap: wrap;
+    padding: 1.1rem 1.25rem;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 }
 
-.routePoint {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-}
-
-.routeIconStart {
-    width: 36px;
-    height: 36px;
-    background: #eaf5ec;
-    border: 1px solid #b6dfbc;
+.invHeaderCircle {
+    position: absolute;
+    top: -80px;
+    right: -60px;
+    width: 288px;
+    height: 288px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #256b38;
-    font-size: 18px;
-    flex-shrink: 0;
+    background: #fff;
+    opacity: 0.05;
+    pointer-events: none;
 }
 
-.routeIconEnd {
-    width: 36px;
-    height: 36px;
-    background: #fef0f0;
-    border: 1px solid #f5b8b8;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #c0392b;
-    font-size: 18px;
-    flex-shrink: 0;
+.invHeaderBrand {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
 }
 
-.routeArrow {
-    color: #E7247A;
-    font-size: 22px;
-    flex-shrink: 0;
+.invHeaderDocTitle {
+    margin: 0;
+    font-size: clamp(1.25rem, 3vw, 1.85rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #1a1a1a;
 }
 
-.routePoint small {
-    font-size: 10px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    display: block;
-}
-
-.routePoint strong {
-    color: #222;
-    font-size: 13px;
-}
-
-/* ─── Date / Time Cards ───────────────────────────────────────── */
-.dateTimeCard {
-    background: #f8f9fb;
-    border: 1px solid #d8dce3;
-    border-top: 2px solid #E7247A;
-    padding: 12px;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.dtIcon {
-    color: #E7247A;
-    font-size: 18px;
-    flex-shrink: 0;
-    opacity: 0.75;
-}
-
-.dateTimeCard small {
-    font-size: 10px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    display: block;
-}
-
-.dateTimeCard strong {
-    color: #222;
-    font-size: 13px;
-}
-
-/* ─── Vehicle Card ────────────────────────────────────────────── */
-.vehicleCard {
-    background: #f8f9fb;
-    padding: 16px;
-    border: 1px solid #d0d5dd;
-    border-left: 3px solid #E7247A;
-}
-
-.vehicleName {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e0e3e8;
-    margin-bottom: 10px;
-}
-
-.vehicleName svg {
-    color: #E7247A;
-    opacity: 0.75;
-}
-
-.vehicleName strong {
-    color: #E7247A;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.vehicleName small {
-    color: #777;
-    font-size: 11px;
-    display: block;
-}
-
-.capacityCard {
-    background: #ffffff;
-    padding: 12px;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #e0e3e8;
-}
-
-.capacityCard svg {
-    color: #E7247A;
-    opacity: 0.7;
-}
-
-.capacityCard small {
-    font-size: 10px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    display: block;
-}
-
-.capacityCard strong {
-    color: #222;
-    font-size: 13px;
-}
-
-/* ─── Locations List ──────────────────────────────────────────── */
-.locationsList {
+.invHeaderContacts {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: flex-end;
+    gap: 0.45rem;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: right;
 }
 
-.locationItem {
-    background: #f8f9fb;
-    padding: 14px;
-    border: 1px solid #d8dce3;
-    border-left: 3px solid #E7247A;
+.invHeaderContacts span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.invHeaderSub {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.85rem 1.25rem;
+    flex-wrap: wrap;
+    padding: 1.1rem 1.25rem 1.2rem;
+    background: #fef5f7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.invForBlock {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+.invForLabel {
+    margin-bottom: 0.35rem;
+    color: #e7247a;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.invGuestName {
+    margin: 0 0 0.35rem !important;
+    color: #1a1a1a;
+    font-size: clamp(1.45rem, 3.5vw, 32px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0;
+}
+
+.invForDesc {
+    margin: 0 !important;
+    max-width: 36rem;
+    color: #6b7280;
+    font-size: 0.88rem;
+    line-height: 1.4;
+}
+
+.invMetaBlock {
+    flex: 0 0 auto;
+    text-align: right;
+    min-width: 0;
+}
+
+.invStatusRow {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
 }
 
-.locationNumber {
+.invStatusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.statusConfirmed {
+    background-color: #dcfce7;
+    color: #166534 !important;
+    border: 1px solid #bbf7d0;
+}
+
+.statusCancelled {
+    background-color: #fee2e2;
+    color: #991b1b !important;
+    border: 1px solid #fecaca;
+}
+
+.statusPending {
+    background-color: #fef3c7;
+    color: #92400e !important;
+    border: 1px solid #fde68a;
+}
+
+.payment_paid {
+    background-color: #dcfce7;
+    color: #166534 !important;
+    border: 1px solid #bbf7d0;
+}
+
+.payment_pending,
+.payment_tentative {
+    background-color: #fef3c7;
+    color: #92400e !important;
+    border: 1px solid #fde68a;
+}
+
+.payment_unpaid,
+.payment_failed {
+    background-color: #fee2e2;
+    color: #991b1b !important;
+    border: 1px solid #fecaca;
+}
+
+.payment_partial {
+    background-color: rgba(253, 126, 20, 0.2);
+    color: #c2410c !important;
+    border: 1px solid rgba(253, 126, 20, 0.45);
+}
+
+.invBookingRef {
+    color: #e7247a;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.invBookingDate {
+    color: #9ca3af;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Body */
+.bodyInner {
+    padding: 0.35rem clamp(0.85rem, 2.5vw, 1.35rem) 0.5rem;
+}
+
+.detailCard {
+    background: #fff;
+    border: 1px solid #e8e5ea;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.06);
+    padding: clamp(1.15rem, 3vw, 1.75rem);
+    margin: 1.05rem 0;
+}
+
+.detailCardHead {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.15rem;
+}
+
+.detailStep {
     width: 32px;
     height: 32px;
-    background: #E7247A;
-    color: white;
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    background: #e7247a;
+    color: #fff;
+    font-size: 0.78rem;
     font-weight: 700;
-    font-size: 13px;
     flex-shrink: 0;
 }
 
-.locationRoute {
+.detailCardTitle {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.detailGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.75rem;
+    row-gap: 1.1rem;
+}
+
+.detailItem {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
+    flex-direction: column;
+    gap: 0.28rem;
+    min-width: 0;
+}
+
+.detailLabel {
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.detailValue {
+    color: #1e1e1e;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* Activity card */
+.activityCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.activityCardHead {
+    background: #fef5f7;
+    padding: clamp(0.95rem, 2.5vw, 1.25rem);
+}
+
+.activityCardTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
     flex-wrap: wrap;
 }
 
-.locationFrom,
-.locationTo {
+.activityName {
+    margin: 0;
+    color: #45556c;
+    font-size: clamp(0.98rem, 2.2vw, 1.12rem);
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
+    flex: 1;
+    min-width: 0;
+}
+
+.ratingRow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex-shrink: 0;
+}
+
+.star {
+    color: #e7247a;
+    font-size: 0.85rem;
+}
+
+.starMuted {
+    color: #d4b8c4;
+    font-size: 0.85rem;
+}
+
+.ratingValue {
+    margin-left: 0.25rem;
+    color: #8a92a6;
+    font-size: 0.78rem;
+}
+
+.activityAddress {
+    margin: 0.55rem 0 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    color: #8a92a6;
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.activityAddress span {
+    word-break: break-word;
+}
+
+.stayGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem 1rem;
+    margin-top: 1rem;
+}
+
+.stayValue {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+/* Guests */
+.guestList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.guestRow {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex: 1;
-    min-width: 180px;
+    justify-content: space-between;
+    gap: 0.75rem;
+    background: #fef5f7;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
 }
 
-.locationFrom svg,
-.locationTo svg {
-    font-size: 17px;
-    flex-shrink: 0;
-}
-
-.locationFrom small,
-.locationTo small {
-    font-size: 10px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    display: block;
-}
-
-.locationFrom strong,
-.locationTo strong {
-    color: #222;
-    font-size: 13px;
-}
-
-.locationArrow {
-    color: #E7247A;
-    font-size: 18px;
-    flex-shrink: 0;
-}
-
-
-/* ─── Pricing Section ─────────────────────────────────────────── */
-.pricingSection {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid #d0d5dd;
-}
-
-.noteCard {
-    background: #f0f4fa;
-    padding: 14px 16px;
-    border: 1px solid #c8d4e8;
-    border-left: 3px solid #E7247A;
+.guestLeft {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
 }
 
-.noteIcon {
-    width: 32px;
-    height: 32px;
-    background: #E7247A;
+.guestIndex {
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #c9a84c;
-    font-size: 14px;
+    background: #45556c;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
     flex-shrink: 0;
 }
 
-.noteCard strong {
-    color: #E7247A;
-    display: block;
-    margin-bottom: 4px;
-    font-size: 12px;
-}
-
-.noteCard p {
-    color: #555;
-    font-size: 11px;
-    margin: 0;
-}
-
-.totalCard {
-    background: #E7247A;
-    padding: 18px 20px;
-}
-
-.totalRow {
+.guestInfo {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 12px;
-    margin-bottom: 6px;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
 }
 
-.totalRow strong {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 13px;
+.guestName {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    word-break: break-word;
 }
 
-.totalDivider {
-    height: 1px;
-    background: rgba(201, 168, 76, 0.4);
-    margin: 10px 0;
+.guestSub {
+    color: #8a92a6;
+    font-size: 0.8rem;
+    font-weight: 500;
+    word-break: break-word;
 }
 
-.totalRowFinal {
+.guestMeta {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-top: 4px;
+    gap: 0.55rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
-.totalRowFinal span {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
+.guestGender {
+    color: #8a92a6;
+    font-size: 0.86rem;
+    font-weight: 500;
 }
 
-.totalAmount {
-    color: #c9a84c;
-    font-size: 20px;
+.guestType {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: #f8e6ee;
+    color: #45556c;
+    font-size: 0.8rem;
     font-weight: 700;
 }
 
-/* ─── Mobile responsive tables ────────────────────────────────── */
-.tableResponsive {
+/* Activity info remarks */
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #eee4ea;
+}
+
+.infoItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.infoBlockText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.infoBlockList {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #45556c;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.infoBlockList li {
+    margin-bottom: 0.35rem;
+}
+
+/* Pricing */
+.priceTable {
     width: 100%;
 }
 
-@media screen and (max-width: 768px) {
-    .tableResponsive {
-        overflow-x: visible;
+.priceRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr) auto;
+    gap: 0.75rem 1rem;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid #eee4ea;
+}
+
+.priceHead {
+    padding-top: 0;
+    border-bottom: 1px solid #e8e5ea;
+}
+
+.priceHead span {
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.priceType {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.priceQty {
+    color: #8a92a6;
+    font-size: 0.88rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.priceTotal {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.extraServices {
+    margin-top: 0.75rem;
+}
+
+.extraTitle {
+    margin: 0 0 0.35rem;
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.priceSummary {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    margin-top: 1rem;
+}
+
+.priceSummaryRow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    min-width: min(100%, 260px);
+    color: #8a92a6;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.priceSummaryRow span:last-child {
+    min-width: 110px;
+    text-align: right;
+    font-weight: 600;
+}
+
+.priceVatNote {
+    margin: 0.15rem 0 0;
+    color: #a0a7b5;
+    font-size: 0.75rem;
+}
+
+.totalAmountBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.95rem 1.15rem;
+    border-radius: 12px;
+    background: #e7247a;
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.totalAmountValue {
+    font-size: clamp(1rem, 2.4vw, 1.2rem);
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+.specialRequestText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.cancelList {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #6b7280;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.cancelList strong {
+    color: #45556c;
+}
+
+.policyNote {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.nonRefundable {
+    display: inline-flex;
+    align-items: flex-start;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid #f1b4b4;
+    background: #fff5f5;
+    color: #c62828;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.infoBullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.infoBullets li {
+    position: relative;
+    padding-left: 1.15rem;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+.infoBullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e7247a;
+}
+
+/* Thanks footer */
+.thanksFooter {
+    position: relative;
+    overflow: hidden;
+    margin: 1rem 0 0;
+    padding: clamp(1.35rem, 3.5vw, 1.85rem) 1.25rem;
+    border-radius: 18px 18px 0 0;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    text-align: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.thanksFooterContent {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.thanksFooterTitle {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.25;
+}
+
+.thanksFooterContacts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem 1.35rem;
+    color: #1a1a1a;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.thanksFooterContacts span,
+.thanksFooterAddress {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.thanksFooterAddress {
+    color: #1a1a1a;
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: 1.4;
+    max-width: 100%;
+}
+
+.thanksFooterAddress span {
+    word-break: break-word;
+}
+
+/* Actions */
+.actionRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem 3rem;
+}
+
+.btnPrint,
+.btnVoucher,
+.btnHome {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    border: 1.5px solid transparent;
+    white-space: nowrap;
+}
+
+.btnPrint:hover,
+.btnVoucher:hover,
+.btnHome:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.btnPrint {
+    background: #e7247a;
+    color: #fff;
+    border-color: #e7247a;
+}
+
+.btnVoucher {
+    background: #fef5f7;
+    color: #e7247a;
+    border-color: #e7247a;
+}
+
+.btnHome {
+    background: #f4f6f9;
+    color: #45556c;
+    border-color: #d7dde7;
+}
+
+/* Responsive */
+@media screen and (max-width: 760px) {
+    .invoiceContainer {
+        width: 98%;
+        max-width: 98%;
     }
 
-    .mobileTable,
-    .mobileTable thead,
-    .mobileTable tbody,
-    .mobileTable th,
-    .mobileTable td,
-    .mobileTable tr {
-        display: block;
+    .invHeaderBand {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.95rem 1rem;
+        border-radius: 0 0 14px 14px;
+    }
+
+    .invHeaderContacts {
+        align-items: flex-start;
+        text-align: left;
         width: 100%;
     }
 
-    .mobileTable thead {
-        display: none;
+    .invHeaderSub {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0.65rem;
+        flex-wrap: nowrap;
+        padding: 0.95rem 1rem 1.05rem;
+        min-height: 0;
     }
 
-    .mobileTable tbody tr {
-        margin-bottom: 12px;
-        border: 1px solid #e0e3e8;
-        background: #f8f9fb;
-        padding: 4px 0;
+    .invForBlock,
+    .invMetaBlock {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
     }
 
-    .mobileTable tbody tr:last-child {
-        margin-bottom: 0;
-    }
-
-    .mobileTable td {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 12px;
-        padding: 10px 14px !important;
-        border: none !important;
-        border-bottom: 1px solid #e8eaed !important;
-        text-align: right;
-        word-break: break-word;
-    }
-
-    .mobileTable td:last-child {
-        border-bottom: none !important;
-    }
-
-    .mobileTable td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: #E7247A;
+    .invMetaBlock {
         text-align: left;
-        flex-shrink: 0;
-        max-width: 45%;
+        margin-top: 0;
+    }
+
+    .invStatusRow {
+        justify-content: flex-start;
+        margin-bottom: 0.35rem;
     }
 }
 
+@media screen and (max-width: 640px) {
+    .pageWrapper {
+        padding: 0.5rem 0 0;
+        min-height: auto;
+    }
+
+    .invoiceContainer {
+        width: 100%;
+        max-width: 100%;
+        padding: 6px;
+    }
+
+    .invHeaderSub {
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0.55rem;
+        padding: 0.85rem 0.95rem 0.95rem;
+    }
+
+    .invForBlock,
+    .invMetaBlock {
+        flex: 0 0 auto;
+    }
+
+    .detailCard {
+        padding: 1rem;
+        margin: 0.85rem 0;
+        border-radius: 14px;
+    }
+
+    .detailGrid {
+        grid-template-columns: 1fr;
+        row-gap: 0.85rem;
+    }
+
+    .stayGrid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .guestRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.55rem;
+    }
+
+    .guestMeta {
+        padding-left: 2.35rem;
+        justify-content: flex-start;
+    }
+
+    .priceRow,
+    .priceHead {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+
+    .priceHead span:nth-child(2),
+    .priceHead span:nth-child(3) {
+        display: none;
+    }
+
+    .priceTotal {
+        text-align: left;
+    }
+
+    .priceSummary {
+        align-items: stretch;
+    }
+
+    .priceSummaryRow {
+        justify-content: space-between;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .priceSummaryRow span:last-child {
+        min-width: 0;
+    }
+
+    .totalAmountBar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
+    .thanksFooter {
+        padding: 1.2rem 0.9rem;
+        border-radius: 14px 14px 0 0;
+    }
+
+    .thanksFooterContacts {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .actionRow {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1.1rem 0.85rem 2.75rem;
+    }
+
+    .btnPrint,
+    .btnVoucher,
+    .btnHome {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+/* Print */
 @media print {
-    .mobileTable {
-        display: table !important;
+    @page {
+        size: A4;
+        margin: 8mm 10mm;
+    }
+
+    .pageWrapper {
+        background: #fff !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+    }
+
+    .invoiceContainer {
+        max-width: 100% !important;
         width: 100% !important;
-    }
-
-    .mobileTable thead {
-        display: table-header-group !important;
-    }
-
-    .mobileTable tbody {
-        display: table-row-group !important;
-    }
-
-    .mobileTable tr {
-        display: table-row !important;
-        margin-bottom: 0 !important;
-        border: none !important;
-        background: transparent !important;
+        margin: 0 !important;
         padding: 0 !important;
     }
 
-    .mobileTable th,
-    .mobileTable td {
-        display: table-cell !important;
-        text-align: left !important;
-        border-bottom: none !important;
+    .invoiceCard {
+        box-shadow: none !important;
+        overflow: visible !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
     }
 
-    .mobileTable td::before {
-        content: none !important;
+    .bodyInner {
+        padding: 4px 10px 0 !important;
+    }
+
+    .detailCard,
+    .activityCard,
+    .invHeader,
+    .infoList,
+    .priceTable,
+    .infoBullets {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    .detailCard {
+        box-shadow: none !important;
+        margin: 0.5rem 0 !important;
+        padding: 0.8rem 0.9rem !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .detailCardHead {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    .detailStep {
+        background: #e7247a !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .detailGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .activityCardHead {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .stayGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .guestRow {
+        background: #fef5f7 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .guestIndex {
+        background: #45556c !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .priceRow {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr) auto !important;
+    }
+
+    .totalAmountBar {
+        background: #e7247a !important;
+        color: #fff !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .infoBullets li::before {
+        background: #e7247a !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .invHeaderBand {
+        display: flex !important;
+        flex-direction: row !important;
+        background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .invHeaderSub {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .invMetaBlock {
+        text-align: right !important;
+    }
+
+    .invStatusRow {
+        justify-content: flex-end !important;
+    }
+
+    .invStatusBadge,
+    .statusConfirmed,
+    .statusCancelled,
+    .statusPending,
+    .payment_paid,
+    .payment_pending,
+    .star {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .thanksFooter {
+        margin: 0.65rem 0 0 !important;
+        border-radius: 14px 14px 0 0 !important;
+        background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%) !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .thanksFooterContacts {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    .actionRow {
+        display: none !important;
+    }
+}
+
+/* ── Transfer-specific ──────────────────────────────────────── */
+.routeCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 0.85rem;
+}
+
+.routeCardHead {
+    padding: 0.75rem 1rem;
+    background: #fef5f7;
+    color: #45556c;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.routeGrid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 1rem;
+}
+
+.routeStation { min-width: 0; }
+.routeStationRight { text-align: right; }
+
+.routeCity {
+    margin: 0;
+    color: #e7247a;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.routeAirport {
+    margin: 0.35rem 0 0;
+    color: #45556c;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.routeTime {
+    margin: 0.35rem 0 0;
+    color: #8a92a6;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.routeArrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding-top: 0.35rem;
+    min-width: 72px;
+}
+
+.durationLabel {
+    color: #e7247a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.arrowLine {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #f0d6e2, #e7247a);
+    position: relative;
+    border-radius: 2px;
+}
+
+.planeIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #e7247a;
+    background: #fff;
+    font-size: 0.95rem;
+}
+
+.flightChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0 1rem 1rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 10px;
+    background: #fef5f7;
+    border: 1px solid #f0d6e2;
+    color: #45556c;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.vehicleCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.vehicleCardHead {
+    background: #fef5f7;
+    padding: clamp(0.95rem, 2.5vw, 1.25rem);
+}
+
+.vehicleName {
+    margin: 0 0 0.85rem;
+    color: #45556c;
+    font-size: clamp(0.98rem, 2.2vw, 1.12rem);
+    font-weight: 700;
+}
+
+.vehicleGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem 1rem;
+}
+
+.guestList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.guestRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    background: #fef5f7;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+}
+
+.guestLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.guestInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.guestSub {
+    color: #8a92a6;
+    font-size: 0.8rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.guestMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.guestGender {
+    color: #8a92a6;
+    font-size: 0.86rem;
+    font-weight: 500;
+}
+
+.specialRequestText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.cancelList {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #6b7280;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.cancelList strong { color: #45556c; }
+
+.nonRefundable {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.35rem 0.65rem;
+    border-radius: 8px;
+    border: 1px solid #f1b4b4;
+    background: #fff5f5;
+    color: #c62828;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+@media screen and (max-width: 640px) {
+    .routeGrid { grid-template-columns: 1fr; gap: 0.5rem; }
+    .routeStationRight { text-align: left; }
+    .routeArrow { flex-direction: row; justify-content: flex-start; padding-top: 0; }
+    .vehicleGrid { grid-template-columns: 1fr; }
+    .guestRow { flex-direction: column; align-items: flex-start; gap: 0.55rem; }
+    .guestMeta { padding-left: 2.35rem; }
+}
+
+@media print {
+    .routeCard,
+    .vehicleCard {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    .guestRow {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .routeGrid {
+        grid-template-columns: 1fr auto 1fr !important;
+    }
+
+    .vehicleGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
 }

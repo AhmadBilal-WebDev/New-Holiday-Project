@@ -7,7 +7,7 @@ import FlightDetail from '@/components/UmrahGetAway/Voucher/FlightDetail';
 import HotelDetail from '@/components/UmrahGetAway/Voucher/HotelDetail';
 import Transfer from '@/components/UmrahGetAway/Voucher/Transfer';
 import VisaDetail from '@/components/UmrahGetAway/Voucher/VisaDetail';
-import HotelInvoiceLoader from '@/components/Loader/HotelInvoiceLoader';
+import HotelVoucherLoader from '@/components/Loader/HotelVoucherLoader';
 import { FaFileInvoice, FaHome, FaUser, FaUserFriends} from 'react-icons/fa';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import { IoWarningOutline } from 'react-icons/io5';
@@ -80,7 +80,7 @@ export default function Page() {
             {isLoading ? (
                 <div className={`container px-0 ${styles.confirmationWrapper}`}>
                     <div className="bg-white rounded shadow p-3">
-                        <HotelInvoiceLoader />
+                        <HotelVoucherLoader />
                     </div>
                 </div>
             ) : (

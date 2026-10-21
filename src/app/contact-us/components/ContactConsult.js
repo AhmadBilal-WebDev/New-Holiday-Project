@@ -49,7 +49,7 @@ export default function ContactConsult() {
           </div>
 
           <div className={styles.ctaActions}>
-            <a href="tel:01217772522" className={styles.primaryBtn}>
+            <a href="tel:00000000000" className={styles.primaryBtn}>
               <FaCalendarAlt aria-hidden="true" />
               Book a call
             </a>

@@ -1,0 +1,322 @@
+@keyframes invSkelPulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.45;
+    }
+}
+
+.wrap {
+    padding: 0;
+    overflow: hidden;
+}
+
+.pulse {
+    animation: invSkelPulse 1.35s ease-in-out infinite;
+    background: #f0e6eb;
+    border-radius: 8px;
+}
+
+.headerBand {
+    height: 72px;
+    border-radius: 0 0 18px 18px;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    gap: 1rem;
+}
+
+.headerBand .pulse {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.headerTitle {
+    width: min(220px, 45%);
+    height: 22px;
+}
+
+.headerContacts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.headerContact {
+    width: 120px;
+    height: 12px;
+    margin-left: auto;
+}
+
+.headerSub {
+    background: #fef5f7;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.subLeft {
+    flex: 1;
+    min-width: 160px;
+}
+
+.subRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    min-width: 120px;
+}
+
+.lineSm {
+    height: 10px;
+    width: 70px;
+}
+
+.lineLg {
+    height: 26px;
+    width: min(240px, 70%);
+    margin-top: 10px;
+}
+
+.lineMd {
+    height: 12px;
+    width: min(200px, 60%);
+    margin-top: 10px;
+}
+
+.badge {
+    height: 24px;
+    width: 88px;
+    border-radius: 999px;
+    background: #f8e6ee;
+    animation: invSkelPulse 1.35s ease-in-out infinite;
+}
+
+.badgeRow {
+    display: flex;
+    gap: 8px;
+}
+
+.body {
+    padding: 0.5rem 1.15rem 1.25rem;
+}
+
+.card {
+    border: 1px solid #e8e5ea;
+    border-radius: 16px;
+    padding: 1.15rem;
+    margin: 1rem 0;
+    background: #fff;
+}
+
+.cardHead {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+}
+
+.step {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e7247a;
+    flex-shrink: 0;
+    opacity: 0.85;
+    animation: invSkelPulse 1.35s ease-in-out infinite;
+}
+
+.cardTitle {
+    height: 18px;
+    width: 140px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.5rem;
+}
+
+.fieldLabel {
+    height: 9px;
+    width: 64px;
+    margin-bottom: 8px;
+}
+
+.fieldValue {
+    height: 14px;
+    width: 85%;
+}
+
+.hotelCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.hotelHead {
+    background: #fef5f7;
+    padding: 1rem;
+}
+
+.hotelTitle {
+    height: 16px;
+    width: 70%;
+}
+
+.hotelAddr {
+    height: 11px;
+    width: 55%;
+    margin-top: 10px;
+}
+
+.stayGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.roomRow {
+    padding: 0.85rem 1rem;
+    border-top: 1px solid #eee4ea;
+    display: grid;
+    grid-template-columns: 1.1fr 1.2fr 0.8fr;
+    gap: 0.75rem;
+}
+
+.guestRow {
+    height: 48px;
+    border-radius: 12px;
+    background: #fef5f7;
+    margin-bottom: 0.65rem;
+    animation: invSkelPulse 1.35s ease-in-out infinite;
+}
+
+.totalBar {
+    height: 48px;
+    border-radius: 12px;
+    background: #e7247a;
+    margin-top: 0.75rem;
+    opacity: 0.85;
+    animation: invSkelPulse 1.35s ease-in-out infinite;
+}
+
+.footer {
+    height: 110px;
+    margin-top: 0.75rem;
+    border-radius: 18px 18px 0 0;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 1rem;
+}
+
+.footer .pulse {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.footerTitle {
+    height: 16px;
+    width: 180px;
+}
+
+.footerLine {
+    height: 10px;
+    width: 220px;
+    max-width: 80%;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem 2rem;
+}
+
+.btnPrimary {
+    height: 44px;
+    width: 160px;
+    border-radius: 10px;
+    background: #e7247a;
+    opacity: 0.75;
+    animation: invSkelPulse 1.35s ease-in-out infinite;
+}
+
+.btnOutline {
+    height: 44px;
+    width: 140px;
+    border-radius: 10px;
+    background: #fef5f7;
+    border: 1.5px solid #f0d6e2;
+    animation: invSkelPulse 1.35s ease-in-out infinite;
+}
+
+.btnMuted {
+    height: 44px;
+    width: 120px;
+    border-radius: 10px;
+    background: #eef1f5;
+    animation: invSkelPulse 1.35s ease-in-out infinite;
+}
+
+@media screen and (max-width: 640px) {
+    .headerBand {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+    .headerContacts {
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .headerSub {
+        flex-direction: column;
+    }
+
+    .subRight {
+        align-items: flex-start;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stayGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .roomRow {
+        grid-template-columns: 1fr;
+    }
+
+    .body {
+        padding: 0.35rem 0.85rem 1rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btnPrimary,
+    .btnOutline,
+    .btnMuted {
+        width: 100%;
+    }
+}

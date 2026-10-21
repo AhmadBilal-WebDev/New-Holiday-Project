@@ -1,33 +1,123 @@
-import React from 'react'
+import styles from "./HotelInvoiceLoader.module.css";
+
+function Field() {
+    return (
+        <div>
+            <div className={`${styles.pulse} ${styles.fieldLabel}`} />
+            <div className={`${styles.pulse} ${styles.fieldValue}`} />
+        </div>
+    );
+}
+
 export default function HotelInvoiceLoader() {
     return (
-        <div className='p-3'>
-            <div className='placeholder-glow'>
-                <span className='placeholder col-12 rounded' style={{ height: '10em' }} />
-
-                <div className='row'>
-                    <div className='col-md-5 col-12'>
-                        <span className='placeholder col-12 rounded mt-4' style={{ height: '3em' }} />
-                    </div>
-                    <div className='col-md-2 col-12'></div>
-                    <div className='col-md-5 col-12'>
-                        <span className='placeholder col-12 rounded mt-4' style={{ height: '3em' }} />
-                    </div>
+        <div className={styles.wrap} aria-hidden="true">
+            <div className={styles.headerBand}>
+                <div>
+                    <div className={`${styles.pulse} ${styles.headerTitle}`} />
+                    <div className={`${styles.pulse} ${styles.headerTag}`} />
                 </div>
-                <span className='placeholder col-12 rounded mt-4' style={{ height: '10em' }} />
-                <div className='row mt-4'>
-                    <div className='col-12 '>
-                        <span className='placeholder col-12 bg-primary  rounded' style={{ height: '3em' }} />
-                        <span className='placeholder col-12 rounded mt-2' style={{ height: '3em' }} />
-                        <span className='placeholder col-12 rounded mt-2' style={{ height: '3em' }} />
-                        <span className='placeholder col-12 rounded mt-2' style={{ height: '3em' }} />
+                <div className={styles.headerContacts}>
+                    <div className={`${styles.pulse} ${styles.headerContact}`} />
+                    <div className={`${styles.pulse} ${styles.headerContact}`} />
+                </div>
+            </div>
+
+            <div className={styles.headerSub}>
+                <div className={styles.headerMain}>
+                    <div className={styles.subLeft}>
+                        <div className={`${styles.pulse} ${styles.lineSm}`} />
+                        <div className={`${styles.pulse} ${styles.lineLg}`} />
+                        <div className={`${styles.pulse} ${styles.lineMd}`} />
                     </div>
-                    <div className='col-12'>
-                        <span className='placeholder col-12 rounded mt-4' style={{ height: '10em' }} />
-                        <span className='placeholder col-12 mt-4  rounded' style={{ height: '3em' }} />
+                    <div className={styles.subRight}>
+                        <div className={styles.badgeRow}>
+                            <div className={styles.badge} />
+                            <div className={styles.badge} />
+                        </div>
+                        <div className={`${styles.pulse} ${styles.lineSm}`} />
+                        <div className={`${styles.pulse} ${styles.lineSm}`} />
                     </div>
                 </div>
             </div>
+
+            <div className={styles.body}>
+                <div className={styles.card}>
+                    <div className={styles.cardHead}>
+                        <div className={styles.step} />
+                        <div className={`${styles.pulse} ${styles.cardTitle}`} />
+                    </div>
+                    <div className={styles.grid}>
+                        <Field />
+                        <Field />
+                        <Field />
+                        <Field />
+                    </div>
+                </div>
+
+                <div className={styles.card}>
+                    <div className={styles.cardHead}>
+                        <div className={styles.step} />
+                        <div className={`${styles.pulse} ${styles.cardTitle}`} />
+                    </div>
+                    <div className={styles.hotelCard}>
+                        <div className={styles.hotelHead}>
+                            <div className={`${styles.pulse} ${styles.hotelTitle}`} />
+                            <div className={`${styles.pulse} ${styles.hotelAddr}`} />
+                            <div className={styles.stayGrid}>
+                                <Field />
+                                <Field />
+                                <Field />
+                            </div>
+                        </div>
+                        <div className={styles.roomRow}>
+                            <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                            <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                            <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                        </div>
+                        <div className={styles.roomRow}>
+                            <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                            <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                            <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles.card}>
+                    <div className={styles.cardHead}>
+                        <div className={styles.step} />
+                        <div className={`${styles.pulse} ${styles.cardTitle}`} />
+                    </div>
+                    <div className={styles.guestRow} />
+                    <div className={styles.guestRow} />
+                    <div className={styles.guestRow} />
+                </div>
+
+                <div className={styles.card}>
+                    <div className={styles.cardHead}>
+                        <div className={styles.step} />
+                        <div className={`${styles.pulse} ${styles.cardTitle}`} />
+                    </div>
+                    <div className={styles.roomRow}>
+                        <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                        <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                        <div className={`${styles.pulse} ${styles.fieldValue}`} />
+                    </div>
+                    <div className={styles.totalBar} />
+                </div>
+            </div>
+
+            <div className={styles.footer}>
+                <div className={`${styles.pulse} ${styles.footerTitle}`} />
+                <div className={`${styles.pulse} ${styles.footerLine}`} />
+                <div className={`${styles.pulse} ${styles.footerLine}`} />
+            </div>
+
+            <div className={styles.actions}>
+                <div className={styles.btnPrimary} />
+                <div className={styles.btnOutline} />
+                <div className={styles.btnMuted} />
+            </div>
         </div>
-    )
+    );
 }

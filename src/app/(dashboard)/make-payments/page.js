@@ -1,24 +1,62 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import {
   FaMoneyCheckAlt,
   FaCloudUploadAlt,
   FaTimesCircle,
   FaCheckCircle,
+  FaHome,
+  FaFileAlt,
+  FaClock,
+  FaMoneyBillWave,
 } from "react-icons/fa";
-import { MdReceipt } from "react-icons/md";
+import { MdReceipt, MdQrCode, MdOutlineCurrencyExchange } from "react-icons/md";
+import { HiOutlineSparkles } from "react-icons/hi2";
+import { CgCalendar } from "react-icons/cg";
 import { useSession } from "next-auth/react";
 import { Select } from "@mantine/core";
 import moment from "moment";
 import { DateInput } from "@mantine/dates";
 import { useRouter } from "next/navigation";
-function page() {
+import Link from "next/link";
+import { useCurrency } from "@/util/currency";
+
+const FALLBACK_CURRENCIES = [
+  "USD", "EUR", "GBP", "SAR", "AED", "PKR", "INR", "CAD", "AUD", "CHF",
+  "JPY", "CNY", "TRY", "MYR", "SGD", "QAR", "KWD", "BHD", "OMR", "EGP",
+];
+
+function getWorldCurrencies(rates = {}) {
+  if (typeof Intl !== "undefined" && typeof Intl.supportedValuesOf === "function") {
+    try {
+      return Intl.supportedValuesOf("currency");
+    } catch {
+      /* fall through */
+    }
+  }
+  const fromRates = Object.keys(rates || {});
+  if (fromRates.length) return fromRates.sort();
+  return FALLBACK_CURRENCIES;
+}
+
+function normalizePaymentStatus(status) {
+  const s = (status || "").toLowerCase().trim();
+  if (s === "confirmed" || s === "paid" || s === "approved") return "confirmed";
+  if (s === "pending" || s === "tentative") return "pending";
+  return s;
+}
+
+export default function MakePaymentsPage() {
   const { data: session } = useSession();
   const router = useRouter();
+  const currencyCtx = useCurrency();
+  const rates = currencyCtx?.rates || {};
   const [invoiceNo, setInvoiceNo] = useState("");
   const [bookingref, setBookingRef] = useState("");
   const [serviceType, setServiceType] = useState("");
   const [transactionId, setTransactionId] = useState("");
+  const [currency, setCurrency] = useState("");
+  const [amount, setAmount] = useState("");
   const [image, setImage] = useState(null);
   const [date, setDate] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -26,29 +64,143 @@ function page() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingids, setBookingIds] = useState([]);
+  const [payments, setPayments] = useState([]);
   const fileRef = useRef(null);
 
-  useEffect(() => {
-    const { email, otp } = session.user;
+  const currencyOptions = useMemo(
+    () =>
+      getWorldCurrencies(rates).map((code) => ({
+        value: code,
+        label: code,
+      })),
+    [rates],
+  );
+
+  const fetchinvoice = useCallback(async () => {
+    const email = session?.user?.email;
+    const otp = session?.user?.otp;
     if (!email || !otp) return;
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/b2c/dashboard/pending-bookings-ids`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+        },
+      );
+      const data = await response.json();
+      if (!data?.success && data?.message?.toLowerCase().includes("otp")) {
+        router.push(
+          `/verify-otp?email=${encodeURIComponent(session?.user?.email || "")}`,
+        );
+        return;
+      }
+      setBookingIds(data.data || []);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [session, router]);
+
+  const fetchPayments = useCallback(async () => {
+    const email = session?.user?.email;
+    const otp = session?.user?.otp;
+    if (!email || !otp) return;
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/b2c/dashboard/payment-requests`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+        },
+      );
+      const data = await response.json();
+      if (!data?.success && data?.message?.toLowerCase().includes("otp")) {
+        router.push(
+          `/verify-otp?email=${encodeURIComponent(session?.user?.email || "")}`,
+        );
+        return;
+      }
+      setPayments(data?.data || data || []);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [session, router]);
+
+  useEffect(() => {
+    if (!session?.user?.email || !session?.user?.otp) return;
     fetchinvoice();
-  }, []);
+    fetchPayments();
+  }, [session, fetchinvoice, fetchPayments]);
+
+  const paymentCounts = useMemo(() => {
+    const counts = { total: payments.length, confirmed: 0, pending: 0 };
+    payments.forEach((p) => {
+      const st = normalizePaymentStatus(p?.status || p?.payment_status);
+      if (st === "confirmed") counts.confirmed += 1;
+      else if (st === "pending") counts.pending += 1;
+    });
+    return counts;
+  }, [payments]);
+
+  const statCards = [
+    {
+      badge: "Total Payments",
+      title: "Total Payments Make",
+      value: paymentCounts.total,
+      icon: <HiOutlineSparkles size={18} />,
+      badgeTone: "",
+    },
+    {
+      badge: "Confirmed",
+      title: "Confirmed Payments",
+      value: paymentCounts.confirmed,
+      icon: <FaCheckCircle size={18} />,
+      badgeTone: "",
+    },
+    {
+      badge: "Pending",
+      title: "Pending Payments",
+      value: paymentCounts.pending,
+      icon: <FaClock size={18} />,
+      badgeTone: "pending",
+    },
+  ];
+
+  const applySelectedFile = (file) => {
+    if (!file) return;
+    const maxBytes = 5 * 1024 * 1024;
+    if (file.size > maxBytes) {
+      setErrorMessage("Payment proof must be 5 MB or less.");
+      if (fileRef.current) fileRef.current.value = "";
+      return;
+    }
+    setErrorMessage("");
+    setImage(file);
+    if (file.type === "application/pdf" || /\.pdf$/i.test(file.name)) {
+      setPreview(null);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => setPreview(reader.result);
+    reader.readAsDataURL(file);
+  };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setImage(file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-    reader.readAsDataURL(file);
+    applySelectedFile(e.target.files?.[0]);
   };
 
   const handleRemoveImage = () => {
     setImage(null);
     setPreview(null);
     if (fileRef.current) fileRef.current.value = "";
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    applySelectedFile(e.dataTransfer?.files?.[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -63,6 +215,14 @@ function page() {
       setErrorMessage("Please enter a Transaction ID.");
       return;
     }
+    if (!currency) {
+      setErrorMessage("Please select a currency.");
+      return;
+    }
+    if (!amount || Number(amount) <= 0) {
+      setErrorMessage("Please enter a valid amount.");
+      return;
+    }
     if (!date) {
       setErrorMessage("Please select a payment date.");
       return;
@@ -71,6 +231,7 @@ function page() {
       setErrorMessage("Please upload payment proof before submitting.");
       return;
     }
+
     setIsSubmitting(true);
     const { email, otp } = session.user;
     try {
@@ -79,25 +240,27 @@ function page() {
       formtoSendData.append("service_type", serviceType);
       formtoSendData.append("booking_reference", bookingref);
       formtoSendData.append("transaction_id", transactionId);
+      formtoSendData.append("currency", currency);
+      formtoSendData.append("payment_amount", String(amount));
       formtoSendData.append("invoice_snapshot", image);
       formtoSendData.append("payment_date", moment(date).format("YYYY-MM-DD"));
       formtoSendData.append("email", email);
       formtoSendData.append("otp", otp);
-      // return;
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/b2c/dashboard/payment-request/create`,
         {
           method: "POST",
-          headers: {
-            Accept: "application/json",
-          },
+          headers: { Accept: "application/json" },
           body: formtoSendData,
         },
       );
       const data = await response.json();
 
-      if (!data?.success && data?.message?.toLowerCase().includes('otp')) {
-        router.push(`/verify-otp?email=${encodeURIComponent(session?.user?.email || '')}`);
+      if (!data?.success && data?.message?.toLowerCase().includes("otp")) {
+        router.push(
+          `/verify-otp?email=${encodeURIComponent(session?.user?.email || "")}`,
+        );
         return;
       }
 
@@ -107,9 +270,12 @@ function page() {
         setServiceType("");
         setBookingRef("");
         setTransactionId("");
+        setCurrency("");
+        setAmount("");
         setDate(null);
         handleRemoveImage();
-        fetchinvoice()
+        fetchinvoice();
+        fetchPayments();
       } else {
         setErrorMessage(
           data?.message || "Failed to submit payment. Please try again.",
@@ -125,392 +291,280 @@ function page() {
 
   const handleBookingSelect = (value) => {
     const selected = bookingids?.find((item) => item.invoice_number === value);
+    if (!selected) return;
     setInvoiceNo(selected.id);
     setBookingRef(selected?.invoice_number || "");
     setServiceType(selected?.type || "");
   };
 
-  const fetchinvoice = async () => {
-    const { email, otp } = session.user;
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/b2c/dashboard/pending-bookings-ids`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, otp }),
-        },
-      );
-      const data = await response.json();
-      if (!data?.success && data?.message?.toLowerCase().includes('otp')) {
-        router.push(`/verify-otp?email=${encodeURIComponent(session?.user?.email || '')}`);
-        return;
-      }
-
-      setBookingIds(data.data || []);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
-
-
-
   return (
-    <div style={{ minHeight: "100vh"}}>
-      {/* Page Header */}
-      <div className="d-flex align-items-center gap-3 mb-4">
-        <div
-          className="d-flex align-items-center justify-content-center rounded-2 flex-shrink-0"
-          style={{
-            width: 44,
-            height: 44,
-            background: "rgb(0 76 76)",
-            color: "#fff",
-          }}
-        >
-          <FaMoneyCheckAlt size={20} />
-        </div>
-        <div>
-          <h5 className="mb-0 fw-bold" style={{ color: "rgb(0 76 76)" }}>
-            Make Payments
-          </h5>
-          <p className="mb-0 text-muted" style={{ fontSize: "13px" }}>
-            Submit your payment details and proof of transaction
-          </p>
-        </div>
+    <div className="hb-page pay-page">
+      <div className="hb-stats pay-stats">
+        {statCards.map((s) => (
+          <article className="hb-stat-card" key={s.title}>
+            <div className="hb-stat-top">
+              <span className="hb-stat-icon">{s.icon}</span>
+              <span className={`hb-stat-badge ${s.badgeTone}`.trim()}>
+                {s.badge}
+              </span>
+            </div>
+            <p className="hb-stat-title">{s.title}</p>
+            <h3 className="hb-stat-value">{s.value ?? "-"}</h3>
+          </article>
+        ))}
       </div>
 
-      <div className="row justify-content-center">
-        <div className="col-12 col-lg-7 col-xl-6">
-          {submitted ? (
-            <div
-              className="rounded-3 p-5 text-center"
-              style={{
-                background:
-                  "linear-gradient(160deg, #ffffff 60%, #fdf8f2 100%)",
-                boxShadow:
-                  "0 4px 24px rgba(31,59,66,0.10), 0 1px 4px rgba(155,131,87,0.08)",
-                border: "1px solid rgba(155,131,87,0.12)",
+      {submitted ? (
+        <section className="pay-panel">
+          <div className="pay-success">
+            <FaCheckCircle size={52} color="#e7247a" />
+            <h2>Payment Submitted!</h2>
+            <p>Your payment details have been received and are under review.</p>
+            <button
+              type="button"
+              className="pay-btn-primary"
+              onClick={() => {
+                setSubmitted(false);
+                setInvoiceNo("");
+                setTransactionId("");
+                setCurrency("");
+                setAmount("");
+                handleRemoveImage();
               }}
             >
-              <FaCheckCircle size={52} color="#2e7d63" className="mb-3" />
-              <h5 className="fw-bold mb-1" style={{ color: "#1f3b42" }}>
-                Payment Submitted!
-              </h5>
-              <p className="text-muted mb-4" style={{ fontSize: "18px" }}>
-                Your payment details have been received and are under review.
-              </p>
-              <button
-                onClick={() => {
-                  setSubmitted(false);
-                  setInvoiceNo("");
-                  setTransactionId("");
-                  handleRemoveImage();
-                }}
-                className="btn"
-                style={{
-                  background: "rgb(0 76 76)",
-                  color: "#fff",
-                  padding: "9px 28px",
-                  borderRadius: "8px",
-                  fontWeight: 600,
-                }}
-              >
-                Submit Another
-              </button>
-            </div>
-          ) : (
-            <div
-              className="rounded-3"
-              style={{
-                background:
-                  "linear-gradient(160deg, #ffffff 60%, #fdf8f2 100%)",
-                boxShadow:
-                  "0 4px 24px rgba(31,59,66,0.10), 0 1px 4px rgba(155,131,87,0.08)",
-                border: "1px solid rgba(155,131,87,0.12)",
-                overflow: "hidden",
-              }}
-            >
-              {/* Card Header */}
-              <div
-                className="d-flex align-items-center gap-2 px-4 py-3"
-                style={{
-                  background:
-                    "linear-gradient(90deg, rgb(0 76 76) 0%, rgb(0 76 76) 60%, #3a6b5e 100%)",
-                  borderBottom: "1px solid rgba(155,131,87,0.25)",
-                }}
-              >
-                <MdReceipt size={18} color="#9b8357" />
-                <span
-                  className="fw-semibold"
-                  style={{ color: "#fff", fontSize: "15px" }}
-                >
-                  Payment Details
-                </span>
+              Submit Another
+            </button>
+          </div>
+        </section>
+      ) : (
+        <section className="pay-panel">
+          <div className="pay-panel-head">
+            <span className="pay-head-icon">
+              <FaMoneyCheckAlt size={18} />
+            </span>
+            <h2 className="pay-panel-title">Payment Details</h2>
+          </div>
+
+          <form className="pay-form" onSubmit={handleSubmit}>
+            <div className="pay-field">
+              <span className="pay-field-icon">
+                <MdReceipt size={18} />
+              </span>
+              <div className="pay-field-body">
+                <label className="pay-label">Invoice No</label>
+                <Select
+                  placeholder="Enter invoice number..."
+                  onChange={handleBookingSelect}
+                  autoSelectOnBlur
+                  searchable
+                  clearable
+                  className="pay-select"
+                  classNames={{ input: "pay-select-input" }}
+                  data={
+                    bookingids
+                      ?.filter((item) => item.invoice_number)
+                      .map((item) => ({
+                        value: item.invoice_number,
+                        label: `${item.invoice_number} - ${item.type}`,
+                      })) || []
+                  }
+                />
               </div>
+            </div>
 
-              <form
-                onSubmit={handleSubmit}
-                className="p-4"
-                style={{
-                  background:
-                    "linear-gradient(160deg, #f8fbfc 0%, #fdf8f2 100%)",
-                }}
-              >
-                <div className="mb-4">
-                  <label
-                    className="form-label fw-semibold"
-                    style={{
-                      color: "#1f3b42",
-                      fontSize: "13px",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    Invoice No <span style={{ color: "#c0392b" }}>*</span>
-                  </label>
-                  <Select
-                    placeholder="Select Invoice No"
-                    onChange={handleBookingSelect}
-                    autoSelectOnBlur
-                    searchable
-                    clearable
-                    styles={{
-                      input: { fontSize: 16 },
-                    }}
-                    data={
-                      bookingids
-                        ?.filter((item) => item.invoice_number) // null/undefined/empty skip
-                        .map((item) => ({
-                          value: item.invoice_number,
-                          label: item.invoice_number + " - " + item.type,
-                        })) || []
+            <div className="pay-field">
+              <span className="pay-field-icon">
+                <MdQrCode size={18} />
+              </span>
+              <div className="pay-field-body">
+                <label className="pay-label" htmlFor="transaction_id">
+                  Transaction ID
+                </label>
+                <input
+                  id="transaction_id"
+                  type="text"
+                  className="pay-input"
+                  name="transaction_id"
+                  placeholder="Enter transaction ID..."
+                  value={transactionId}
+                  onChange={(e) => setTransactionId(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="pay-field">
+              <span className="pay-field-icon">
+                <MdOutlineCurrencyExchange size={18} />
+              </span>
+              <div className="pay-field-body">
+                <label className="pay-label">Currency</label>
+                <Select
+                  placeholder="Select currency..."
+                  searchable
+                  clearable
+                  value={currency || null}
+                  onChange={(value) => setCurrency(value || "")}
+                  data={currencyOptions}
+                  className="pay-select"
+                  classNames={{ input: "pay-select-input" }}
+                />
+              </div>
+            </div>
+
+            <div className="pay-field">
+              <span className="pay-field-icon">
+                <FaMoneyBillWave size={18} />
+              </span>
+              <div className="pay-field-body">
+                <label className="pay-label" htmlFor="payment_amount">
+                  Amount
+                </label>
+                <input
+                  id="payment_amount"
+                  type="number"
+                  className="pay-input"
+                  name="amount"
+                  placeholder="Enter amount..."
+                  min="0"
+                  step="0.01"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="pay-field">
+              <span className="pay-field-icon">
+                <CgCalendar size={18} />
+              </span>
+              <div className="pay-field-body">
+                <label className="pay-label">Select Date</label>
+                <DateInput
+                  value={date}
+                  name="date"
+                  onChange={setDate}
+                  valueFormat="DD-MM-YYYY"
+                  placeholder="Select a date..."
+                  className="pay-date"
+                  classNames={{ input: "pay-date-input" }}
+                />
+              </div>
+            </div>
+
+            <div className="pay-upload-block">
+              {!image ? (
+                <div
+                  className="pay-upload-zone"
+                  onClick={() => fileRef.current?.click()}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  onDrop={onDrop}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      fileRef.current?.click();
                     }
-                  />
-                </div>
-
-                {/* Transaction ID */}
-                <div className="mb-4">
-                  <label
-                    className="form-label fw-semibold"
-                    style={{
-                      color: "#1f3b42",
-                      fontSize: "13px",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    Transaction ID <span style={{ color: "#c0392b" }}>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="transaction_id"
-                    placeholder="e.g. TXN-20240227-00123"
-                    value={transactionId}
-                    onChange={(e) => setTransactionId(e.target.value)}
-                    // required
-                    style={{
-                      border: "1.5px solid #e2e8f0",
-                      borderRadius: "8px",
-                      padding: "10px 14px",
-                      fontSize: "16px",
-                      boxShadow: "none",
-                      outline: "none",
-                    }}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="form-label fw-semibold"
-                    style={{
-                      color: "#1f3b42",
-                      fontSize: "13px",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    Select Date <span style={{ color: "#c0392b" }}>*</span>
-                  </label>
-                  <DateInput
-                    value={date}
-                    name="date"
-                    onChange={setDate}
-                    valueFormat="DD-MM-YYYY"
-                    placeholder="Select Payment Date"
-                    styles={{
-                      input: { fontSize: 16 },
-                    }}
-                  />
-                </div>
-
-                {/* Payment Proof Upload */}
-                <div className="mb-4">
-                  <label
-                    className="form-label fw-semibold"
-                    style={{
-                      color: "#1f3b42",
-                      fontSize: "13px",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    Payment Proof <span style={{ color: "#c0392b" }}>*</span>
-                  </label>
-
-                  {!preview ? (
-                    <div
-                      onClick={() => fileRef.current?.click()}
-                      style={{
-                        border: "2px dashed #d0d7de",
-                        borderRadius: "10px",
-                        padding: "36px 20px",
-                        textAlign: "center",
-                        cursor: "pointer",
-                        background: "#fafbfc",
-                        transition: "border-color 0.2s, background 0.2s",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = "#9b8357";
-                        e.currentTarget.style.background = "#fffdf8";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = "#d0d7de";
-                        e.currentTarget.style.background = "#fafbfc";
-                      }}
-                    >
-                      <FaCloudUploadAlt size={36} color="#9b8357" />
-                      <p
-                        className="mb-1 mt-2 fw-semibold"
-                        style={{ color: "#1f3b42", fontSize: "14px" }}
-                      >
-                        Click to upload receipt / screenshot
-                      </p>
-                      <p
-                        className="mb-0 text-muted"
-                        style={{ fontSize: "12px" }}
-                      >
-                        PNG, JPG, or JPEG — max 5 MB
-                      </p>
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        position: "relative",
-                        borderRadius: "10px",
-                        overflow: "hidden",
-                        border: "1.5px solid #e2e8f0",
-                      }}
-                    >
-                      <img
-                        src={preview}
-                        alt="Payment proof"
-                        style={{
-                          width: "100%",
-                          maxHeight: "260px",
-                          objectFit: "contain",
-                          display: "block",
-                          background: "#f8f9fa",
-                        }}
-                      />
-                      <button
-                        type="button"
-                        onClick={handleRemoveImage}
-                        style={{
-                          position: "absolute",
-                          top: 8,
-                          right: 8,
-                          background: "rgba(255,255,255,0.9)",
-                          border: "none",
-                          borderRadius: "50%",
-                          width: 30,
-                          height: 30,
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          boxShadow: "0 1px 4px rgba(0,0,0,0.15)",
-                        }}
-                      >
-                        <FaTimesCircle size={16} color="#c0392b" />
-                      </button>
-                      <div
-                        style={{
-                          padding: "8px 12px",
-                          fontSize: "12px",
-                          color: "#6c757d",
-                          borderTop: "1px solid #f0f0f0",
-                          background: "#fafbfc",
-                        }}
-                      >
-                        {image?.name}
-                      </div>
-                    </div>
-                  )}
-
-                  <input
-                    ref={fileRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    style={{ display: "none" }}
-                    // required={!image}
-                    name="transaction_image"
-                  />
-                </div>
-                {errorMessage && (
-                  <div
-                    className="alert alert-danger alert-dismissible fade show mb-4"
-                    role="alert"
-                  >
-                    {errorMessage}
-                    <button
-                      type="button"
-                      className="btn-close"
-                      onClick={() => setErrorMessage("")}
-                    />
-                  </div>
-                )}
-
-                {/* Submit */}
-                <button
-                  type="submit"
-                  className="btn w-100"
-                  disabled={isSubmitting}
-                  style={{
-                    background: isSubmitting ? "#4a7a84" : "rgb(0 76 76)",
-                    color: "#fff",
-                    padding: "11px",
-                    borderRadius: "8px",
-                    fontWeight: 600,
-                    fontSize: "15px",
-                    letterSpacing: "0.3px",
-                    border: "none",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
                   }}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <span
-                        className="spinner-border spinner-border-sm"
-                        role="status"
-                      />
-                      Submitting...
-                    </>
+                  <FaCloudUploadAlt size={42} className="pay-upload-icon" />
+                  <p className="pay-upload-title">
+                    Click to upload receipt / screenshot
+                  </p>
+                  <p className="pay-upload-sub">
+                    PNG, JPG, JPEG, or PDF — max 5 MB
+                  </p>
+                  <button
+                    type="button"
+                    className="pay-btn-upload"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      fileRef.current?.click();
+                    }}
+                  >
+                    Upload A File
+                  </button>
+                </div>
+              ) : (
+                <div className="pay-preview">
+                  {preview ? (
+                    <img src={preview} alt="Payment proof" />
                   ) : (
-                    "Submit Payment"
+                    <div
+                      className="pay-preview-name"
+                      style={{ padding: "2rem 1rem", textAlign: "center" }}
+                    >
+                      <FaFileAlt size={28} style={{ marginBottom: 8 }} />
+                      <div>{image?.name}</div>
+                    </div>
                   )}
-                </button>
-              </form>
+                  <button
+                    type="button"
+                    className="pay-preview-remove"
+                    onClick={handleRemoveImage}
+                    aria-label="Remove file"
+                  >
+                    <FaTimesCircle size={16} />
+                  </button>
+                  {preview && (
+                    <div className="pay-preview-name">{image?.name}</div>
+                  )}
+                </div>
+              )}
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*,.pdf,application/pdf"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+                name="transaction_image"
+              />
             </div>
-          )}
-        </div>
-      </div>
+
+            {errorMessage && (
+              <div className="pay-error" role="alert">
+                {errorMessage}
+                <button
+                  type="button"
+                  onClick={() => setErrorMessage("")}
+                  aria-label="Dismiss"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
+            <div className="pay-actions">
+              <Link href="/dashboard" className="pay-btn-secondary">
+                <FaHome size={15} />
+                Back To Dashboard
+              </Link>
+              <button
+                type="submit"
+                className="pay-btn-primary"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                    />
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <FaFileAlt size={15} />
+                    Submit Payment
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+        </section>
+      )}
     </div>
   );
 }
-
-export default page;

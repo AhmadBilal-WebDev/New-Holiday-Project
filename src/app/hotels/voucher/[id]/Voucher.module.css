@@ -1,729 +1,1129 @@
-/* ─────────────────────────────────────────
-   ROOT WRAPPER
-───────────────────────────────────────── */
+/* ── Hotel Voucher — pink theme (separate from invoice) ── */
+
 .pageWrapper {
-  background: #efefef;
-  min-height: 100vh;
-  padding: 2.5rem 0;
+    background: #e7e7e7;
+    min-height: 100vh;
+    padding: 1rem 0 0;
+    -webkit-font-smoothing: antialiased;
 }
 
-.confirmationWrapper {
-  max-width: 860px;
-  margin: auto;
-  font-family: "Helvetica", Arial, sans-serif;
+.voucherContainer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5px;
+    position: relative;
+    font-family: "Helvetica", Arial, sans-serif;
+    color: #000;
 }
 
-
-/* ─────────────────────────────────────────
-   VOUCHER CARD SHELL
-───────────────────────────────────────── */
 .voucherCard {
-  background: #ffffff;
-  border-radius: 0;
-  overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
-  position: relative;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.08);
 }
 
-.watermark {
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-  width: 400px;
-  height: 400px;
-  position: absolute;
-  bottom: 3.5rem;
-  rotate: -2deg;
-  right: -12rem;
+.errorCard {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.08);
+    text-align: center;
+    padding: 3rem 1.5rem;
 }
 
-/* ─────────────────────────────────────────
-   TITLE BAND
-───────────────────────────────────────── */
-.titleBand {
-  padding: .5rem 2rem .6rem;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+.errorIcon {
+    color: #e6a800;
 }
 
-.titleLeft {
-  flex: 1;
+.errorText {
+    margin: 1rem 0 0;
+    color: #45556c;
+    font-size: 1.05rem;
 }
 
-.mainTitle {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  line-height: 1.15;
-  margin-bottom: 0.45rem;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+.brandImageWrap {
+    width: 100%;
+    line-height: 0;
 }
 
-.mainSubtitle {
-  font-size: 0.92rem;
-  font-weight: 500;
-  margin: 0;
+.brandImage {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+    object-fit: contain;
 }
 
-.titleRight {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  flex-shrink: 0;
+/* ── Header ─────────────────────────────────────────────────── */
+.vchHeader {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
 }
 
-.qrWrapper {
-  background: #ffffff;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #e0e0e0;
+.vchHeaderBand {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1.1rem 1.25rem;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.vchHeaderCircle {
+    position: absolute;
+    top: -80px;
+    right: -60px;
+    width: 288px;
+    height: 288px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.vchHeaderBrand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 0.25rem;
+}
+
+.vchHeaderDocTitle {
+    margin: 0;
+    font-size: clamp(1.25rem, 3vw, 1.85rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #1a1a1a;
+}
+
+.vchHeaderTagline {
+    margin: 0;
+    color: rgba(26, 26, 26, 0.75);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.vchHeaderContacts {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.45rem;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-align: right;
+}
+
+.vchHeaderContacts span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.vchHeaderSub {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem 1.2rem;
+    background: #fef5f7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.vchHeaderMain {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.vchForBlock {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.vchForLabel {
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+}
+
+.vchGuestName {
+    margin: 0 0 0.35rem;
+    color: #45556c;
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.vchForDesc {
+    margin: 0;
+    color: #8a92a6;
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+.vchMetaBlock {
+    flex: 0 1 auto;
+    text-align: right;
+    min-width: 0;
+}
+
+.vchStatusRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    margin-bottom: 0.45rem;
+}
+
+.vchStatusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.statusConfirmed {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.statusCancelled {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.statusPending {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.payment_paid {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.payment_pending {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.payment_unpaid,
+.payment_failed {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.vchBookingRef,
+.vchBookingDate {
+    color: #45556c;
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+/* QR card — voucher-only */
+.qrCard {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: #fff;
+    border: 1.5px solid #f0d6e2;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(231, 36, 122, 0.06);
+}
+
+.qrBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 108px;
+    height: 108px;
+    padding: 0.4rem;
+    background: #fef5f7;
+    border: 1px solid #f0d6e2;
+    border-radius: 12px;
+    line-height: 0;
+}
+
+.qrText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.qrTitle {
+    color: #e7247a;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.25;
 }
 
 .qrLabel {
-  font-size: 0.62rem;
-  color: #555;
-  text-align: center;
-  line-height: 1.5;
+    color: #8a92a6;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: left;
+    line-height: 1.4;
+    max-width: none;
 }
 
-/* ─────────────────────────────────────────
-   GOLD DIVIDER
-───────────────────────────────────────── */
-.goldDivider {
-  height: 3px;
-  background: linear-gradient(90deg, #c49a2a 0%, #e8c55a 50%, #c49a2a 100%);
+/* ── Body ───────────────────────────────────────────────────── */
+.bodyInner {
+    padding: 0.35rem clamp(0.85rem, 2.5vw, 1.35rem) 0.5rem;
 }
 
-/* ─────────────────────────────────────────
-   VOUCHER DETAILS BAND
-───────────────────────────────────────── */
-.voucherDetailsBand {
-  background: #f9f6f1;
-  border-bottom: 1px solid #e6ddd0;
-}
-
-.voucherBandInner {
-  padding: 1.2rem 2rem;
-}
-
-.voucherSectionLabel {
-  display: block;
-  font-size: 0.73rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #000;
-  margin-bottom: 0.85rem;
-}
-
-.voucherDetailsRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 2.5rem;
-}
-
-.voucherDetailsLeft {
-  min-width: 50%;
-}
-
-.voucherNoLabel {
-  font-size: 0.63rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #777;
-  margin-bottom: 0.2rem;
-}
-
-.voucherNumber {
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 0.45rem;
-  letter-spacing: 0.02em;
-}
-
-.confirmedBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: #E7247A;
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  padding: 0.22rem 0.8rem;
-  border-radius: 4px;
-  text-transform: uppercase;
-}
-
-.pendingBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: #d4a94b59;
-  color: #000;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  padding: 0.22rem 0.8rem;
-  border-radius: 4px;
-  text-transform: uppercase;
-}
-
-.cancelledBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: #dc3545;
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  padding: 0.22rem 0.8rem;
-  border-radius: 4px;
-  text-transform: uppercase;
-}
-.voucherDetailsDivider {
-  width: 1px;
-  background: #d4c9b4;
-  align-self: stretch;
-  min-height: 70px;
-}
-
-.voucherDetailsRight {
-  flex: 1;
-}
-
-.bookingDetailsTitle {
-  font-size: 0.88rem;
-  color: #777;
-  margin-bottom: 0.55rem;
-}
-
-.bookingDetailLine {
-  display: flex;
-  align-items: baseline;
-  gap: 0.25rem;
-  margin-bottom: 0.3rem;
-  font-size: 0.88rem;
-}
-
-.bookingDetailLabel {
-  font-weight: 700;
-  color: #1a1a1a;
-  font-size: 0.82rem;
-}
-
-.bookingDetailValue {
-  color: #1a1a1a;
-  font-weight: 600;
-  font-size: 0.88rem;
-}
-
-.bookingDetailSmallLabel {
-  font-size: 0.88rem;
-  color: #666;
-  margin-bottom: 0.1rem;
-}
-
-.bookingDateValue {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
-}
-
-/* ─────────────────────────────────────────
-   SECTION BLOCKS
-───────────────────────────────────────── */
-.sectionBlock {
-  border-bottom: 1px solid #e8e8e8;
-}
-
-.sectionHeader {
-  background: #E7247A;
-  color: #ffffff;
-  padding: 0.65rem 1.5rem;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-}
-
-.sectionHeader::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0));
-}
-
-.sectionIconWrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  background: #c49a2a;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-/* ─────────────────────────────────────────
-   HOTEL INFO GRID
-───────────────────────────────────────── */
-.hotelInfoGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  padding: 1.3rem 1.5rem;
-}
-
-.hotelInfoLeft {
-  padding-right: 2rem;
-  border-right: 1px solid #e8e8e8;
-}
-
-.hotelTitle {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 0.5rem;
-}
-
-.hotelAddressLine {
-  font-size: 0.8rem;
-  color: #555;
-  margin-bottom: 0.28rem;
-  line-height: 1.5;
-}
-
-.hotelInfoRight {
-  padding-left: 2rem;
-}
-
-.hotelDateRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.38rem 0;
-  border-bottom: 1px solid #f0f0f0;
-  font-size: 0.82rem;
-}
-
-.hotelDateRow:last-child {
-  border-bottom: none;
-}
-
-.hotelDateLabel {
-  color: #666;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.hotelDateValue {
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.boldValue {
-  font-weight: 800 !important;
-}
-
-.cityDot {
-  width: 10px;
-  height: 10px;
-  background: #c49a2a;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-}
-
-/* ─────────────────────────────────────────
-   TABLES
-───────────────────────────────────────── */
-.premiumTable {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 0.82rem;
-}
-
-.premiumTable thead tr {
-  background: #d4a84b;
-  color: #1a1a1a;
-}
-
-.premiumTable thead th {
-  padding: 0.65rem 1rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  border: none;
-  background: #d4a84b;
-  color: #1a1a1a;
-}
-
-.premiumTable tbody tr {
-  border-bottom: 1px solid #ececec;
-}
-
-.premiumTable tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.premiumTable tbody tr:hover {
-  background-color: #f5f5f5;
-}
-
-.premiumTable tbody td {
-  padding: 0.7rem 1rem;
-  color: #333;
-  vertical-align: middle;
-  border: none;
-}
-
-.srCell {
-  width: 40px;
-  text-align: center;
-  font-weight: 700;
-  color: #1a1a1a;
-}
-
-/* ─────────────────────────────────────────
-   IMPORTANT INFORMATION
-───────────────────────────────────────── */
-.importantSection {
-  padding: 1.2rem 1.5rem 1.4rem;
-}
-
-.importantTitle {
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #1a1a1a;
-  margin-bottom: 0.5rem;
-}
-
-.importantDivider {
-  height: 1px;
-  background: #ddd;
-  margin-bottom: 0.85rem;
-}
-
-.importantList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.importantList li {
-  position: relative;
-  padding-left: 1.1rem;
-  font-size: 0.8rem;
-  color: #444;
-  line-height: 1.75;
-}
-
-.importantList li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: #444;
-}
-
-/* ─────────────────────────────────────────
-   ACTION BUTTONS
-───────────────────────────────────────── */
-.actionRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-}
-
-.btnPrimary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.6rem 1.5rem;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #E7247A, #036666);
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-decoration: none;
-  box-shadow: 0 4px 14px rgba(0, 76, 76, 0.35);
-}
-
-.btnPrimary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 76, 76, 0.45);
-  background: linear-gradient(135deg, #067575, #037272);
-  color: #ffffff;
-}
-
-.btnGold {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.6rem 1.5rem;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #c49a2a, #e8c55a);
-  color: #E7247A;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-decoration: none;
-  box-shadow: 0 4px 14px rgba(196, 154, 42, 0.35);
-}
-
-.btnGold:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(196, 154, 42, 0.45);
-  color: #1e2d45;
-}
-
-/* ─────────────────────────────────────────
-   PRINT STYLES
-───────────────────────────────────────── */
-@media print {
-  @page {
-    size: A4;
-    margin: 10mm 12mm;
-  }
-
-  .pageWrapper {
-    background: #fff !important;
-    padding: 0 !important;
-  }
-
-  .confirmationWrapper {
-    max-width: 100% !important;
-  }
-
-  .voucherCard {
-    box-shadow: none !important;
-  }
-
-  .goldDivider {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .sectionHeader {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    background: #E7247A !important;
-    color: #ffffff !important;
-  }
-
-  .sectionIconWrap {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    background: #c49a2a !important;
-  }
-
-  .premiumTable thead tr {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    background: #d4a84b !important;
-  }
-
-  .premiumTable thead th {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    background: #d4a84b !important;
-    color: #1a1a1a !important;
-  }
-
-  .confirmedBadge {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    background: #E7247A !important;
-    color: #ffffff !important;
-  }
-
-  .sectionBlock {
-    page-break-inside: avoid;
-  }
-
-  .actionRow {
-    display: none !important;
-  }
-
-  .watermark {
-    position: fixed !important;
-    bottom: 1rem !important;
-    right: -6rem !important;
-    width: 350px !important;
-    height: 350px !important;
-    opacity: 0.2 !important;
-    rotate: 0deg !important;
-    z-index: 1 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-}
-
-/* ─────────────────────────────────────────
-   RESPONSIVE
-───────────────────────────────────────── */
-@media (max-width: 768px) {
-  .titleBand {
-    flex-direction: column;
-    text-align: center;
-    padding: 1.2rem 1rem;
-  }
-
-  .mainTitle {
-    font-size: 1.3rem;
-  }
-
-  .voucherDetailsRow {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .voucherDetailsDivider {
-    display: none;
-  }
-
-  .hotelInfoGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .hotelInfoLeft {
-    padding-right: 0;
-    border-right: none;
-    border-bottom: 1px solid #e8e8e8;
-    padding-bottom: 1rem;
-  }
-
-  .hotelInfoRight {
-    padding-left: 0;
-  }
-
-  .voucherBandInner {
-    padding: 1rem;
-  }
-
-  .sectionHeader {
-    padding: 0.6rem 1rem;
-  }
-
-  .hotelInfoGrid {
-    padding: 1rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .tableWrap {
-    padding: 0.75rem !important;
-  }
-
-  /* Stack tables as cards on mobile */
-  .premiumTable,
-  .premiumTable thead,
-  .premiumTable tbody,
-  .premiumTable tr,
-  .premiumTable th,
-  .premiumTable td {
-    display: block;
-    width: 100%;
-  }
-
-  .premiumTable {
-    min-width: 0;
-    border-collapse: collapse;
-  }
-
-  .premiumTable thead {
-    display: none;
-  }
-
-  .premiumTable tbody tr {
+.detailCard {
     background: #fff;
-    border: 1px solid #e4e4e4;
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
-    padding: 0.35rem 0;
-    overflow: hidden;
-  }
+    border: 1px solid #e8e5ea;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(19, 20, 35, 0.06);
+    padding: clamp(1.15rem, 3vw, 1.75rem);
+    margin: 1.05rem 0;
+}
 
-  .premiumTable tbody tr:nth-child(even) {
-    background: #fafafa;
-  }
-
-  .premiumTable tbody tr:hover {
-    background: #fafafa;
-  }
-
-  .premiumTable tbody td {
+.detailCardHead {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.55rem 0.85rem;
-    text-align: left !important;
-    border-bottom: 1px solid #f0f0f0;
-    word-break: break-word;
-  }
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.15rem;
+}
 
-  .premiumTable tbody td:last-child {
-    border-bottom: none;
-  }
-
-  .premiumTable tbody td::before {
-    content: attr(data-label);
-    flex: 0 0 42%;
-    max-width: 42%;
+.detailStep {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7247a;
+    color: #fff;
+    font-size: 0.78rem;
     font-weight: 700;
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    color: #E7247A;
-    text-transform: uppercase;
-  }
+    flex-shrink: 0;
+}
 
-  .premiumTable tbody td.fullWidthCell {
+.detailCardTitle {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.detailGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.75rem;
+    row-gap: 1.1rem;
+}
+
+.detailItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    min-width: 0;
+}
+
+.detailLabel {
+    color: #8a92a6;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.detailValue {
+    color: #1e1e1e;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* Hotel card */
+.hotelCard {
+    border: 1px solid #f0d6e2;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.hotelCardHead {
+    background: #fef5f7;
+    padding: clamp(0.95rem, 2.5vw, 1.25rem);
+}
+
+.hotelCardTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.hotelNameWrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.hotelIcon {
+    display: inline-flex;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+.hotelName {
+    margin: 0;
+    color: #45556c;
+    font-size: clamp(0.98rem, 2.2vw, 1.12rem);
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.hotelCity {
+    color: #8a92a6;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.hotelAddress {
+    margin: 0.45rem 0 0;
+    padding-left: 1.4rem;
+    color: #8a92a6;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.stayGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem 1rem;
+    margin-top: 1rem;
+    padding-left: 1.4rem;
+}
+
+.stayValue {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.roomList {
+    background: #fff;
+}
+
+.roomItem {
+    padding: 0.9rem clamp(0.95rem, 2.5vw, 1.25rem);
+    border-top: 1px solid #eee4ea;
+}
+
+.roomItemRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) auto;
+    gap: 0.65rem 1rem;
+    align-items: center;
+}
+
+.roomType {
+    color: #45556c;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.roomBoard {
+    color: #8a92a6;
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.roomOccupancy {
+    color: #8a92a6;
+    font-size: 0.84rem;
+    font-weight: 500;
+    white-space: nowrap;
+    justify-self: end;
+}
+
+.roomMeta {
+    margin-top: 0.55rem;
+    display: flex;
     flex-direction: column;
     gap: 0.35rem;
-  }
-
-  .premiumTable tbody td.fullWidthCell::before {
-    flex: none;
-    max-width: 100%;
-  }
-
-  .srCell {
-    width: 100%;
-  }
 }
 
-@media screen and (max-width: 480px) {
-  .premiumTable tbody td {
-    flex-direction: column;
-    gap: 0.2rem;
-  }
+.cancelList {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #6b7280;
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
 
-  .premiumTable tbody td::before {
-    flex: none;
+.cancelList strong {
+    color: #45556c;
+}
+
+.nonRefundable {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #f1b4b4;
+    background: #fff5f5;
+    color: #c62828;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Guests */
+.guestList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.guestRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    background: #fef5f7;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+}
+
+.guestLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.guestIndex {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #45556c;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.guestInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.guestName {
+    color: #45556c;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.guestSub {
+    color: #8a92a6;
+    font-size: 0.8rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.guestMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+}
+
+.guestGender {
+    color: #8a92a6;
+    font-size: 0.86rem;
+    font-weight: 500;
+}
+
+.guestType {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: #f8e6ee;
+    color: #45556c;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.specialRequestText {
+    margin: 0;
+    color: #45556c;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.infoBullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.infoBullets li {
+    position: relative;
+    padding-left: 1.15rem;
+    color: #45556c;
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+.infoBullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #e7247a;
+}
+
+/* Thanks footer */
+.thanksFooter {
+    position: relative;
+    overflow: hidden;
+    margin: 1rem 0 0;
+    padding: clamp(1.35rem, 3.5vw, 1.85rem) 1.25rem;
+    border-radius: 18px 18px 0 0;
+    background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%);
+    text-align: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.thanksFooterContent {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.thanksFooterTitle {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.25;
+}
+
+.thanksFooterContacts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem 1.35rem;
+    color: #1a1a1a;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.thanksFooterContacts span,
+.thanksFooterAddress {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.thanksFooterAddress {
+    color: #1a1a1a;
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: 1.4;
     max-width: 100%;
-  }
+}
+
+.thanksFooterAddress span {
+    word-break: break-word;
+}
+
+/* Actions */
+.actionRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem 3rem;
+}
+
+.btnPrint,
+.btnInvoice,
+.btnHome {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    border: 1.5px solid transparent;
+    white-space: nowrap;
+}
+
+.btnPrint:hover,
+.btnInvoice:hover,
+.btnHome:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.btnPrint {
+    background: #e7247a;
+    color: #fff;
+    border-color: #e7247a;
+}
+
+.btnInvoice {
+    background: #fef5f7;
+    color: #e7247a;
+    border-color: #e7247a;
+}
+
+.btnHome {
+    background: #f4f6f9;
+    color: #45556c;
+    border-color: #d7dde7;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media screen and (max-width: 760px) {
+    .voucherContainer {
+        width: 98%;
+        max-width: 98%;
+        padding: 4px;
+    }
+
+    .vchHeaderBand {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.95rem 1rem;
+        border-radius: 0 0 14px 14px;
+        gap: 0.75rem;
+    }
+
+    .vchHeaderDocTitle {
+        font-size: 1.25rem;
+    }
+
+    .vchHeaderContacts {
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+        gap: 0.35rem;
+        font-size: 0.84rem;
+    }
+
+    .vchHeaderSub {
+        gap: 0.9rem;
+        padding: 0.95rem 1rem 1.05rem;
+    }
+
+    .vchHeaderMain {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.85rem;
+    }
+
+    .vchMetaBlock {
+        text-align: left;
+        width: 100%;
+    }
+
+    .vchStatusRow {
+        justify-content: flex-start;
+    }
+
+    .qrCard {
+        width: 100%;
+        gap: 0.85rem;
+        padding: 0.85rem 0.9rem;
+    }
+
+    .qrBox {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .qrCard {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.7rem;
+    }
+
+    .qrText {
+        align-items: center;
+    }
+
+    .qrLabel {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .pageWrapper {
+        padding: 0.5rem 0 0;
+    }
+
+    .voucherContainer {
+        width: 100%;
+        max-width: 100%;
+        padding: 6px;
+    }
+
+    .vchGuestName {
+        font-size: 1.35rem;
+    }
+
+    .qrCard {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .qrTitle {
+        font-size: 0.88rem;
+    }
+
+    .qrLabel {
+        font-size: 0.78rem;
+    }
+
+    .detailCard {
+        padding: 1rem;
+        margin: 0.85rem 0;
+        border-radius: 14px;
+    }
+
+    .detailGrid {
+        grid-template-columns: 1fr;
+        row-gap: 0.85rem;
+    }
+
+    .hotelCardTop {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .hotelCity {
+        padding-left: 1.4rem;
+        white-space: normal;
+    }
+
+    .hotelAddress,
+    .stayGrid {
+        padding-left: 0;
+    }
+
+    .stayGrid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .roomItemRow {
+        grid-template-columns: 1fr;
+        gap: 0.28rem;
+    }
+
+    .roomOccupancy {
+        justify-self: start;
+    }
+
+    .guestRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.55rem;
+    }
+
+    .guestMeta {
+        padding-left: 2.35rem;
+        flex-wrap: wrap;
+    }
+
+    .thanksFooter {
+        padding: 1.2rem 0.9rem;
+        border-radius: 14px 14px 0 0;
+    }
+
+    .thanksFooterContacts {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .actionRow {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+        padding: 1.1rem 0.85rem 2.75rem;
+    }
+
+    .btnPrint,
+    .btnInvoice,
+    .btnHome {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+/* ── Print ──────────────────────────────────────────────────── */
+@media print {
+    @page {
+        size: A4;
+        margin: 8mm 10mm;
+    }
+
+    .pageWrapper {
+        background: #fff !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+    }
+
+    .voucherContainer {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .voucherCard {
+        box-shadow: none !important;
+        overflow: visible !important;
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    .bodyInner {
+        padding: 4px 10px 0 !important;
+    }
+
+    .detailCard,
+    .hotelCard,
+    .vchHeader,
+    .roomList,
+    .infoBullets {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    .detailCard {
+        box-shadow: none !important;
+        margin: 0.5rem 0 !important;
+        padding: 0.8rem 0.9rem !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .detailCardHead {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    .detailStep {
+        background: #e7247a !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .detailGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .hotelCardHead {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .stayGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .roomItemRow {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) auto !important;
+    }
+
+    .roomItem,
+    .guestRow {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .guestRow {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .guestIndex {
+        background: #45556c !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .guestType {
+        background: #f8e6ee !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .infoBullets li::before {
+        background: #e7247a !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .vchHeaderBand {
+        display: flex !important;
+        flex-direction: row !important;
+        background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .vchHeaderCircle {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .vchHeaderSub {
+        display: flex !important;
+        flex-direction: column !important;
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .vchHeaderMain {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+    }
+
+    .vchMetaBlock {
+        text-align: right !important;
+    }
+
+    .vchStatusRow {
+        justify-content: flex-end !important;
+    }
+
+    .qrCard {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        width: 100% !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        border: 1.5px solid #f0d6e2 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .qrBox {
+        background: #fef5f7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .qrTitle {
+        color: #e7247a !important;
+    }
+
+    .vchStatusBadge,
+    .statusConfirmed,
+    .statusCancelled,
+    .statusPending,
+    .payment_paid,
+    .payment_pending {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .thanksFooter {
+        margin: 0.65rem 0 0 !important;
+        border-radius: 14px 14px 0 0 !important;
+        background: linear-gradient(98.13deg, #fef5f7 0%, #e7247a 100%) !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .thanksFooterContacts {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    .actionRow {
+        display: none !important;
+    }
 }

@@ -1,23 +1,35 @@
-﻿'use client'
-import styles from "../../../hotels/invoice/[id]/Invoice.module.css";
-import localStyles from "./invoice.module.css";
+﻿"use client";
+import styles from "./invoice.module.css";
 import moment from "moment";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import HotelInvoiceLoader from "@/components/Loader/HotelInvoiceLoader";
-import { PiDownloadSimpleThin } from "react-icons/pi";
-import { Tooltip } from '@mantine/core';
-import { FaHome, FaPhone, FaEnvelope, FaGlobe, FaCalendarAlt, FaFileInvoice, FaCheckCircle, FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import ActivityInvoiceLoader from "@/components/Loader/ActivityInvoiceLoader";
+import {
+  FaPhone,
+  FaEnvelope,
+  FaCheckCircle,
+  FaMapMarkerAlt,
+  FaRegStar,
+  FaStar,
+  FaStarHalfAlt,
+} from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import Link from "next/link";
+import { Merriweather } from "next/font/google";
+
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  weight: ["700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
 
 export default function Page() {
   const { id } = useParams();
   const ref = useRef();
   const [voucherDetail, setVoucherDetail] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetchDetails();
@@ -26,10 +38,13 @@ export default function Page() {
   const fetchDetails = async () => {
     setIsLoading(true);
     try {
-      const responses = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/activities/booking/${id}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }, 
-      });
+      const responses = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/activities/booking/${id}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       const res = await responses.json();
       setIsLoading(false);
       if (res.Success) {
@@ -49,23 +64,28 @@ export default function Page() {
   }
 
   function hasGuestName(guest) {
-    return Boolean(String(guest?.first_name || '').trim() || String(guest?.last_name || '').trim());
+    return Boolean(
+      String(guest?.first_name || "").trim() ||
+        String(guest?.last_name || "").trim()
+    );
   }
 
   function formatChildUnderLabel(age) {
-    if (age == null || age === '') return 'Child';
+    if (age == null || age === "") return "Child";
     return `Children (under ${age})`;
   }
 
   function getNamedChildren() {
-    return (voucherDetail?.other_passengers?.children_details || []).filter(hasGuestName);
+    return (voucherDetail?.other_passengers?.children_details || []).filter(
+      hasGuestName
+    );
   }
 
   function getChildrenAgeSummary() {
     const details = voucherDetail?.other_passengers?.children_details || [];
     if (!details.length) {
       const count = Number(voucherDetail?.children || 0);
-      return count > 0 ? [{ label: 'Children', count }] : [];
+      return count > 0 ? [{ label: "Children", count }] : [];
     }
     const counts = {};
     details.forEach((child) => {
@@ -76,30 +96,39 @@ export default function Page() {
   }
 
   function getModalityName() {
-    return voucherDetail?.modality?.name || voucherDetail?.voucher?.modality?.name || '';
+    return (
+      voucherDetail?.modality?.name ||
+      voucherDetail?.voucher?.modality?.name ||
+      ""
+    );
   }
 
   function getStartTime() {
     const modalityName = getModalityName();
     const timeMatch = String(modalityName).match(/(\d{1,2}:\d{2})/);
     if (timeMatch) {
-      const parsed = moment(timeMatch[1], ['HH:mm', 'H:mm'], true);
-      if (parsed.isValid()) return parsed.format('hh:mm A');
+      const parsed = moment(timeMatch[1], ["HH:mm", "H:mm"], true);
+      if (parsed.isValid()) return parsed.format("hh:mm A");
     }
-    return '';
+    return "";
   }
 
   function getLanguageLabel() {
-    const langs = voucherDetail?.languages || voucherDetail?.voucher?.languages || [];
+    const langs =
+      voucherDetail?.languages || voucherDetail?.voucher?.languages || [];
     if (!langs.length) {
       const modalityName = getModalityName().toLowerCase();
-      if (modalityName.includes('english') || modalityName.includes('eng')) return 'English';
-      return '';
+      if (modalityName.includes("english") || modalityName.includes("eng"))
+        return "English";
+      return "";
     }
     return langs
-      .map((l) => l.description || (l.code === 'en' ? 'English' : String(l.code || '').toUpperCase()))
+      .map((l) =>
+        l.description ||
+        (l.code === "en" ? "English" : String(l.code || "").toUpperCase())
+      )
       .filter(Boolean)
-      .join(', ');
+      .join(", ");
   }
 
   function getCancellationPolicy() {
@@ -113,7 +142,8 @@ export default function Page() {
 
   function getCancellationPoliciesList(policyWrapper) {
     if (!policyWrapper) return [];
-    if (Array.isArray(policyWrapper?.cancellation_policies)) return policyWrapper.cancellation_policies;
+    if (Array.isArray(policyWrapper?.cancellation_policies))
+      return policyWrapper.cancellation_policies;
     if (Array.isArray(policyWrapper)) return policyWrapper;
     return [];
   }
@@ -124,16 +154,16 @@ export default function Page() {
       voucherDetail?.voucher?.contract_remarks ||
       voucherDetail?.voucher?.comments ||
       [];
-    const text = remarks.map((r) => r?.text).filter(Boolean).join(' ');
+    const text = remarks.map((r) => r?.text).filter(Boolean).join(" ");
     if (!text.trim()) return [];
 
     return text
-      .split('//')
+      .split("//")
       .map((part) => part.trim())
       .filter(Boolean)
       .map((part) => {
-        const sepIdx = part.indexOf(':');
-        if (sepIdx === -1) return { label: '', value: part };
+        const sepIdx = part.indexOf(":");
+        if (sepIdx === -1) return { label: "", value: part };
         return {
           label: part.slice(0, sepIdx).trim(),
           value: part.slice(sepIdx + 1).trim(),
@@ -143,90 +173,145 @@ export default function Page() {
   }
 
   const SUPPLIER_REMARK_LABELS = [
-    'supplier name',
-    'supplier emergency phone',
-    'supplier',
-    'voucher type',
-    'meeting point instructions',
-    'start/opening time',
-    'end/closing time',
+    "supplier name",
+    "supplier emergency phone",
+    "supplier",
+    "voucher type",
+    "meeting point instructions",
+    "start/opening time",
+    "end/closing time",
   ];
 
   function getVisibleContractRemarks() {
     return parseContractRemarks().filter(
-      (item) => !SUPPLIER_REMARK_LABELS.includes(String(item.label || '').toLowerCase())
+      (item) =>
+        !SUPPLIER_REMARK_LABELS.includes(String(item.label || "").toLowerCase())
     );
   }
 
   function convertToCustomerCurrency(price) {
-    if (price == null || price === '') return Number(0).toFixed(2);
-    if (!voucherDetail.customer_exchange_rate) return Number(price || 0).toFixed(2);
-    if (voucherDetail.currency_code === voucherDetail.customer_currency) return Number(price).toFixed(2);
-    return (Number(price) * Number(voucherDetail.customer_exchange_rate)).toFixed(2);
+    if (price == null || price === "") return Number(0).toFixed(2);
+    if (!voucherDetail.customer_exchange_rate)
+      return Number(price || 0).toFixed(2);
+    if (voucherDetail.currency_code === voucherDetail.customer_currency)
+      return Number(price).toFixed(2);
+    return (
+      Number(price) * Number(voucherDetail.customer_exchange_rate)
+    ).toFixed(2);
   }
 
   function getTotalPassengers() {
     const parts = [];
     const adults = Number(voucherDetail?.adults || 0);
-    if (adults > 0) parts.push(`${adults} Adult${adults !== 1 ? 's' : ''}`);
+    if (adults > 0) parts.push(`${adults} Adult${adults !== 1 ? "s" : ""}`);
     getChildrenAgeSummary().forEach((item) => {
       parts.push(`${item.count} ${item.label}`);
     });
-    return parts.join(', ');
+    return parts.join(", ");
+  }
+
+  function formatRemarkValue(value) {
+    const text = String(value || "").trim();
+    if (!text) return [];
+
+    const protectedText = text.replace(
+      /\b(Min|Max|No|Nos|Dr|Mr|Mrs|Ms|Jr|Sr|vs|approx|kg|lbs?)\.\s+/gi,
+      "$1.\u00A0"
+    );
+
+    const parts = protectedText
+      .split(/\.\s+/)
+      .map((part) => part.trim().replace(/\u00A0/g, " ").replace(/\.$/, ""))
+      .filter(Boolean);
+
+    const merged = [];
+    for (let i = 0; i < parts.length; i++) {
+      let current = parts[i];
+      while (i + 1 < parts.length && current.length <= 4) {
+        i += 1;
+        current = `${current}. ${parts[i]}`;
+      }
+      merged.push(current.endsWith(".") ? current : `${current}.`);
+    }
+
+    return merged;
+  }
+
+  function isLongRemark(item) {
+    const value = String(item?.value || "");
+    const label = String(item?.label || "").toLowerCase();
+    const longLabels = [
+      "mandatory instructions",
+      "recommendations",
+      "voucher type",
+      "inclusions",
+    ];
+    return (
+      value.length > 70 ||
+      longLabels.includes(label) ||
+      formatRemarkValue(value).length > 1
+    );
   }
 
   function renderCancellationPolicyContent() {
     const policyWrapper = getCancellationPolicy();
     if (!policyWrapper) return null;
 
-    const cancelPolicy = policyWrapper.cancel_policy || 'refundable';
+    const cancelPolicy = policyWrapper.cancel_policy || "refundable";
     const policies = getCancellationPoliciesList(policyWrapper);
 
-    if (cancelPolicy === 'non-refundable') {
+    if (cancelPolicy === "non-refundable") {
       return (
-        <div className="text-danger small mt-2">
-          This booking is non-refundable. No refund will be issued for cancellations.
-        </div>
+        <span className={styles.nonRefundable}>
+          This booking is non-refundable. No refund will be issued for
+          cancellations.
+        </span>
       );
     }
 
     if (!policies.length) {
       return (
-        <div className="small mt-2">
-          This booking is refundable. Please contact support for cancellation terms.
-        </div>
+        <p className={styles.policyNote}>
+          This booking is refundable. Please contact support for cancellation
+          terms.
+        </p>
       );
     }
 
     return (
-      <ul style={{ paddingLeft: 18, margin: 0, fontSize: '0.9rem' }}>
+      <ul className={styles.cancelList}>
         {policies.map((policy, i) => {
           const fromDate = policy.from || policy.dateFrom;
           const amount = policy.amount ?? policy.value ?? policy.original_amount;
-          const dateLabel = fromDate ? moment(fromDate).format('D MMM YYYY') : null;
+          const dateLabel = fromDate
+            ? moment(fromDate).format("D MMM YYYY")
+            : null;
 
           if (fromDate || amount != null) {
             return (
-              <li key={i} style={{ marginBottom: 6, color: '#555' }}>
+              <li key={i}>
                 {dateLabel ? (
                   <>
                     Free cancellation before <strong>{dateLabel}</strong>.
                     {Number(amount) > 0 && (
                       <>
-                        {' '}On or after this date, a cancellation fee of{' '}
+                        {" "}
+                        On or after this date, a cancellation fee of{" "}
                         <strong>
-                          {voucherDetail.customer_currency} {convertToCustomerCurrency(amount)}
-                        </strong>{' '}
+                          {voucherDetail.customer_currency}{" "}
+                          {convertToCustomerCurrency(amount)}
+                        </strong>{" "}
                         will apply.
                       </>
                     )}
                   </>
                 ) : (
                   <>
-                    A cancellation fee of{' '}
+                    A cancellation fee of{" "}
                     <strong>
-                      {voucherDetail.customer_currency} {convertToCustomerCurrency(amount)}
-                    </strong>{' '}
+                      {voucherDetail.customer_currency}{" "}
+                      {convertToCustomerCurrency(amount)}
+                    </strong>{" "}
                     may apply.
                   </>
                 )}
@@ -236,18 +321,22 @@ export default function Page() {
 
           if (policy.time_duration != null) {
             return (
-              <li key={i} style={{ marginBottom: 6, color: '#555' }}>
-                If cancelled <strong>{policy.time_duration} hours</strong> before departure, a{' '}
-                {policy.type === 'percentage' ? (
-                  <><strong>{policy.value}%</strong> cancellation charge</>
+              <li key={i}>
+                If cancelled <strong>{policy.time_duration} hours</strong> before
+                departure, a{" "}
+                {policy.type === "percentage" ? (
+                  <>
+                    <strong>{policy.value}%</strong> cancellation charge
+                  </>
                 ) : (
                   <>
-                    fixed cancellation charge of{' '}
+                    fixed cancellation charge of{" "}
                     <strong>
-                      {voucherDetail.customer_currency} {convertToCustomerCurrency(policy.value)}
+                      {voucherDetail.customer_currency}{" "}
+                      {convertToCustomerCurrency(policy.value)}
                     </strong>
                   </>
-                )}{' '}
+                )}{" "}
                 will apply.
               </li>
             );
@@ -259,47 +348,6 @@ export default function Page() {
     );
   }
 
-  function formatRemarkValue(value) {
-    const text = String(value || '').trim();
-    if (!text) return [];
-
-    // Protect common abbreviations so "Min. Age" does not split incorrectly
-    const protectedText = text.replace(
-      /\b(Min|Max|No|Nos|Dr|Mr|Mrs|Ms|Jr|Sr|vs|approx|kg|lbs?)\.\s+/gi,
-      '$1.\u00A0'
-    );
-
-    const parts = protectedText
-      .split(/\.\s+/)
-      .map((part) => part.trim().replace(/\u00A0/g, ' ').replace(/\.$/, ''))
-      .filter(Boolean);
-
-    // Merge leftover short fragments (e.g. "Min" + "Age: 5")
-    const merged = [];
-    for (let i = 0; i < parts.length; i++) {
-      let current = parts[i];
-      while (i + 1 < parts.length && current.length <= 4) {
-        i += 1;
-        current = `${current}. ${parts[i]}`;
-      }
-      merged.push(current.endsWith('.') ? current : `${current}.`);
-    }
-
-    return merged;
-  }
-
-  function isLongRemark(item) {
-    const value = String(item?.value || '');
-    const label = String(item?.label || '').toLowerCase();
-    const longLabels = [
-      'mandatory instructions',
-      'recommendations',
-      'voucher type',
-      'inclusions',
-    ];
-    return value.length > 70 || longLabels.includes(label) || formatRemarkValue(value).length > 1;
-  }
-
   const contractRemarkItems = getVisibleContractRemarks();
   const startTime = getStartTime();
   const languageLabel = getLanguageLabel();
@@ -307,497 +355,693 @@ export default function Page() {
   const cancellationPolicy = getCancellationPolicy();
   const allContractRemarks = parseContractRemarks();
   const durationFromRemarks = allContractRemarks.find(
-    (item) => String(item.label).toLowerCase() === 'duration'
+    (item) => String(item.label).toLowerCase() === "duration"
   )?.value;
   const meetingPoint = allContractRemarks.find(
-    (item) => String(item.label).toLowerCase() === 'meeting point'
+    (item) => String(item.label).toLowerCase() === "meeting point"
   )?.value;
   const childrenAgeSummary = getChildrenAgeSummary();
 
+  const leadPhone = `${voucherDetail?.lead_phone_code || ""} ${
+    voucherDetail?.lead_phone || ""
+  }`.trim();
+
+  const hasRemarks = contractRemarkItems.length > 0;
+  const hasSpecial = Boolean(voucherDetail?.special_request);
+  const hasCancel = Boolean(cancellationPolicy);
+  const pad = (n) => String(n).padStart(2, "0");
+  let n = 0;
+  const step = {
+    booking: pad(++n),
+    activity: pad(++n),
+    guests: pad(++n),
+    remarks: hasRemarks ? pad(++n) : null,
+    pricing: pad(++n),
+    special: hasSpecial ? pad(++n) : null,
+    cancel: hasCancel ? pad(++n) : null,
+    important: pad(++n),
+  };
+
+  if (isLoading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <div className={styles.invoiceContainer}>
+          <div className={styles.invoiceCard}>
+            <ActivityInvoiceLoader />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (errorMessage) {
+    return (
+      <div className={styles.pageWrapper}>
+        <div className={styles.invoiceContainer}>
+          <div className={styles.errorCard}>
+            <h5>{errorMessage}</h5>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <div className={styles.invoicecontainerwrap}>
-        <div className={styles.invoicecontainer}>
-          {isLoading ? (
-            <div className={styles.themeholyinvoice}>
-              <HotelInvoiceLoader />
-            </div>
-          ) : (
-            <main>
-              {/* Action Buttons */}
-              <div className={styles.invoiceprintbutton}>
-                <Tooltip label="Print Invoice" color="blue">
-                  <div onClick={() => window.print()} className="bg-primary-subtle cursor-pointer p-2 text-primary rounded">
-                    <PiDownloadSimpleThin size={25} />
-                  </div>
-                </Tooltip>
-                <Tooltip label="View Voucher" color="teal">
-                  <Link href={`/activities/voucher/${voucherDetail?.booking_reference}`}>
-                    <div className="bg-info-subtle cursor-pointer p-2 text-info rounded mt-2">
-                      <FaFileInvoice size={22} />
-                    </div>
-                  </Link>
-                </Tooltip>
-                <Tooltip label="Go Home" color="green">
-                  <Link href="/">
-                    <div className="bg-success-subtle cursor-pointer p-2 text-success rounded mt-2">
-                      <FaHome size={25} />
-                    </div>
-                  </Link>
-                </Tooltip>
+    <div className={styles.pageWrapper}>
+      <div className={styles.invoiceContainer}>
+        <main>
+          <div ref={ref} id="invoice" className={styles.invoiceCard}>
+            {/* Header */}
+            <div className={styles.invHeader}>
+              <div className={styles.invHeaderBand}>
+                <span className={styles.invHeaderCircle} aria-hidden="true" />
+                <div className={styles.invHeaderBrand}>
+                  <h2
+                    className={`${styles.invHeaderDocTitle} ${merriweather.className}`}
+                  >
+                    Activity Invoice
+                  </h2>
+                </div>
+                <div className={styles.invHeaderContacts}>
+                  <span>
+                    <FaPhone size={13} />
+                    00000000000
+                  </span>
+                  <span>
+                    <FaEnvelope size={13} />
+                    info@example.com
+
+                  </span>
+                </div>
               </div>
 
-              <div ref={ref} id="invoice" className={styles.themeholyinvoice}>
-                {/* Watermark */}
-                <div className={styles.watermark}>
-                  <Image
-                    src="/watermark.png"
-                    width={450}
-                    height={450}
-                    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
-                    alt="Watermark"
-                    quality={100}
-                  />
-                </div>
-
-                {/* Invoice Header */}
-                <div className={styles.invHeader}>
-                  {/* Left panel */}
-                  <div className={styles.invHeaderLeft}>
-                    <div className={`${styles.invHeaderLogo} text-center`}>
-                      <Image src="/images/logoblack.png" height={100} width={150} className="h-auto" quality={100} alt="Logo" />
-                    </div>
-                    <div className={styles.invHeaderMeta}>
-                      <span>
-                        <FaCalendarAlt size={13} className={styles.invMetaIcon} />
-                        Date: <b>{moment(voucherDetail?.created_at, 'DD-MM-YYYY HH:mm:ss').format('DD-MM-YYYY')}</b>
-                      </span>
-                      <span>
-                        <FaFileInvoice size={13} className={styles.invMetaIcon} />
-                        Voucher No: <b>{voucherDetail?.booking_reference}</b>
-                      </span>
-                      {voucherDetail?.provider_reference && (
-                        <span>
-                          <FaFileInvoice size={13} className={styles.invMetaIcon} />
-                          Booking Ref: <b>{voucherDetail.provider_reference}</b>
-                        </span>
-                      )}
-                    </div>
-                    <div className={styles.invHeaderTitle}>INVOICE</div>
-                  </div>
-                  {/* Right panel */}
-                  <div className={styles.invHeaderRight}>
-                    <div className={styles.invBookingFor}>Booking For:</div>
-                    <div className={styles.invGuestName}>
-                      {voucherDetail?.lead_title} {voucherDetail?.lead_first_name} {voucherDetail?.lead_last_name}
-
-                    </div>
-                    <div className={styles.invHeaderDivider}></div>
-                    <div className={styles.invContactInfo}>
-                      {voucherDetail?.lead_address && (
-                        <p><FaLocationDot size={12} className={styles.invContactIcon} />{voucherDetail.lead_address}</p>
-                      )}
-                      {!voucherDetail?.lead_address && voucherDetail?.lead_country && (
-                        <p><FaLocationDot size={12} className={styles.invContactIcon} />{voucherDetail.lead_country}</p>
-                      )}
-                      {voucherDetail?.lead_email && (
-                        <p><FaEnvelope size={12} className={styles.invContactIcon} />{voucherDetail.lead_email}</p>
-                      )}
-                      {voucherDetail?.lead_phone && (
-                        <p>
-                          <FaPhone size={12} className={styles.invContactIcon} />
-                          {`${voucherDetail?.lead_phone_code || ''} ${voucherDetail.lead_phone}`.trim()}
-                        </p>
-                      )}
-                    </div>
-                    <div className={styles.invHeaderDivider}></div>
-                    <div className={styles.invStatusRow}>
-                      <span className={`${styles.invStatusBadge} ${voucherDetail?.booking_status === 'confirmed' ? styles.confirmedStatus : voucherDetail?.booking_status === 'cancelled' ? styles.cancelledStatus : styles.pandingStatus}`}>
-                        <FaCheckCircle size={12} />
-                        STATUS: {voucherDetail?.booking_status?.toUpperCase()}
-                      </span>
-                      {voucherDetail?.payment_status && (
-                        <span className={`${styles.confirmedStatus} ms-1 ${styles.invStatusBadge}`}>
-                          Payment: {voucherDetail?.payment_status.toUpperCase()}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className={styles.downloadinner}>
-
-                  {/* Activity Details */}
-                  <div className={`${styles.accomBlock} mb-3`}>
-                    <div className={styles.accomHeader}>
-                      <span className={styles.accomTitle}>• Activity Details</span>
-                    </div>
-                    <div className={styles.accomDivider}></div>
-                    <div className={styles.accomRow}>
-                      <span className={styles.accomLabel}>Activity Name</span>
-                      <span className={styles.accomValue} style={{ fontWeight: 700 }}>{voucherDetail?.activity?.title}</span>
-                    </div>
-                    {modalityName && (
-                      <>
-                        <div className={styles.accomRowDivider}></div>
-                        <div className={styles.accomRow}>
-                          <span className={styles.accomLabel}>Package</span>
-                          <span className={styles.accomValue}>{modalityName}</span>
-                        </div>
-                      </>
-                    )}
-                    {(meetingPoint || String(voucherDetail?.activity?.address || '').trim()) && (
-                      <>
-                        <div className={styles.accomRowDivider}></div>
-                        <div className={styles.accomRow}>
-                          <span className={styles.accomLabel}>Meeting Point</span>
-                          <span className={styles.accomValue}>
-                            <FaLocationDot size={11} style={{ color: '#c49a2a', marginRight: 4 }} />
-                            {meetingPoint || voucherDetail.activity.address}
-                          </span>
-                        </div>
-                      </>
-                    )}
-                    <div className={styles.accomRowDivider}></div>
-                    <div className={styles.accomRow}>
-                      <span className={styles.accomLabel}>Activity Date</span>
-                      <span className={styles.accomValue}>
-                        {voucherDetail?.travel_date ? moment(voucherDetail.travel_date).format('DD-MM-YYYY dddd') : '-'}
-                      </span>
-                    </div>
-                    {startTime && (
-                      <>
-                        <div className={styles.accomRowDivider}></div>
-                        <div className={styles.accomRow}>
-                          <span className={styles.accomLabel}>Start Time</span>
-                          <span className={styles.accomValue}>{startTime}</span>
-                        </div>
-                      </>
-                    )}
-                    {languageLabel && (
-                      <>
-                        <div className={styles.accomRowDivider}></div>
-                        <div className={styles.accomRow}>
-                          <span className={styles.accomLabel}>Language</span>
-                          <span className={styles.accomValue}>{languageLabel}</span>
-                        </div>
-                      </>
-                    )}
-                    {(voucherDetail?.activity?.activity_duration || durationFromRemarks) && (
-                      <>
-                        <div className={styles.accomRowDivider}></div>
-                        <div className={styles.accomRow}>
-                          <span className={styles.accomLabel}>Duration</span>
-                          <span className={styles.accomValue}>
-                            {voucherDetail?.activity?.activity_duration || durationFromRemarks}
-                          </span>
-                        </div>
-                      </>
-                    )}
-                    <div className={styles.accomRowDivider}></div>
-                    <div className={styles.accomRow}>
-                      <span className={styles.accomLabel}>Travelers</span>
-                      <span className={styles.accomValue}>{getTotalPassengers()}</span>
-                    </div>
-                    {Number(voucherDetail?.activity?.rating_stars) > 0 && (
-                      <>
-                        <div className={styles.accomRowDivider}></div>
-                        <div className={styles.accomRow}>
-                          <span className={styles.accomLabel}>Rating</span>
-                          <span className={styles.accomValue}>
-                            <span className="d-inline-flex align-items-center gap-1">
-                              {Array.from({ length: 5 }).map((_, index) => {
-                                const rating = Number(voucherDetail.activity.rating_stars);
-                                const fullStars = Math.floor(rating);
-                                const hasHalfStar = rating - fullStars >= 0.5;
-                                if (index < fullStars) return <FaStar key={index} style={{ color: '#c49a2a' }} />;
-                                if (index === fullStars && hasHalfStar) return <FaStarHalfAlt key={index} style={{ color: '#c49a2a' }} />;
-                                return <FaRegStar key={index} style={{ color: '#c49a2a' }} />;
-                              })}
-                              <span style={{ fontSize: '0.8rem', color: '#666', marginLeft: 4 }}>
-                                ({Number(voucherDetail.activity.rating_stars).toFixed(1)})
-                              </span>
-                            </span>
-                          </span>
-                        </div>
-                      </>
-                    )}
-                  </div>
-
-                  {/* Guest Details */}
-                  <div className={`${styles.accomBlock} mb-1`}>
-                    <div className={styles.accomHeader}>
-                      <span className={styles.accomTitle}>• Guest Details</span>
-                    </div>
-                    <div className={styles.accomDivider}></div>
-                    <div className={localStyles.tableResponsive}>
-                      <table className={`${styles.invoicetable} ${localStyles.mobileTable} w-100`}>
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Full Name</th>
-                            <th>Contact</th>
-                            <th>Gender</th>
-                            <th>Country</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td data-label="#">1</td>
-                            <td data-label="Full Name"><strong>{voucherDetail?.lead_title} {voucherDetail?.lead_first_name} {voucherDetail?.lead_last_name}</strong></td>
-                            <td data-label="Contact">
-                              <div>{voucherDetail?.lead_email || '-'}</div>
-                              {voucherDetail?.lead_phone && (
-                                <div style={{ fontSize: '0.85rem', color: '#555', marginTop: 2 }}>
-                                  {`${voucherDetail?.lead_phone_code || ''} ${voucherDetail.lead_phone}`.trim()}
-                                </div>
-                              )}
-                            </td>
-                            <td data-label="Gender">{capitalize(voucherDetail?.lead_gender) || '-'}</td>
-                            <td data-label="Country">{voucherDetail?.lead_country || '-'}</td>
-                          </tr>
-                          {voucherDetail?.other_passengers?.additional_adults?.map((adult, index) => (
-                            <tr key={`adult-${index}`}>
-                              <td data-label="#">{index + 2}</td>
-                              <td data-label="Full Name"><strong>{adult.first_name} {adult.last_name}</strong></td>
-                              <td data-label="Contact">-</td>
-                              <td data-label="Gender">{capitalize(adult.gender) || '-'}</td>
-                              <td data-label="Country">-</td>
-                            </tr>
-                          ))}
-                          {getNamedChildren().map((child, index) => (
-                            <tr key={`child-${index}`}>
-                              <td data-label="#">{(voucherDetail?.other_passengers?.additional_adults?.length || 0) + index + 2}</td>
-                              <td data-label="Full Name">
-                                <strong>{child.first_name} {child.last_name}</strong>
-                                <em style={{ fontSize: '0.75rem', color: '#888', marginLeft: 6 }}>
-                                  ({formatChildUnderLabel(child.age)})
-                                </em>
-                              </td>
-                              <td data-label="Contact">-</td>
-                              <td data-label="Gender">{capitalize(child.gender) || '-'}</td>
-                              <td data-label="Country">-</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  {/* Activity Information */}
-                  {contractRemarkItems.length > 0 && (
-                    <div className={`${styles.accomBlock} mb-1`}>
-                      <div className={styles.accomHeader}>
-                        <span className={styles.accomTitle}>• Activity Information</span>
-                      </div>
-                      <div className={styles.accomDivider}></div>
-                      {contractRemarkItems.map((item, index) => {
-                        const longRemark = isLongRemark(item);
-                        const points = formatRemarkValue(item.value);
-
-                        return (
-                          <div key={index}>
-                            {index > 0 && <div className={styles.accomRowDivider}></div>}
-                            <div className={`${styles.accomRow} ${localStyles.infoRow}`}>
-                              <span className={`${styles.accomLabel} ${localStyles.infoLabel}`}>
-                                {item.label || 'Note'}
-                              </span>
-                              <div className={localStyles.infoContent}>
-                                {longRemark && points.length > 1 ? (
-                                  <ul className={localStyles.infoBlockList}>
-                                    {points.map((point, pointIndex) => (
-                                      <li key={pointIndex}>{point}</li>
-                                    ))}
-                                  </ul>
-                                ) : (
-                                  <p className={localStyles.infoBlockText}>{item.value}</p>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* Pricing Details */}
-                  <div className={`${styles.accomBlock} mb-1`}>
-                    <div className={styles.accomHeader}>
-                      <span className={styles.accomTitle}>• Pricing Details</span>
-                      <span className={styles.accomCity}>{voucherDetail?.customer_currency}</span>
-                    </div>
-                    <div className={styles.accomDivider}></div>
-                    <div className={localStyles.tableResponsive}>
-                      <table className={`${styles.invoicetable} ${localStyles.mobileTable} w-100`}>
-                        <thead>
-                          <tr>
-                            <th>Traveler Type</th>
-                            <th>Quantity &times; Unit Price</th>
-                            <th className="text-end">Total</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td data-label="Traveler Type">Adult{Number(voucherDetail?.adults) !== 1 ? 's' : ''}</td>
-                            <td data-label="Quantity × Unit Price">{voucherDetail?.adults} &times; {voucherDetail?.customer_currency} {convertToCustomerCurrency(voucherDetail?.activity?.sale_price)}</td>
-                            <td data-label="Total" className="text-end">{voucherDetail?.customer_currency} {convertToCustomerCurrency(voucherDetail?.adult_price)}</td>
-                          </tr>
-                          {Number(voucherDetail?.children) > 0 && (
-                            childrenAgeSummary.length > 0 ? (
-                              childrenAgeSummary.map((item, index) => (
-                                <tr key={`child-price-${index}`}>
-                                  <td data-label="Traveler Type">{item.label}</td>
-                                  <td data-label="Quantity × Unit Price">
-                                    {item.count} &times; {voucherDetail?.customer_currency}{' '}
-                                    {convertToCustomerCurrency(voucherDetail?.activity?.child_sale_price)}
-                                  </td>
-                                  <td data-label="Total" className="text-end">
-                                    {voucherDetail?.customer_currency}{' '}
-                                    {convertToCustomerCurrency(
-                                      Number(voucherDetail?.activity?.child_sale_price || 0) * Number(item.count)
-                                    )}
-                                  </td>
-                                </tr>
-                              ))
-                            ) : (
-                              <tr>
-                                <td data-label="Traveler Type">Child{Number(voucherDetail?.children) !== 1 ? 'ren' : ''}</td>
-                                <td data-label="Quantity × Unit Price">{voucherDetail?.children} &times; {voucherDetail?.customer_currency} {convertToCustomerCurrency(voucherDetail?.activity?.child_sale_price)}</td>
-                                <td data-label="Total" className="text-end">{voucherDetail?.customer_currency} {convertToCustomerCurrency(voucherDetail?.child_price)}</td>
-                              </tr>
-                            )
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  {/* Additional Services */}
-                  {voucherDetail?.additional_services?.length > 0 && (
-                    <div className={`${styles.accomBlock} mb-1`}>
-                      <div className={styles.accomHeader}>
-                        <span className={styles.accomTitle}>• Additional Services</span>
-                      </div>
-                      <div className={styles.accomDivider}></div>
-                      <div className={localStyles.tableResponsive}>
-                        <table className={`${styles.invoicetable} ${localStyles.mobileTable} w-100`}>
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Service</th>
-                              <th>Quantity &times; Unit Price</th>
-                              <th className="text-end">Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {voucherDetail.additional_services.map((item, index) => (
-                              <tr key={index}>
-                                <td data-label="#">{index + 1}</td>
-                                <td data-label="Service">{item.name}</td>
-                                <td data-label="Quantity × Unit Price">{item.quantity} &times; {voucherDetail?.customer_currency} {convertToCustomerCurrency(item?.price)}</td>
-                                <td data-label="Total" className="text-end">{voucherDetail?.customer_currency} {convertToCustomerCurrency(item?.total)}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Special Request */}
-                  {voucherDetail?.special_request && (
-                    <div className={`${styles.accomBlock} mb-1`}>
-                      <div className={styles.accomHeader}>
-                        <span className={styles.accomTitle}>• Special Request</span>
-                      </div>
-                      <div className={styles.accomDivider}></div>
-                      <div className="p-3">
-                        <p style={{ margin: 0, lineHeight: '1.6', color: '#333', fontSize: '0.9rem' }}>{voucherDetail.special_request}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* CANCELLATION POLICY SECTION */}
-                  {cancellationPolicy && (
-                    <div className={`${styles.accomBlock} mb-1`}>
-                      <div className={styles.accomHeader}>
-                        <span className={styles.accomTitle}>• Cancellation Policy</span>
-                      </div>
-                      <div className={styles.accomDivider}></div>
-                      <div className="p-3">
-                        {renderCancellationPolicyContent()}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Sub Total */}
-                  <div className="text-end">
-                    <table className={`${styles.totaltable} w-100`}>
-                      <tbody>
-                        <tr>
-                          <td>Sub Total: {voucherDetail?.customer_currency} {voucherDetail?.customer_total}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Total */}
-                  <div className={styles.invTotalSection}>
-                    <div className={styles.invTotalLabel}>Total:</div>
-                    <div className={styles.invTotalAmount}>
-                      {voucherDetail?.customer_currency} {voucherDetail?.customer_total}
-                    </div>
-                      <span className='small'>Included VAT and Taxes</span>
-                  </div>
-                  <div className={styles.invTotalDivider}></div>
-
-                  {/* Important Information */}
-                  <div className={styles.invTotalNote}>
-                    <b>Important Information</b>
-                    <ul style={{ paddingLeft: '18px', marginTop: '8px' }}>
-                      <li style={{ fontSize: '0.88rem', color: '#555', marginBottom: '5px' }}>Please present this invoice on arrival at the activity location.</li>
-                      <li style={{ fontSize: '0.88rem', color: '#555', marginBottom: '5px' }}>Arrive at least 15 minutes before the scheduled activity start time.</li>
-                      <li style={{ fontSize: '0.88rem', color: '#555', marginBottom: '5px' }}>Valid passport or photo ID must be presented at check-in.</li>
-                      <li style={{ fontSize: '0.88rem', color: '#555', marginBottom: '5px' }}>This invoice is valid only for the specified dates, passenger, and activity.</li>
-                      <li style={{ fontSize: '0.88rem', color: '#555', marginBottom: '5px' }}>Activity schedules are subject to weather conditions and operator availability.</li>
-                      <li style={{ fontSize: '0.88rem', color: '#555', marginBottom: '5px' }}>The invoice displays the complete pricing details inclusive of all applicable taxes.</li>
-                    </ul>
-                  </div>
-                  <div className={styles.invTotalDivider}></div>
-
-                  <div className="text-end mt-4 mb-4">
-                    <p className="mb-0">Thank you and Best Regards</p>
-                    <p className="fw-bold">Al-Hijaz Tours</p>
-                  </div>
-                  <p className="text-center mt-1">
-                    <b>Note:</b> This is a computer generated receipt and does not require any physical signature.
+              <div className={styles.invHeaderSub}>
+                <div className={styles.invForBlock}>
+                  <div className={styles.invForLabel}>INVOICE FOR</div>
+                  <h1
+                    className={`${styles.invGuestName} ${merriweather.className}`}
+                  >
+                    {voucherDetail?.lead_title} {voucherDetail?.lead_first_name}{" "}
+                    {voucherDetail?.lead_last_name}
+                  </h1>
+                  <p className={styles.invForDesc}>
+                    {(() => {
+                      const title =
+                        voucherDetail?.activity?.title || "Activity Booking";
+                      const packageLabel =
+                        modalityName &&
+                        modalityName.trim().toLowerCase() !==
+                          title.trim().toLowerCase()
+                          ? modalityName
+                          : "";
+                      return [title, packageLabel].filter(Boolean).join(" · ");
+                    })()}
                   </p>
                 </div>
 
-                {/* Footer Bar */}
-                <div className={styles.invFooterBar}>
-                  <div className={styles.invFooterLeft}>
-                    <span className={styles.invFooterItem}>
-                      <FaPhone size={13} className={styles.invFooterIcon} />
-                      01217772522
+                <div className={styles.invMetaBlock}>
+                  <div className={styles.invStatusRow}>
+                    <span
+                      className={`${styles.invStatusBadge} ${
+                        voucherDetail?.booking_status === "confirmed"
+                          ? styles.statusConfirmed
+                          : voucherDetail?.booking_status === "cancelled"
+                            ? styles.statusCancelled
+                            : styles.statusPending
+                      }`}
+                    >
+                      <FaCheckCircle size={12} />
+                      {voucherDetail?.booking_status
+                        ? String(voucherDetail.booking_status).toUpperCase()
+                        : "—"}
                     </span>
-                    <span className={styles.invFooterItem}>
-                      <FaEnvelope size={13} className={styles.invFooterIcon} />
-                      info@alhijaztours.net
-                    </span>
+                    {voucherDetail?.payment_status && (
+                      <span
+                        className={`${styles.invStatusBadge} ${
+                          styles[
+                            `payment_${String(
+                              voucherDetail.payment_status
+                            ).toLowerCase()}`
+                          ] || styles.statusPending
+                        }`}
+                      >
+                        {String(voucherDetail.payment_status).toUpperCase()}
+                      </span>
+                    )}
                   </div>
-                  <div className={styles.invFooterRight}>
-                    <span className={styles.invFooterCompany}>Al-Hijaz Tours</span>
-                    <span className={styles.invFooterItem}>
-                      www.alhijaztours.net
-                      <FaGlobe size={13} className={styles.invFooterIcon} />
-                    </span>
+                  <div className={styles.invBookingRef}>
+                    Booking Ref: {voucherDetail?.booking_reference || "—"}
+                  </div>
+                  {voucherDetail?.provider_reference && (
+                    <div className={styles.invBookingDate}>
+                      Provider Ref: {voucherDetail.provider_reference}
+                    </div>
+                  )}
+                  <div className={styles.invBookingDate}>
+                    Booking Date:{" "}
+                    {voucherDetail?.created_at
+                      ? moment(
+                          voucherDetail.created_at,
+                          "DD-MM-YYYY HH:mm:ss"
+                        ).format("DD-MM-YYYY")
+                      : "—"}
                   </div>
                 </div>
               </div>
-            </main>
-          )}
-        </div>
+            </div>
+
+            <div className={styles.bodyInner}>
+              {/* 01 Booking By */}
+              <section className={styles.detailCard}>
+                <div className={styles.detailCardHead}>
+                  <span className={styles.detailStep}>{step.booking}</span>
+                  <h3
+                    className={`${styles.detailCardTitle} ${merriweather.className}`}
+                  >
+                    Booking By
+                  </h3>
+                </div>
+                <div className={styles.detailGrid}>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Full Name</span>
+                    <span className={styles.detailValue}>
+                      {voucherDetail?.lead_title}{" "}
+                      {voucherDetail?.lead_first_name}{" "}
+                      {voucherDetail?.lead_last_name}
+                    </span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Email</span>
+                    <span className={styles.detailValue}>
+                      {voucherDetail?.lead_email || "—"}
+                    </span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Phone</span>
+                    <span className={styles.detailValue}>
+                      {leadPhone || "—"}
+                    </span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Gender</span>
+                    <span className={styles.detailValue}>
+                      {capitalize(voucherDetail?.lead_gender) || "—"}
+                    </span>
+                  </div>
+                  <div className={styles.detailItem}>
+                    <span className={styles.detailLabel}>Country</span>
+                    <span className={styles.detailValue}>
+                      {voucherDetail?.lead_country || "—"}
+                    </span>
+                  </div>
+                  {voucherDetail?.lead_address && (
+                    <div className={styles.detailItem}>
+                      <span className={styles.detailLabel}>Address</span>
+                      <span className={styles.detailValue}>
+                        {voucherDetail.lead_address}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </section>
+
+              {/* 02 Activity Details */}
+              <section className={styles.detailCard}>
+                <div className={styles.detailCardHead}>
+                  <span className={styles.detailStep}>{step.activity}</span>
+                  <h3
+                    className={`${styles.detailCardTitle} ${merriweather.className}`}
+                  >
+                    Activity Details
+                  </h3>
+                </div>
+
+                <div className={styles.activityCard}>
+                  <div className={styles.activityCardHead}>
+                    <div className={styles.activityCardTop}>
+                      <h4 className={styles.activityName}>
+                        {voucherDetail?.activity?.title || "—"}
+                      </h4>
+                      {Number(voucherDetail?.activity?.rating_stars) > 0 && (
+                        <div className={styles.ratingRow}>
+                          {Array.from({ length: 5 }).map((_, index) => {
+                            const rating = Number(
+                              voucherDetail.activity.rating_stars
+                            );
+                            const fullStars = Math.floor(rating);
+                            const hasHalfStar = rating - fullStars >= 0.5;
+                            if (index < fullStars)
+                              return (
+                                <FaStar key={index} className={styles.star} />
+                              );
+                            if (index === fullStars && hasHalfStar)
+                              return (
+                                <FaStarHalfAlt
+                                  key={index}
+                                  className={styles.star}
+                                />
+                              );
+                            return (
+                              <FaRegStar key={index} className={styles.starMuted} />
+                            );
+                          })}
+                          <span className={styles.ratingValue}>
+                            ({Number(voucherDetail.activity.rating_stars).toFixed(1)})
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {(meetingPoint ||
+                      String(voucherDetail?.activity?.address || "").trim()) && (
+                      <p className={styles.activityAddress}>
+                        <FaLocationDot size={12} />
+                        <span>
+                          {meetingPoint || voucherDetail.activity.address}
+                        </span>
+                      </p>
+                    )}
+
+                    <div className={styles.stayGrid}>
+                      {modalityName && (
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Package</span>
+                          <span className={styles.stayValue}>{modalityName}</span>
+                        </div>
+                      )}
+                      <div className={styles.detailItem}>
+                        <span className={styles.detailLabel}>Activity Date</span>
+                        <span className={styles.stayValue}>
+                          {voucherDetail?.travel_date
+                            ? moment(voucherDetail.travel_date).format(
+                                "DD-MM-YYYY dddd"
+                              )
+                            : "—"}
+                        </span>
+                      </div>
+                      {startTime && (
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Start Time</span>
+                          <span className={styles.stayValue}>{startTime}</span>
+                        </div>
+                      )}
+                      {languageLabel && (
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Language</span>
+                          <span className={styles.stayValue}>
+                            {languageLabel}
+                          </span>
+                        </div>
+                      )}
+                      {(voucherDetail?.activity?.activity_duration ||
+                        durationFromRemarks) && (
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Duration</span>
+                          <span className={styles.stayValue}>
+                            {voucherDetail?.activity?.activity_duration ||
+                              durationFromRemarks}
+                          </span>
+                        </div>
+                      )}
+                      <div className={styles.detailItem}>
+                        <span className={styles.detailLabel}>Travelers</span>
+                        <span className={styles.stayValue}>
+                          {getTotalPassengers() || "—"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* 03 Guest Details */}
+              <section className={styles.detailCard}>
+                <div className={styles.detailCardHead}>
+                  <span className={styles.detailStep}>{step.guests}</span>
+                  <h3
+                    className={`${styles.detailCardTitle} ${merriweather.className}`}
+                  >
+                    Guest Details
+                  </h3>
+                </div>
+                <div className={styles.guestList}>
+                  <div className={styles.guestRow}>
+                    <div className={styles.guestLeft}>
+                      <span className={styles.guestIndex}>1</span>
+                      <div className={styles.guestInfo}>
+                        <span className={styles.guestName}>
+                          {voucherDetail?.lead_title}{" "}
+                          {voucherDetail?.lead_first_name}{" "}
+                          {voucherDetail?.lead_last_name}
+                        </span>
+                        <span className={styles.guestSub}>
+                          {[voucherDetail?.lead_email, leadPhone || null]
+                            .filter(Boolean)
+                            .join(" · ") || "—"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={styles.guestMeta}>
+                      {voucherDetail?.lead_gender && (
+                        <span className={styles.guestGender}>
+                          {capitalize(voucherDetail.lead_gender)}
+                        </span>
+                      )}
+                      {voucherDetail?.lead_country && (
+                        <span className={styles.guestGender}>
+                          {voucherDetail.lead_country}
+                        </span>
+                      )}
+                      <span className={styles.guestType}>Lead</span>
+                    </div>
+                  </div>
+
+                  {voucherDetail?.other_passengers?.additional_adults?.map(
+                    (adult, index) => (
+                      <div
+                        key={`adult-${index}`}
+                        className={styles.guestRow}
+                      >
+                        <div className={styles.guestLeft}>
+                          <span className={styles.guestIndex}>{index + 2}</span>
+                          <div className={styles.guestInfo}>
+                            <span className={styles.guestName}>
+                              {adult.first_name} {adult.last_name}
+                            </span>
+                          </div>
+                        </div>
+                        <div className={styles.guestMeta}>
+                          {adult.gender && (
+                            <span className={styles.guestGender}>
+                              {capitalize(adult.gender)}
+                            </span>
+                          )}
+                          <span className={styles.guestType}>Adult</span>
+                        </div>
+                      </div>
+                    )
+                  )}
+
+                  {getNamedChildren().map((child, index) => (
+                    <div key={`child-${index}`} className={styles.guestRow}>
+                      <div className={styles.guestLeft}>
+                        <span className={styles.guestIndex}>
+                          {(voucherDetail?.other_passengers?.additional_adults
+                            ?.length || 0) +
+                            index +
+                            2}
+                        </span>
+                        <div className={styles.guestInfo}>
+                          <span className={styles.guestName}>
+                            {child.first_name} {child.last_name}
+                          </span>
+                          <span className={styles.guestSub}>
+                            {formatChildUnderLabel(child.age)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className={styles.guestMeta}>
+                        {child.gender && (
+                          <span className={styles.guestGender}>
+                            {capitalize(child.gender)}
+                          </span>
+                        )}
+                        <span className={styles.guestType}>Child</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Activity Information */}
+              {contractRemarkItems.length > 0 && (
+                <section className={styles.detailCard}>
+                  <div className={styles.detailCardHead}>
+                    <span className={styles.detailStep}>{step.remarks}</span>
+                    <h3
+                      className={`${styles.detailCardTitle} ${merriweather.className}`}
+                    >
+                      Activity Information
+                    </h3>
+                  </div>
+                  <div className={styles.infoList}>
+                    {contractRemarkItems.map((item, index) => {
+                      const longRemark = isLongRemark(item);
+                      const points = formatRemarkValue(item.value);
+                      return (
+                        <div key={index} className={styles.infoItem}>
+                          <span className={styles.detailLabel}>
+                            {item.label || "Note"}
+                          </span>
+                          {longRemark && points.length > 1 ? (
+                            <ul className={styles.infoBlockList}>
+                              {points.map((point, pointIndex) => (
+                                <li key={pointIndex}>{point}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className={styles.infoBlockText}>{item.value}</p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
+              {/* Pricing Details */}
+              <section className={styles.detailCard}>
+                <div className={styles.detailCardHead}>
+                  <span className={styles.detailStep}>{step.pricing}</span>
+                  <h3
+                    className={`${styles.detailCardTitle} ${merriweather.className}`}
+                  >
+                    Pricing Details
+                  </h3>
+                </div>
+
+                <div className={styles.priceTable}>
+                  <div className={`${styles.priceRow} ${styles.priceHead}`}>
+                    <span>Traveler Type</span>
+                    <span>Qty × Unit</span>
+                    <span>Total</span>
+                  </div>
+                  <div className={styles.priceRow}>
+                    <span className={styles.priceType}>
+                      Adult{Number(voucherDetail?.adults) !== 1 ? "s" : ""}
+                    </span>
+                    <span className={styles.priceQty}>
+                      {voucherDetail?.adults} × {voucherDetail?.customer_currency}{" "}
+                      {convertToCustomerCurrency(
+                        voucherDetail?.activity?.sale_price
+                      )}
+                    </span>
+                    <span className={styles.priceTotal}>
+                      {voucherDetail?.customer_currency}{" "}
+                      {convertToCustomerCurrency(voucherDetail?.adult_price)}
+                    </span>
+                  </div>
+                  {Number(voucherDetail?.children) > 0 &&
+                    (childrenAgeSummary.length > 0 ? (
+                      childrenAgeSummary.map((item, index) => (
+                        <div
+                          key={`child-price-${index}`}
+                          className={styles.priceRow}
+                        >
+                          <span className={styles.priceType}>{item.label}</span>
+                          <span className={styles.priceQty}>
+                            {item.count} × {voucherDetail?.customer_currency}{" "}
+                            {convertToCustomerCurrency(
+                              voucherDetail?.activity?.child_sale_price
+                            )}
+                          </span>
+                          <span className={styles.priceTotal}>
+                            {voucherDetail?.customer_currency}{" "}
+                            {convertToCustomerCurrency(
+                              Number(
+                                voucherDetail?.activity?.child_sale_price || 0
+                              ) * Number(item.count)
+                            )}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className={styles.priceRow}>
+                        <span className={styles.priceType}>
+                          Child
+                          {Number(voucherDetail?.children) !== 1 ? "ren" : ""}
+                        </span>
+                        <span className={styles.priceQty}>
+                          {voucherDetail?.children} ×{" "}
+                          {voucherDetail?.customer_currency}{" "}
+                          {convertToCustomerCurrency(
+                            voucherDetail?.activity?.child_sale_price
+                          )}
+                        </span>
+                        <span className={styles.priceTotal}>
+                          {voucherDetail?.customer_currency}{" "}
+                          {convertToCustomerCurrency(voucherDetail?.child_price)}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+
+                {voucherDetail?.additional_services?.length > 0 && (
+                  <div className={styles.extraServices}>
+                    <p className={styles.extraTitle}>Additional Services</p>
+                    {voucherDetail.additional_services.map((item, index) => (
+                      <div key={index} className={styles.priceRow}>
+                        <span className={styles.priceType}>{item.name}</span>
+                        <span className={styles.priceQty}>
+                          {item.quantity} × {voucherDetail?.customer_currency}{" "}
+                          {convertToCustomerCurrency(item?.price)}
+                        </span>
+                        <span className={styles.priceTotal}>
+                          {voucherDetail?.customer_currency}{" "}
+                          {convertToCustomerCurrency(item?.total)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className={styles.priceSummary}>
+                  <div className={styles.priceSummaryRow}>
+                    <span>Sub Total</span>
+                    <span>
+                      {voucherDetail?.customer_currency}{" "}
+                      {voucherDetail?.customer_total}
+                    </span>
+                  </div>
+                  <p className={styles.priceVatNote}>Included VAT and Taxes</p>
+                </div>
+
+                <div className={styles.totalAmountBar}>
+                  <span>Total Amount</span>
+                  <span className={styles.totalAmountValue}>
+                    {voucherDetail?.customer_currency}{" "}
+                    {voucherDetail?.customer_total}
+                  </span>
+                </div>
+              </section>
+
+              {voucherDetail?.special_request && (
+                <section className={styles.detailCard}>
+                  <div className={styles.detailCardHead}>
+                    <span className={styles.detailStep}>{step.special}</span>
+                    <h3
+                      className={`${styles.detailCardTitle} ${merriweather.className}`}
+                    >
+                      Special Request
+                    </h3>
+                  </div>
+                  <p className={styles.specialRequestText}>
+                    {voucherDetail.special_request}
+                  </p>
+                </section>
+              )}
+
+              {cancellationPolicy && (
+                <section className={styles.detailCard}>
+                  <div className={styles.detailCardHead}>
+                    <span className={styles.detailStep}>{step.cancel}</span>
+                    <h3
+                      className={`${styles.detailCardTitle} ${merriweather.className}`}
+                    >
+                      Cancellation Policy
+                    </h3>
+                  </div>
+                  {renderCancellationPolicyContent()}
+                </section>
+              )}
+
+              {/* Important Information */}
+              <section className={styles.detailCard}>
+                <div className={styles.detailCardHead}>
+                  <span className={styles.detailStep}>{step.important}</span>
+                  <h3
+                    className={`${styles.detailCardTitle} ${merriweather.className}`}
+                  >
+                    Important Information
+                  </h3>
+                </div>
+                <ul className={styles.infoBullets}>
+                  <li>
+                    Please present this invoice on arrival at the activity
+                    location.
+                  </li>
+                  <li>
+                    Arrive at least 15 minutes before the scheduled activity
+                    start time.
+                  </li>
+                  <li>
+                    Valid passport or photo ID must be presented at check-in.
+                  </li>
+                  <li>
+                    This invoice is valid only for the specified dates,
+                    passenger, and activity.
+                  </li>
+                  <li>
+                    Activity schedules are subject to weather conditions and
+                    operator availability.
+                  </li>
+                  <li>
+                    The invoice displays the complete pricing details inclusive
+                    of all applicable taxes.
+                  </li>
+                  <li>
+                    This is a computer-generated receipt and does not require
+                    any physical signature.
+                  </li>
+                </ul>
+              </section>
+            </div>
+
+            <div className={styles.thanksFooter}>
+              <div className={styles.thanksFooterContent}>
+                <h3
+                  className={`${styles.thanksFooterTitle} ${merriweather.className}`}
+                >
+                  Thanks For Choosing Us
+                </h3>
+                <div className={styles.thanksFooterContacts}>
+                  <span>
+                    <FaPhone size={12} />
+                    00000000000
+                  </span>
+                  <span>
+                    <FaEnvelope size={12} />
+                    info@example.com
+
+                  </span>
+                </div>
+                <div className={styles.thanksFooterAddress}>
+                  <FaMapMarkerAlt size={12} />
+                  <span>XXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.actionRow}>
+            <button
+              type="button"
+              className={styles.btnPrint}
+              onClick={() => window.print()}
+            >
+              Print Invoice
+            </button>
+            <Link
+              href={`/activities/voucher/${voucherDetail?.booking_reference}`}
+              className={styles.btnVoucher}
+            >
+              View Voucher
+            </Link>
+            <Link href="/" className={styles.btnHome}>
+              Go to Home
+            </Link>
+          </div>
+        </main>
       </div>
     </div>
   );

@@ -1,25 +1,47 @@
-'use client'
-import React, { useState, useEffect } from 'react'
-import styles from '../Bookings.module.css'
-import { FaClock, FaCalendarAlt, FaCheckCircle, FaArrowRight, FaPlane, FaRegFileAlt, FaTimesCircle, FaUserEdit, FaUndo } from 'react-icons/fa'
-import { CgCalendar } from 'react-icons/cg';
-import { Menu, Pagination } from "@mantine/core";
-import { Popover } from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
-import { LiaAngleDownSolid } from "react-icons/lia";
-import { IoMdCheckmark } from "react-icons/io";
+"use client";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import {
+  FaClock,
+  FaCheckCircle,
+  FaArrowRight,
+  FaPlane,
+  FaRegFileAlt,
+  FaTimesCircle,
+  FaUserEdit,
+} from "react-icons/fa";
+import { CgCalendar } from "react-icons/cg";
+import { Menu } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
+import { FiSearch, FiDownload } from "react-icons/fi";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import moment from "moment";
 import { useRouter } from "next/navigation";
-import { RiDeleteBin6Line } from 'react-icons/ri';
+import { RiDeleteBin6Line } from "react-icons/ri";
 import CancelBookingModal from "@/dashboard_components/CancelBookingModal/CancelBookingModal";
 import EditPassengerModal from "@/dashboard_components/EditPassengerModal/EditPassengerModal";
 import RefundQuoteModal from "@/dashboard_components/RefundQuoteModal/RefundQuoteModal";
-import { getBookingTripType, groupSegments } from '@/components/Flights/Checkout/flightHelpers';
+import {
+  getBookingTripType,
+  groupSegments,
+} from "@/components/Flights/Checkout/flightHelpers";
 
 const airportCode = (point) =>
-  point?.airport_code || point?.iata_code || point?.code || '';
+  point?.airport_code || point?.iata_code || point?.code || "";
+
+function formatStatusLabel(status) {
+  if (!status) return "-";
+  return status
+    .toLowerCase()
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function normalizeBookingStatus(status) {
+  const s = (status || "").toLowerCase().trim().replace(/\s+/g, "_");
+  if (s === "pending" || s === "tentative") return "tentative";
+  return s;
+}
 
 /**
  * Build FLIGHT / DATE rows for the bookings table.
@@ -39,7 +61,7 @@ function getFlightRouteLines(booking) {
 
   const formatDate = (seg) => {
     const raw = seg?.departure?.datetime || seg?.departure?.date;
-    return raw ? moment(raw).format('DD MMM YYYY') : '';
+    return raw ? moment(raw).format("DD MMM YYYY") : "";
   };
 
   const lineFromSegments = (segs) => {
@@ -48,37 +70,44 @@ function getFlightRouteLines(booking) {
     const to = airportCode(segs[segs.length - 1]?.arrival);
     if (!from && !to) return null;
     return {
-      from: from || details.departure_code || '—',
-      to: to || details.arrival_code || '—',
+      from: from || details.departure_code || "—",
+      to: to || details.arrival_code || "—",
       date: formatDate(segs[0]),
     };
   };
 
   if (!segments.length) {
-    return [{
-      from: details.departure_code || '—',
-      to: details.arrival_code || '—',
-      date: details.departure_date
-        ? moment(details.departure_date).format('DD MMM YYYY')
-        : '',
-    }];
+    return [
+      {
+        from: details.departure_code || "—",
+        to: details.arrival_code || "—",
+        date: details.departure_date
+          ? moment(details.departure_date).format("DD MMM YYYY")
+          : "",
+      },
+    ];
   }
 
   const groups = groupSegments(flight);
 
-  if (tripType === 'one_way') {
+  if (tripType === "one_way") {
     const line = lineFromSegments(groups[0]?.segments || segments);
     return line ? [line] : [];
   }
 
-  // return + multi_city: one row per leg (stops already merged inside group)
-  return groups.map((group) => lineFromSegments(group.segments)).filter(Boolean);
+  return groups
+    .map((group) => lineFromSegments(group.segments))
+    .filter(Boolean);
 }
 
-export default function HotelBookingsPage() {
+export default function FlightBookingsPage() {
   const { data: session } = useSession();
   const router = useRouter();
-  const [cancelModal, setCancelModal] = useState({ opened: false, bookingReference: "", provider: ""  });
+  const [cancelModal, setCancelModal] = useState({
+    opened: false,
+    bookingReference: "",
+    provider: "",
+  });
   const [editPassengerModal, setEditPassengerModal] = useState({
     opened: false,
     bookingReference: "",
@@ -91,30 +120,14 @@ export default function HotelBookingsPage() {
     provider: "",
   });
   const [bookings, setBookings] = useState([]);
-  const [meta, setMeta] = useState({});
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [dateRange, setDateRange] = useState([null, null]);
-  const [activePage, setActivePage] = useState(1);
-  const PAGE_SIZE = 10;
-  const [calendarColumns, setCalendarColumns] = useState(2);
 
-  useEffect(() => {
-    const update = () => setCalendarColumns(window.innerWidth < 768 ? 1 : 2);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  useEffect(() => {
-    const { email, otp } = session.user;
-    if (!email || !otp) return;
-    fetchBookings();
-  }, []);
-
-  async function fetchBookings() {
-    const { email, otp } = session.user;
+  const fetchBookings = useCallback(async () => {
+    const email = session?.user?.email;
+    const otp = session?.user?.otp;
     if (!email || !otp) return;
     setLoading(true);
     try {
@@ -122,31 +135,32 @@ export default function HotelBookingsPage() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/b2c/dashboard/flight/bookings`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // "ngrok-skip-browser-warning": "true",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, otp }),
         },
       );
       const data = await response.json();
-
-      if (!data?.success && data?.message?.toLowerCase().includes('otp')) {
-        router.push(`/verify-otp?email=${encodeURIComponent(session?.user?.email || '')}`);
+      if (!data?.success && data?.message?.toLowerCase().includes("otp")) {
+        router.push(
+          `/verify-otp?email=${encodeURIComponent(session?.user?.email || "")}`,
+        );
         return;
       }
-
       setBookings(data?.data || []);
-      setMeta(data?.meta || {});
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  }
+  }, [session, router]);
+
+  useEffect(() => {
+    if (!session?.user?.email || !session?.user?.otp) return;
+    fetchBookings();
+  }, [session, fetchBookings]);
 
   const filteredBookings = bookings.filter((booking) => {
-    // Search filter
+    const passenger = booking?.passenger_details?.[0];
     const matchesSearch =
       searchQuery === "" ||
       booking?.booking_reference
@@ -159,81 +173,137 @@ export default function HotelBookingsPage() {
       booking?.holder_email
         ?.toLowerCase()
         .includes(searchQuery.toLowerCase()) ||
+      passenger?.firstName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      passenger?.lastName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      passenger?.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       booking?.hotel?.name?.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Status filter
     const matchesStatus =
       selectedStatus === "all" ||
-      booking?.booking_status?.toLowerCase() === selectedStatus.toLowerCase();
+      normalizeBookingStatus(booking?.booking_status) ===
+        selectedStatus.toLowerCase();
 
-    // Date range filter
     let matchesDateRange = true;
     if (dateRange[0] && dateRange[1]) {
       const travelDate = moment(booking?.flight_details?.departure_date);
-      const startDate = moment(dateRange[0]);
-      const endDate = moment(dateRange[1]);
       matchesDateRange =
-        travelDate.isSameOrAfter(startDate, "day") &&
-        travelDate.isSameOrBefore(endDate, "day");
+        travelDate.isSameOrAfter(moment(dateRange[0]), "day") &&
+        travelDate.isSameOrBefore(moment(dateRange[1]), "day");
     }
 
     return matchesSearch && matchesStatus && matchesDateRange;
   });
 
-  // Reset to page 1 whenever filters change
-  useEffect(() => {
-    setActivePage(1);
-  }, [searchQuery, selectedStatus, dateRange]);
+  const hasActiveFilters =
+    selectedStatus !== "all" || Boolean(dateRange[0] && dateRange[1]);
 
-  const totalPages = Math.ceil(filteredBookings.length / PAGE_SIZE);
-  const paginatedBookings = filteredBookings.slice(
-    (activePage - 1) * PAGE_SIZE,
-    activePage * PAGE_SIZE
-  );
+  const statusCounts = useMemo(() => {
+    const counts = { total: bookings.length, confirmed: 0, tentative: 0, cancelled: 0 };
+    bookings.forEach((booking) => {
+      const status = normalizeBookingStatus(booking?.booking_status);
+      if (status === "confirmed") counts.confirmed += 1;
+      else if (status === "tentative") counts.tentative += 1;
+      else if (status === "cancelled") counts.cancelled += 1;
+    });
+    return counts;
+  }, [bookings]);
 
   const statCards = [
     {
-      label: "Total Bookings",
-      value: meta?.total_count,
-      icon: <FaCalendarAlt size={18} />,
-      iconBg: "#00000057",
+      badge: "Total Bookings",
+      title: "Total Flight Bookings",
+      value: statusCounts.total,
+      icon: <FaPlane size={18} />,
+      badgeTone: "",
     },
     {
-      label: "Confirmed",
-      value: meta?.confirmed_count,
+      badge: "Confirmed",
+      title: "Confirmed Flight Bookings",
+      value: statusCounts.confirmed,
       icon: <FaCheckCircle size={18} />,
-      iconBg: "#00000057",
+      badgeTone: "",
     },
     {
-      label: "Tentative",
-      value: meta?.tentative_count,
+      badge: "Tentative",
+      title: "Tentative Flight Bookings",
+      value: statusCounts.tentative,
       icon: <FaClock size={18} />,
-      iconBg: "#00000057",
+      badgeTone: "pending",
     },
     {
-      label: "Cancelled",
-      value: meta?.cancelled_count,
+      badge: "Cancelled",
+      title: "Cancelled Flight Bookings",
+      value: statusCounts.cancelled,
       icon: <FaTimesCircle size={18} />,
-      iconBg: "#00000057",
+      badgeTone: "cancelled",
     },
   ];
+
   const statusBadgeClass = {
-    confirmed: "bk-badge-confirmed",
-    tentative: "bk-badge-tentative",
-    pending: "bk-badge-pending",
-    cancelled: "bk-badge-cancelled",
-    paid: "bk-badge-confirmed",
+    confirmed: "hb-badge-confirmed",
+    tentative: "hb-badge-tentative",
+    pending: "hb-badge-pending",
+    cancelled: "hb-badge-cancelled",
+    paid: "hb-badge-confirmed",
+  };
+
+  const downloadReport = () => {
+    const headers = [
+      "Booking Ref",
+      "Guest Name",
+      "Guest Email",
+      "Route",
+      "Departure Date",
+      "Issued Date",
+      "Price",
+      "Booking Status",
+      "Payment Status",
+    ];
+    const rows = filteredBookings.map((booking) => {
+      const passenger = booking?.passenger_details?.[0];
+      const routes = getFlightRouteLines(booking)
+        .map((line) => `${line.from} → ${line.to}${line.date ? ` (${line.date})` : ""}`)
+        .join(" | ");
+      return [
+        booking?.booking_reference || "",
+        `${passenger?.firstName || ""} ${passenger?.lastName || ""}`.trim(),
+        passenger?.email || "",
+        routes,
+        booking?.flight_details?.departure_date
+          ? moment(booking.flight_details.departure_date).format("DD MMM YYYY")
+          : "",
+        booking?.created_at
+          ? moment(booking.created_at).format("DD MMM YYYY")
+          : "",
+        `${booking?.pricing?.display_currency || ""} ${booking?.pricing?.amount ?? ""}`.trim(),
+        formatStatusLabel(booking?.booking_status),
+        formatStatusLabel(booking?.payment_status),
+      ];
+    });
+    const escapeCell = (value) => `"${String(value).replace(/"/g, '""')}"`;
+    const csv = [headers, ...rows]
+      .map((row) => row.map(escapeCell).join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `flight-bookings-${moment().format("YYYY-MM-DD")}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
-    <div className='bk-page-wrapper'>
+    <div className="hb-page">
       <CancelBookingModal
         opened={cancelModal.opened}
-        onClose={() => setCancelModal({ opened: false, bookingReference: "", provider: "" })}
+        onClose={() =>
+          setCancelModal({ opened: false, bookingReference: "", provider: "" })
+        }
         bookingReference={cancelModal.bookingReference}
         provider={cancelModal.provider}
         type="flight"
-        endPoint='/api/flights/booking/cancel'
+        endPoint="/api/flights/booking/cancel"
         onSuccess={() => fetchBookings()}
       />
       <EditPassengerModal
@@ -263,115 +333,119 @@ export default function HotelBookingsPage() {
         bookingReference={refundModal.bookingReference}
         provider={refundModal.provider}
       />
-      {/* Header */}
-      <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          <div className={styles.icon}>
-            <FaPlane size={30} />
-          </div>
-          <div className={styles.headerText}>
-            <h1>Flight Bookings</h1>
-            <p>Manage all your flight reservations in one place</p>
-          </div>
-        </div>
-      </div>
-      {/* Stats */}
-      <div className="row g-3 mb-4">
+
+      <div className="hb-stats">
         {statCards.map((s) => (
-          <div className="col-12 col-md-6 col-lg-3" key={s.label}>
-            <div className="bk-stat-card rounded-3 p-3 h-100 text-white">
-              <div className="d-flex align-items-center justify-content-between mb-2">
-                <span className="bk-stat-label text-white">{s.label}</span>
-                <div className="bk-stat-icon rounded-2 d-flex align-items-center justify-content-center">
-                  {s.icon}
-                </div>
-              </div>
-              <h4 className="fw-bold mb-0">{s.value ?? "-"}</h4>
+          <article className="hb-stat-card" key={s.title}>
+            <div className="hb-stat-top">
+              <span className="hb-stat-icon">{s.icon}</span>
+              <span className={`hb-stat-badge ${s.badgeTone}`.trim()}>
+                {s.badge}
+              </span>
             </div>
-          </div>
+            <p className="hb-stat-title">{s.title}</p>
+            <h3 className="hb-stat-value">{s.value ?? "-"}</h3>
+          </article>
         ))}
       </div>
 
-      {/* Table Card */}
-      <div className="bk-table-card bg-white rounded-3">
-        {/* Filter Bar */}
-        <div className="bk-filter-bar">
-          <input
-            type="text"
-            placeholder="Search by name, email or invoice..."
-            className={`${styles.searchInput}`}
-            style={{ fontSize: 16 }}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Menu shadow="md" position="bottom-end" width="target">
-            <Menu.Target>
-              <button className={styles.filterBtn}>
-                {selectedStatus === "all"
-                  ? "All Status"
-                  : selectedStatus.charAt(0).toUpperCase() + selectedStatus.slice(1)}{" "}
-                <LiaAngleDownSolid />
-              </button>
-            </Menu.Target>
-            <Menu.Dropdown>
-              {["all", "confirmed", "tentative", "cancelled"].map((s) => (
-                <Menu.Item
-                  key={s}
-                  leftSection={
-                    selectedStatus === s ? (
-                      <IoMdCheckmark size={14} />
-                    ) : (
-                      <span style={{ width: 14, display: "inline-block" }} />
-                    )
-                  }
-                  onClick={() => setSelectedStatus(s)}
-                >
-                  {s === "all" ? "All Status" : s.charAt(0).toUpperCase() + s.slice(1)}
-                </Menu.Item>
-              ))}
-            </Menu.Dropdown>
-          </Menu>
-          <Popover width="auto" position="bottom-end" withArrow shadow="md">
-            <Popover.Target>
-              <button className={styles.filterBtn}>
-                <CgCalendar size={15} />
-                {dateRange[0] && dateRange[1]
-                  ? `${moment(dateRange[0]).format("MMM DD")} ${moment(dateRange[1]).format("MMM DD")}`
-                  : "Date Range"}
-              </button>
-            </Popover.Target>
-            <Popover.Dropdown>
-              <div>
-                <h6 className="fw-normal my-2 text-center">Departure Date</h6>
-              </div>
-              <DatePicker
-                type="range"
-                numberOfColumns={calendarColumns}
-                value={dateRange}
-                onChange={setDateRange}
-              />
-              {dateRange[0] && dateRange[1] && (
-                <div className="bk-date-clear-wrapper">
-                  <button className="bk-date-clear-btn" onClick={() => setDateRange([null, null])}>
-                    Clear
-                  </button>
-                </div>
-              )}
-            </Popover.Dropdown>
-          </Popover>
-          <span className="bk-results-count text-muted">
-            {filteredBookings.length} of {bookings.length} result
-            {bookings.length !== 1 ? "s" : ""}
-          </span>
+      <section className="hb-panel">
+        <div className="hb-panel-head">
+          <h2 className="hb-panel-title">Flight Bookings</h2>
         </div>
 
-        {/* Table */}
-        <div className="table-responsive">
-          <table className="bk-table">
+        <form className="hb-toolbar" onSubmit={(e) => e.preventDefault()}>
+          <div className="hb-search">
+            <FiSearch className="hb-search-icon" size={16} />
+            <input
+              type="text"
+              className="hb-search-input"
+              placeholder="Search bookings..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Search bookings"
+            />
+          </div>
+
+          <div className="hb-status-row" role="group" aria-label="Status filter">
+            {[
+              { key: "all", label: "All" },
+              { key: "confirmed", label: "Confirmed" },
+              { key: "tentative", label: "Tentative" },
+              { key: "cancelled", label: "Cancelled" },
+            ].map((s) => (
+              <button
+                key={s.key}
+                type="button"
+                className={`hb-status-chip${selectedStatus === s.key ? " active" : ""}`}
+                onClick={() => setSelectedStatus(s.key)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+
+          <DatePickerInput
+            type="range"
+            placeholder="Date Range"
+            value={dateRange}
+            onChange={setDateRange}
+            leftSection={<CgCalendar size={15} />}
+            clearable
+            className="hb-date-input"
+            classNames={{ input: "hb-date-input-field" }}
+            valueFormat="MMM DD"
+            popoverProps={{
+              position: "bottom-start",
+              withinPortal: true,
+              middlewares: { flip: true, shift: true },
+            }}
+          />
+
+          {hasActiveFilters && (
+            <button
+              type="button"
+              className="hb-btn-clear"
+              onClick={() => {
+                setSelectedStatus("all");
+                setDateRange([null, null]);
+              }}
+            >
+              Clear
+            </button>
+          )}
+
+          <button
+            type="button"
+            className="hb-btn-download"
+            onClick={downloadReport}
+            disabled={loading || filteredBookings.length === 0}
+          >
+            <FiDownload size={15} />
+            Download Report
+          </button>
+        </form>
+
+        <div className="hb-results-meta">
+          {filteredBookings.length} of {bookings.length} result
+          {bookings.length !== 1 ? "s" : ""}
+          {hasActiveFilters ? " (filtered)" : ""}
+        </div>
+
+        <div className="hb-table-wrap">
+          <table className="hb-table">
             <thead>
-              <tr className="bk-thead-tr">
-                {["Invoice No.", "Booked By", "Flight / Date", "Issued Date", "Status","Amount", "Actions"].map((h) => (
-                  <th key={h} className="bk-th">{h}</th>
+              <tr>
+                {[
+                  "Invoice No.",
+                  "Booked By",
+                  "Flight / Date",
+                  "Issued Date",
+                  "Status",
+                  "Amount",
+                  "Actions",
+                ].map((h) => (
+                  <th key={h}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -379,137 +453,161 @@ export default function HotelBookingsPage() {
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => (
                   <tr key={i} className="mp-skeleton-row">
-                    {Array.from({ length: 6 }).map((_, j) => (
+                    {Array.from({ length: 7 }).map((_, j) => (
                       <td key={j}>
-                        <div className={`mp-skeleton-bar${j === 5 ? " mp-skeleton-bar-short" : ""}`} />
+                        <div
+                          className={`mp-skeleton-bar${j === 6 ? " mp-skeleton-bar-short" : ""}`}
+                        />
                       </td>
                     ))}
                   </tr>
                 ))
               ) : filteredBookings.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="bk-empty-state">
+                  <td colSpan={7} className="hb-empty">
                     No bookings found matching your filters.
                   </td>
                 </tr>
               ) : (
-                paginatedBookings.map((booking, index) => {
+                filteredBookings.map((booking, index) => {
                   const st = booking?.booking_status?.toLowerCase();
-                  const badgeClass = statusBadgeClass[st] || "bk-badge-default";
-                  const paymentBadgeClass = statusBadgeClass[booking?.payment_status] || "bk-badge-default";
+                  const badgeClass =
+                    statusBadgeClass[st] || "hb-badge-default";
+                  const paymentBadgeClass =
+                    statusBadgeClass[
+                      booking?.payment_status?.toLowerCase()
+                    ] || "hb-badge-default";
                   const routeLines = getFlightRouteLines(booking);
-                  const isConfirmed = st === 'confirmed';
-                  const isPaid = booking?.payment_status?.toLowerCase() === 'paid';
-                  const departureInFuture = moment(booking?.flight_details?.departure_date).isAfter(moment(), 'day');
-                  const canEditOrRefund = isConfirmed && isPaid && departureInFuture;
+                  const isConfirmed = st === "confirmed";
+                  const isPaid =
+                    booking?.payment_status?.toLowerCase() === "paid";
+                  const departureInFuture = moment(
+                    booking?.flight_details?.departure_date,
+                  ).isAfter(moment(), "day");
+                  const canEditOrRefund =
+                    isConfirmed && isPaid && departureInFuture;
+                  const passenger = booking?.passenger_details?.[0];
 
                   return (
-                    <tr key={index} className="bk-tr">
-                      <td className="bk-td-ref">{booking?.booking_reference}</td>
-                      <td className="bk-td-guest">
-                        <div className="bk-guest-name">
-                          {booking?.passenger_details[0].firstName} {booking?.passenger_details[0].lastName}
-                        </div>
-                        <div className="bk-guest-email">{booking?.passenger_details[0].email}</div>
+                    <tr
+                      key={booking?.id || booking?.booking_reference || index}
+                    >
+                      <td>
+                        <span className="hb-code">
+                          {booking?.booking_reference || "-"}
+                        </span>
                       </td>
-                      <td className="bk-td-detail">
+                      <td>
+                        <div className="hb-guest-name">
+                          {passenger?.firstName} {passenger?.lastName}
+                        </div>
+                        <div className="hb-guest-email">{passenger?.email}</div>
+                      </td>
+                      <td>
                         {routeLines.map((line, lineIdx) => (
-                          <div key={lineIdx} className={lineIdx > 0 ? 'mt-1' : ''}>
-                            <div className="bk-detail-primary d-flex align-items-center gap-1">
+                          <div
+                            key={lineIdx}
+                            style={lineIdx > 0 ? { marginTop: 4 } : undefined}
+                          >
+                            <div className="hb-hotel d-flex align-items-center gap-1">
                               {line.from}
                               <FaArrowRight size={9} />
                               {line.to}
                             </div>
                             {line.date && (
-                              <div className="bk-detail-secondary">{line.date}</div>
+                              <div className="hb-guest-email">{line.date}</div>
                             )}
                           </div>
                         ))}
                       </td>
-                      <td className="bk-td-text-nowrap">
-                        {moment(booking?.created_at).format("DD MMM YYYY")}
+                      <td style={{ whiteSpace: "nowrap" }}>
+                        {booking?.created_at
+                          ? moment(booking.created_at).format("DD MMM YYYY")
+                          : "-"}
                       </td>
-                      <td className="bk-td-ref">
-                        <span className={`bk-status-badge ${badgeClass}`}>
-                          Status: {st ? st.charAt(0).toUpperCase() + st.slice(1) : "-"}
+                      <td>
+                        <span className={`hb-badge ${badgeClass}`}>
+                          Status: {formatStatusLabel(booking?.booking_status)}
                         </span>
                         <br />
-                        <span className={`bk-status-badge mt-1 ${paymentBadgeClass}`}>
-                          Payment: {booking?.payment_status}
+                        <span className={`hb-badge mt-1 ${paymentBadgeClass}`}>
+                          Payment:{" "}
+                          {formatStatusLabel(booking?.payment_status)}
                         </span>
                       </td>
-                      <td className="bk-td-status">
-                        {booking?.pricing?.display_currency} {booking?.pricing?.amount}
+                      <td className="hb-price">
+                        {booking?.pricing?.display_currency}{" "}
+                        {booking?.pricing?.amount}
                       </td>
-                      <td className="bk-td-actions">
-                        <button className={styles.actionsBtn}>
-                          <Menu shadow="md" position="bottom-end" width={190}>
-                            <Menu.Target>
-                              <span className="bk-menu-dots">...</span>
-                            </Menu.Target>
-                            <Menu.Dropdown>
-                              <Menu.Item leftSection={<FaRegFileAlt size={13} />}>
-                                <Link
-                                  href={`/flights/invoice/${booking?.booking_reference}`}
-                                  target="_blank"
-                                  className="text-dark"
-                                >
-                                  View Invoice
-                                </Link>
+                      <td>
+                        <Menu shadow="md" position="bottom-end" width={190}>
+                          <Menu.Target>
+                            <button
+                              type="button"
+                              className="hb-actions-btn"
+                              aria-label="Booking actions"
+                            >
+                              ...
+                            </button>
+                          </Menu.Target>
+                          <Menu.Dropdown>
+                            <Menu.Item leftSection={<FaRegFileAlt size={13} />}>
+                              <Link
+                                href={`/flights/invoice/${booking?.booking_reference}`}
+                                target="_blank"
+                                className="text-dark"
+                              >
+                                View Invoice
+                              </Link>
+                            </Menu.Item>
+                            <Menu.Item leftSection={<FaRegFileAlt size={13} />}>
+                              <Link
+                                href={`/flights/voucher/${booking?.booking_reference}`}
+                                target="_blank"
+                                className="text-dark"
+                              >
+                                View Voucher
+                              </Link>
+                            </Menu.Item>
+                            {canEditOrRefund && (
+                              <Menu.Item
+                                leftSection={<FaUserEdit size={13} />}
+                                onClick={() =>
+                                  setEditPassengerModal({
+                                    opened: true,
+                                    bookingReference:
+                                      booking?.booking_reference,
+                                    provider: booking?.provider,
+                                    passengers:
+                                      booking?.passenger_details || [],
+                                  })
+                                }
+                              >
+                                Edit Passenger
                               </Menu.Item>
-                              <Menu.Item leftSection={<FaRegFileAlt size={13} />}>
-                                <Link
-                                  href={`/flights/voucher/${booking?.booking_reference}`}
-                                  target="_blank"
-                                  className="text-dark"
+                            )}
+                            {booking?.booking_status?.toLowerCase() !==
+                              "cancelled" &&
+                              departureInFuture && (
+                                <Menu.Item
+                                  leftSection={
+                                    <RiDeleteBin6Line color="red" size={13} />
+                                  }
+                                  color="red"
+                                  onClick={() =>
+                                    setCancelModal({
+                                      opened: true,
+                                      bookingReference:
+                                        booking?.booking_reference,
+                                      provider: booking?.provider,
+                                    })
+                                  }
                                 >
-                                  View Voucher
-                                </Link>
-                              </Menu.Item>
-                              {canEditOrRefund && (
-                                <>
-                                  <Menu.Item
-                                    leftSection={<FaUserEdit size={13} />}
-                                    onClick={() =>
-                                      setEditPassengerModal({
-                                        opened: true,
-                                        bookingReference: booking?.booking_reference,
-                                        provider: booking?.provider,
-                                        passengers: booking?.passenger_details || [],
-                                      })
-                                    }
-                                  >
-                                    Edit Passenger
-                                  </Menu.Item>
-                                  {/* <Menu.Item
-                                    leftSection={<FaUndo size={13} />}
-                                    onClick={() =>
-                                      setRefundModal({
-                                        opened: true,
-                                        bookingReference: booking?.booking_reference,
-                                        provider: booking?.provider,
-                                      })
-                                    }
-                                  >
-                                    Refund
-                                  </Menu.Item> */}
-                                </>
+                                  Cancel Booking
+                                </Menu.Item>
                               )}
-                              {booking?.booking_status?.toLowerCase() !== "cancelled" &&
-                                departureInFuture && (
-                                  <Menu.Item
-                                    leftSection={<RiDeleteBin6Line color="red" size={13} />}
-                                    color="red"
-                                    onClick={() =>
-                                      setCancelModal({ opened: true, bookingReference: booking?.booking_reference, provider: booking?.provider })
-                                    }
-                                  >
-                                    Cancel Booking
-                                  </Menu.Item>
-                                )}
-                            </Menu.Dropdown>
-                          </Menu>
-                        </button>
+                          </Menu.Dropdown>
+                        </Menu>
                       </td>
                     </tr>
                   );
@@ -518,22 +616,7 @@ export default function HotelBookingsPage() {
             </tbody>
           </table>
         </div>
-        {!loading && totalPages > 1 && (
-          <div className="bk-pagination-wrapper d-flex flex-wrap justify-content-center align-items-center gap-2 py-3 px-2">
-            <span className="text-muted" style={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
-              Showing {(activePage - 1) * PAGE_SIZE + 1}–{Math.min(activePage * PAGE_SIZE, filteredBookings.length)} of {filteredBookings.length}
-            </span>
-            <Pagination
-              total={totalPages}
-              value={activePage}
-              onChange={setActivePage}
-              size="sm"
-              color="#9b8357"
-              withEdges
-            />
-          </div>
-        )}
-      </div>
+      </section>
     </div>
-  )
+  );
 }

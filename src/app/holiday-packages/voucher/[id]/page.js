@@ -4,7 +4,7 @@ import moment from "moment";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import HotelInvoiceLoader from "@/components/Loader/HotelInvoiceLoader";
+import HotelVoucherLoader from "@/components/Loader/HotelVoucherLoader";
 import {
     FaBus, FaFileInvoice, FaHotel, FaPlaneArrival, FaPlaneDeparture,
     FaUser, FaUserFriends, FaHome, FaStar, FaConciergeBell, FaPassport,
@@ -125,7 +125,7 @@ export default function Page() {
             {isLoading ? (
                 <div className={`container px-0 ${styles.confirmationWrapper}`}>
                     <div className="bg-white rounded shadow p-3">
-                        <HotelInvoiceLoader />
+                        <HotelVoucherLoader />
                     </div>
                 </div>
             ) : (

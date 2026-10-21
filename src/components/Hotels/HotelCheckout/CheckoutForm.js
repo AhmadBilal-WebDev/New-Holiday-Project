@@ -758,7 +758,8 @@ export default function CheckoutForm({ data, currency, rates }) {
                             <MdVerified size={15} />
                             <span>
                                 After completing the bank transfer, please send the payment receipt to
-                                {" "}<strong>info@alhijaztours.net</strong> with your booking reference.
+                                {" "}<strong>info@example.com
+</strong> with your booking reference.
                                 Your booking will be confirmed within <strong>24 hours</strong> of payment verification.
                             </span>
                         </div>

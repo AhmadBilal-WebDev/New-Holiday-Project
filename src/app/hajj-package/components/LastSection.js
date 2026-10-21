@@ -37,7 +37,7 @@ function LastSection() {
 
                   <div>
                     <p className="mb-0 fw-semibold text-light">Call Us</p>
-                    <small className="text-light"><a href="tel:01217772522" className="text-light">0121 777 2522</a></small>
+                    <small className="text-light"><a href="tel:00000000000" className="text-light">0121 777 2522</a></small>
                   </div>
                 </div>
 
@@ -49,7 +49,9 @@ function LastSection() {
 
                   <div>
                     <p className="mb-0 fw-semibold text-light">Email Us</p>
-                    <small className="text-light"><a href="mailto:info@alhijaztours.net" className="text-light">info@alhijaztours.net</a></small>
+                    <small className="text-light"><a href="mailto:info@example.com
+" className="text-light">info@example.com
+</a></small>
                   </div>
                 </div>
               </div>

@@ -43,7 +43,7 @@ export default function Detail() {
         </span>
         <div className={styles.infoBody}>
           <span className={styles.infoLabel}>Call the desk</span>
-          <a href="tel:01217772522" className={styles.infoValue}>
+          <a href="tel:00000000000" className={styles.infoValue}>
             0121 777 2522
           </a>
           <span className={styles.infoMeta}>Mon–Sun · 08:00–22:00 GMT</span>
@@ -56,8 +56,10 @@ export default function Detail() {
         </span>
         <div className={styles.infoBody}>
           <span className={styles.infoLabel}>Email us</span>
-          <a href="mailto:info@alhijaztours.net" className={styles.infoValue}>
-            info@alhijaztours.net
+          <a href="mailto:info@example.com
+" className={styles.infoValue}>
+            info@example.com
+
           </a>
           <span className={styles.infoMeta}>Reply within 4 working hours</span>
         </div>
