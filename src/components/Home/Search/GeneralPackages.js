@@ -154,7 +154,7 @@ export default function GeneralPackages({ packageConfig, isActive, onSearch }) {
                         || flightStoreDates.depart
                         || flightStoreDates.check_in
                     ),
-                  ]
+                ]
                 : mainDates;
             const stayDates = packageConfig.searchData.hotel?.dates
                 ? [new Date(packageConfig.searchData.hotel.dates.checkIn || packageConfig.searchData.hotel.dates.check_in), new Date(packageConfig.searchData.hotel.dates.checkOut || packageConfig.searchData.hotel.dates.check_out)]
@@ -163,7 +163,7 @@ export default function GeneralPackages({ packageConfig, isActive, onSearch }) {
                 ? [
                     new Date(packageConfig.searchData.transfer.dates.pickup || packageConfig.searchData.transfer.dates.check_in),
                     new Date(packageConfig.searchData.transfer.dates.dropoff || packageConfig.searchData.transfer.dates.check_out || packageConfig.searchData.transfer.dates.pickup || packageConfig.searchData.transfer.dates.check_in)
-                  ]
+                ]
                 : mainDates;
             if (packageConfig.searchData.flight?.tripType) {
                 setFlightTripType(packageConfig.searchData.flight.tripType);
@@ -1143,7 +1143,7 @@ export default function GeneralPackages({ packageConfig, isActive, onSearch }) {
                             ))}
                             <hr />
                             <p onClick={addRoom} className="small cursor-pointer text-end mb-1 text-primary">+ Add Room</p>
-                            <button onClick={ClosePopover} type="button" className="btn  w-100 btn-outline-success">Done</button>
+                            <button onClick={ClosePopover} type="button" className="btn  w-100" style={{ backgroundColor: '#E7247A', color: '#fff', borderColor: '#E7247A' }}>Done</button>
                         </div>
                     </Popover.Dropdown>
                 </Popover>

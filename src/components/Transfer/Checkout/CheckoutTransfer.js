@@ -21,6 +21,7 @@ import LocationMapModal from './LocationMapModal';
 import { useJsApiLoader } from '@react-google-maps/api';
 import PriceDisplay from '@/components/Currency/PriceDisplay';
 import styles from "./CheckoutTransfer.module.css";
+import TopContact from '@/components/Home/TopContact/TopContact';
 
 export default function CheckoutTransfer({ transferDetail, selectedExtras = [], onSelectedExtrasChange }) {
     const [errors, setErrors] = useState({});
@@ -423,7 +424,7 @@ export default function CheckoutTransfer({ transferDetail, selectedExtras = [], 
             customerExchangeRate = 1;
             customerTotalAfterDiscount = grandTotal;
         }
-debugger
+        debugger
         transferDetail.selected_extras = selectedExtras;
         const request = {
             booked_qty: transferDetail?.quantity || 1,
@@ -666,24 +667,24 @@ debugger
     );
 
     return (
+        <div>
+            <div className={styles.formWrapper}>
+                <LeadDetail setFormData={setFormData} />
+                {loading && (
+                    <PackageBookingLoader
+                        errorMessage={loaderError}
+                        showLoader={loading}
+                        onComplete={handleLoaderComplete}
+                        confirmStatus={confirmStatus}
+                        componentName="Transfer"
+                    />
+                )}
 
-        <div className={styles.formWrapper}>
-            <LeadDetail setFormData={setFormData} />
-            {loading && (
-                <PackageBookingLoader
-                    errorMessage={loaderError}
-                    showLoader={loading}
-                    onComplete={handleLoaderComplete}
-                    confirmStatus={confirmStatus}
-                    componentName="Transfer"
-                />
-            )}
-
-            {/* Map Modal */}
-            {isLoaded ? (
-                <>
-                    {renderMapModal()}
-                    {/* <div className="rounded border p-3 mb-3">
+                {/* Map Modal */}
+                {isLoaded ? (
+                    <>
+                        {renderMapModal()}
+                        {/* <div className="rounded border p-3 mb-3">
                         <h5 className="mb-3">Pickup and Dropoff Locations</h5>
                         <div className="alert alert-info py-2 mb-3" role="alert">
                             <small>
@@ -742,660 +743,656 @@ debugger
                             )}
                         </div>
                     </div> */}
-                </>
-            ) : (
-                <div className="rounded border p-3 mb-3">
-                    <h5 className="mb-3">Pickup and Dropoff Locations</h5>
-                    <div className="d-flex align-items-center gap-2 text-muted" style={{ minHeight: 80 }}>
-                        <div className="spinner-border spinner-border-sm" role="status" />
-                        <span>Loading map services...</span>
-                    </div>
-                </div>
-            )}
-
-            {/* Extra Services */}
-            {availableExtras.length > 0 && (
-                <div className={styles.formCard}>
-                    <section className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Extra Services</h2>
-                        <p className={styles.sectionDesc}>
-                            Optional add-ons for your transfer. Selected extras will be added to the total price.
-                        </p>
-                        <div className={styles.extrasList}>
-                            {availableExtras.map((extra) => {
-                                const isSelected = selectedExtras.some((item) => item.code === extra.code);
-                                const metaParts = getExtraMetaParts(extra);
-                                return (
-                                    <label
-                                        key={extra.code}
-                                        className={`${styles.extraItem} ${isSelected ? styles.extraItemActive : ''}`}
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            className={styles.extraCheckbox}
-                                            checked={isSelected}
-                                            onChange={() => toggleExtra(extra)}
-                                        />
-                                        <div className={styles.extraContent}>
-                                            <div className={styles.extraInfo}>
-                                                <span className={styles.extraName}>
-                                                    {extra.name || extra.type}
-                                                </span>
-                                                {metaParts.length > 0 ? (
-                                                    <div className={styles.extraMeta}>
-                                                        {metaParts.map((part) => (
-                                                            <span key={part} className={styles.extraMetaTag}>
-                                                                {part}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                ) : (
-                                                    extra.type && extra.name && extra.type !== extra.name ? (
-                                                        <span className={styles.extraMetaText}>{extra.type}</span>
-                                                    ) : null
-                                                )}
-                                            </div>
-                                            <span className={styles.extraPrice}>
-                                                <PriceDisplay
-                                                    price={Number(extra.amount || 0)}
-                                                    currency={transferDetail?.currency}
-                                                />
-                                            </span>
-                                        </div>
-                                    </label>
-                                );
-                            })}
+                    </>
+                ) : (
+                    <div className="rounded border p-3 mb-3">
+                        <h5 className="mb-3">Pickup and Dropoff Locations</h5>
+                        <div className="d-flex align-items-center gap-2 text-muted" style={{ minHeight: 80 }}>
+                            <div className="spinner-border spinner-border-sm" role="status" />
+                            <span>Loading map services...</span>
                         </div>
-                    </section>
-                </div>
-            )}
-
-            {/* Lead Guest Info */}
-            <div className={styles.formCard}>
-                <section className={styles.section}>
-                    <div className={styles.sectionHeader}>
-                        <h2 className={styles.sectionTitle}>Enter Your Information</h2>
-                        <p className={styles.sectionDesc}>
-                            Details you&apos;ve saved in your profile pre-fill here.
-                        </p>
-                    </div>
-
-                    <div className={styles.fieldGrid}>
-                        <div className={styles.fieldGroup}>
-                            <label className={styles.label} htmlFor="transferFirstName">
-                                First Name <span className={styles.required}>*</span>
-                            </label>
-                            <input
-                                id="transferFirstName"
-                                type="text"
-                                name="firstName"
-                                value={formData.firstName}
-                                onChange={handleChange}
-                                className={`${styles.input} ${errors.firstName ? styles.inputError : ""}`}
-                                placeholder="First Name"
-                                autoComplete="given-name"
-                            />
-                            {errors.firstName && (
-                                <p className={styles.errorText}>{errors.firstName}</p>
-                            )}
-                        </div>
-
-                        <div className={styles.fieldGroup}>
-                            <label className={styles.label} htmlFor="transferLastName">
-                                Last Name <span className={styles.required}>*</span>
-                            </label>
-                            <input
-                                id="transferLastName"
-                                type="text"
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                className={`${styles.input} ${errors.lastName ? styles.inputError : ""}`}
-                                placeholder="Last Name"
-                                autoComplete="family-name"
-                            />
-                            {errors.lastName && (
-                                <p className={styles.errorText}>{errors.lastName}</p>
-                            )}
-                        </div>
-
-                        <div className={`${styles.fieldGroup} ${styles.fieldGroupFull}`}>
-                            <label className={styles.label} htmlFor="transferEmail">
-                                Email Address <span className={styles.required}>*</span>
-                            </label>
-                            <input
-                                id="transferEmail"
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
-                                placeholder="you@example.com"
-                                autoComplete="email"
-                            />
-                            {errors.email && (
-                                <p className={styles.errorText}>{errors.email}</p>
-                            )}
-                        </div>
-
-                        <div className={styles.fieldGroup}>
-                            <label className={styles.label}>
-                                Select Country <span className={styles.required}>*</span>
-                            </label>
-                            <Select
-                                placeholder="Select Country"
-                                searchable
-                                data={countryOptions}
-                                value={formData.country || null}
-                                limit={50}
-                                onChange={handleCountryChange}
-                                onBlur={handleCountryAutofillBlur}
-                                inputProps={{
-                                    autoComplete: "country-name",
-                                    name: "country",
-                                }}
-                                error={errors.country}
-                                classNames={{ root: styles.selectInput }}
-                            />
-                        </div>
-
-                        <div className={styles.fieldGroup}>
-                            <label className={styles.label} htmlFor="transferAddress">
-                                Address <span className={styles.required}>*</span>
-                            </label>
-                            <Autocomplete
-                                id="transferAddress"
-                                apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-                                placeholder="House No. / Street"
-                                className={`${styles.input} ${errors.address ? styles.inputError : ""}`}
-                                name="address"
-                                value={formData.address}
-                                onChange={handleChange}
-                                onPlaceSelected={handlePlaceSelected}
-                                options={{
-                                    types: ["geocode", "establishment"],
-                                }}
-                            />
-                            {errors.address && (
-                                <p className={styles.errorText}>{errors.address}</p>
-                            )}
-                        </div>
-
-                        <div className={styles.phoneRow}>
-                            <div className={styles.fieldGroup}>
-                                <label className={styles.label} htmlFor="transferPhoneCode">
-                                    Code
-                                </label>
-                                <input
-                                    id="transferPhoneCode"
-                                    type="text"
-                                    name="phoneCode"
-                                    value={formData.phoneCode}
-                                    onChange={handleChange}
-                                    className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
-                                    placeholder="+1"
-                                    inputMode="tel"
-                                    autoComplete="tel-country-code"
-                                />
-                            </div>
-                            <div className={styles.fieldGroup}>
-                                <label className={styles.label} htmlFor="transferPhone">
-                                    Phone Number <span className={styles.required}>*</span>
-                                </label>
-                                <input
-                                    id="transferPhone"
-                                    type="tel"
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    onKeyDown={(e) => {
-                                        if (e.ctrlKey || e.metaKey || e.altKey) return;
-                                        if (
-                                            !/[0-9+]/.test(e.key) &&
-                                            !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'].includes(e.key)
-                                        ) {
-                                            e.preventDefault();
-                                        }
-                                    }}
-                                    className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
-                                    placeholder="Phone Number"
-                                    autoComplete="tel"
-                                    inputMode="tel"
-                                />
-                                {errors.phone && (
-                                    <p className={styles.errorText}>{errors.phone}</p>
-                                )}
-                            </div>
-                        </div>
-
-                        <div className={styles.fieldGroup}>
-                            <label className={styles.label} htmlFor="transferTitle">
-                                Title <span className={styles.required}>*</span>
-                            </label>
-                            <select
-                                id="transferTitle"
-                                name="title"
-                                value={formData.title}
-                                onChange={handleChange}
-                                className={`${styles.select} ${errors.title ? styles.inputError : ""}`}
-                            >
-                                <option value="">Select</option>
-                                <option value="MR">Mr</option>
-                                <option value="MRS">Mrs</option>
-                                <option value="MISS">Miss</option>
-                                <option value="DR">Dr</option>
-                            </select>
-                            {errors.title && <p className={styles.errorText}>{errors.title}</p>}
-                        </div>
-
-                        <div className={styles.fieldGroup}>
-                            <label className={styles.label}>
-                                Gender <span className={styles.required}>*</span>
-                            </label>
-                            <div className={styles.genderGroup}>
-                                <label className={styles.genderOption} htmlFor="leadRadio1">
-                                    <input
-                                        checked={formData.gender === "male"}
-                                        type="radio"
-                                        onChange={handleChange}
-                                        name="gender"
-                                        id="leadRadio1"
-                                        value="male"
-                                    />
-                                    Male
-                                </label>
-                                <label className={styles.genderOption} htmlFor="leadRadio2">
-                                    <input
-                                        checked={formData.gender === "female"}
-                                        type="radio"
-                                        onChange={handleChange}
-                                        name="gender"
-                                        id="leadRadio2"
-                                        value="female"
-                                    />
-                                    Female
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p className={styles.sectionNote}>
-                        This information will be used for all booking confirmations and
-                        communications. Ensure that the name matches travel documents.
-                    </p>
-                </section>
-            </div>
-            <div className={styles.otherGuestsCard}>
-                <div className={styles.otherGuestsHeader}>
-                    <h2 className={styles.otherGuestsTitle}>Other Guests</h2>
-                    <p className={styles.otherGuestsSubtitle}>
-                        Add details for additional guests staying in the room
-                    </p>
-                </div>
-
-                <hr className={styles.otherGuestsDivider} />
-
-                <div className={styles.otherGuestsAction}>
-                    <p className={styles.otherGuestsHint}>
-                        You can add remaining adults and children travelling with you.
-                    </p>
-                    <button
-                        type="button"
-                        onClick={handleGuestAdd}
-                        className={styles.addGuestBtn}
-                    >
-                        + Add Guest
-                    </button>
-                </div>
-
-                {otherGuestDetail.length > 0 && (
-                    <div className={styles.guestList}>
-                        {otherGuestDetail.map((item, index) => (
-                            <div key={index} className={styles.guestBlock}>
-                                <div className={styles.guestHeader}>
-                                    <div className={styles.guestTitleRow}>
-                                        <h3 className={styles.guestTitle}>Passenger {index + 2}</h3>
-                                        {(item.type === 'CH' || item.type === 'IN') && (
-                                            <span className={styles.guestBadge}>
-                                                {item.type === 'CH' ? 'Child' : 'Infant'}
-                                            </span>
-                                        )}
-                                    </div>
-                                    <button
-                                        type="button"
-                                        onClick={() => handleGuestRemove(index)}
-                                        className={styles.removeGuestBtn}
-                                        aria-label={`Remove passenger ${index + 2}`}
-                                    >
-                                        <TiDeleteOutline size={20} />
-                                    </button>
-                                </div>
-                                <div className={styles.fieldGridThree}>
-                                    <div className={styles.fieldGroup}>
-                                        <label className={styles.label}>
-                                            First Name <span className={styles.required}>*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="firstName"
-                                            onChange={(e) => handleGuestChange(e, index)}
-                                            value={item.firstName}
-                                            placeholder="First Name"
-                                            className={`${styles.input} ${otherGuestError[index]?.firstName ? styles.inputError : ""}`}
-                                        />
-                                        {otherGuestError[index]?.firstName && (
-                                            <p className={styles.errorText}>{otherGuestError[index]?.firstName}</p>
-                                        )}
-                                    </div>
-                                    <div className={styles.fieldGroup}>
-                                        <label className={styles.label}>
-                                            Last Name <span className={styles.required}>*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="lastName"
-                                            onChange={(e) => handleGuestChange(e, index)}
-                                            value={item.lastName}
-                                            placeholder="Last Name"
-                                            className={`${styles.input} ${otherGuestError[index]?.lastName ? styles.inputError : ""}`}
-                                        />
-                                        {otherGuestError[index]?.lastName && (
-                                            <p className={styles.errorText}>{otherGuestError[index]?.lastName}</p>
-                                        )}
-                                    </div>
-                                    <div className={styles.fieldGroup}>
-                                        <label className={styles.label}>
-                                            Gender <span className={styles.required}>*</span>
-                                        </label>
-                                        <div className={styles.genderGroup}>
-                                            <label className={styles.genderOption} htmlFor={`male_${index}`}>
-                                                <input
-                                                    checked={item.gender === "male"}
-                                                    type="radio"
-                                                    onChange={(e) => handleGuestChange(e, index)}
-                                                    name={`gender_${index}`}
-                                                    id={`male_${index}`}
-                                                    value="male"
-                                                />
-                                                Male
-                                            </label>
-                                            <label className={styles.genderOption} htmlFor={`female_${index}`}>
-                                                <input
-                                                    checked={item.gender === "female"}
-                                                    type="radio"
-                                                    onChange={(e) => handleGuestChange(e, index)}
-                                                    name={`gender_${index}`}
-                                                    id={`female_${index}`}
-                                                    value="female"
-                                                />
-                                                Female
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
                     </div>
                 )}
-            </div>
-            {/* Secure Payment Method */}
-            <div className={styles.paymentCard}>
-                <div className={styles.paymentHeader}>
-                    <MdOutlineLock className={styles.paymentHeaderIcon} size={20} aria-hidden="true" />
-                    <h2 className={styles.paymentHeaderTitle}>Secure Payment Method</h2>
-                </div>
 
-                <div className={styles.paymentBody}>
-                    <div
-                        className={`${styles.paymentOptions} ${
-                            transferDetail?.provider !== 'custom' ? styles.paymentOptionsSingle : ''
-                        }`}
-                    >
-                        {transferDetail?.provider === 'custom' && (
-                            <button
-                                type="button"
-                                onClick={() => setPaymentMethod('bank_transfer')}
-                                className={`${styles.paymentOption} ${
-                                    paymentMethod === 'bank_transfer' ? styles.paymentOptionActive : ''
-                                }`}
-                            >
-                                <span
-                                    className={`${styles.paymentIcon} ${
-                                        paymentMethod === 'bank_transfer'
-                                            ? styles.paymentIconActive
-                                            : styles.paymentIconInactive
-                                    }`}
+                {/* Extra Services */}
+                {availableExtras.length > 0 && (
+                    <div className={styles.formCard}>
+                        <section className={styles.section}>
+                            <h2 className={styles.sectionTitle}>Extra Services</h2>
+                            <p className={styles.sectionDesc}>
+                                Optional add-ons for your transfer. Selected extras will be added to the total price.
+                            </p>
+                            <div className={styles.extrasList}>
+                                {availableExtras.map((extra) => {
+                                    const isSelected = selectedExtras.some((item) => item.code === extra.code);
+                                    const metaParts = getExtraMetaParts(extra);
+                                    return (
+                                        <label
+                                            key={extra.code}
+                                            className={`${styles.extraItem} ${isSelected ? styles.extraItemActive : ''}`}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                className={styles.extraCheckbox}
+                                                checked={isSelected}
+                                                onChange={() => toggleExtra(extra)}
+                                            />
+                                            <div className={styles.extraContent}>
+                                                <div className={styles.extraInfo}>
+                                                    <span className={styles.extraName}>
+                                                        {extra.name || extra.type}
+                                                    </span>
+                                                    {metaParts.length > 0 ? (
+                                                        <div className={styles.extraMeta}>
+                                                            {metaParts.map((part) => (
+                                                                <span key={part} className={styles.extraMetaTag}>
+                                                                    {part}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        extra.type && extra.name && extra.type !== extra.name ? (
+                                                            <span className={styles.extraMetaText}>{extra.type}</span>
+                                                        ) : null
+                                                    )}
+                                                </div>
+                                                <span className={styles.extraPrice}>
+                                                    <PriceDisplay
+                                                        price={Number(extra.amount || 0)}
+                                                        currency={transferDetail?.currency}
+                                                    />
+                                                </span>
+                                            </div>
+                                        </label>
+                                    );
+                                })}
+                            </div>
+                        </section>
+                    </div>
+                )}
+
+                {/* Lead Guest Info */}
+                <div className={styles.formCard}>
+                    <section className={styles.section}>
+                        <div className={styles.sectionHeader}>
+                            <h2 className={styles.sectionTitle}>Enter Your Information</h2>
+                            <p className={styles.sectionDesc}>
+                                Details you&apos;ve saved in your profile pre-fill here.
+                            </p>
+                        </div>
+
+                        <div className={styles.fieldGrid}>
+                            <div className={styles.fieldGroup}>
+                                <label className={styles.label} htmlFor="transferFirstName">
+                                    First Name <span className={styles.required}>*</span>
+                                </label>
+                                <input
+                                    id="transferFirstName"
+                                    type="text"
+                                    name="firstName"
+                                    value={formData.firstName}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${errors.firstName ? styles.inputError : ""}`}
+                                    placeholder="First Name"
+                                    autoComplete="given-name"
+                                />
+                                {errors.firstName && (
+                                    <p className={styles.errorText}>{errors.firstName}</p>
+                                )}
+                            </div>
+
+                            <div className={styles.fieldGroup}>
+                                <label className={styles.label} htmlFor="transferLastName">
+                                    Last Name <span className={styles.required}>*</span>
+                                </label>
+                                <input
+                                    id="transferLastName"
+                                    type="text"
+                                    name="lastName"
+                                    value={formData.lastName}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${errors.lastName ? styles.inputError : ""}`}
+                                    placeholder="Last Name"
+                                    autoComplete="family-name"
+                                />
+                                {errors.lastName && (
+                                    <p className={styles.errorText}>{errors.lastName}</p>
+                                )}
+                            </div>
+
+                            <div className={`${styles.fieldGroup} ${styles.fieldGroupFull}`}>
+                                <label className={styles.label} htmlFor="transferEmail">
+                                    Email Address <span className={styles.required}>*</span>
+                                </label>
+                                <input
+                                    id="transferEmail"
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
+                                    placeholder="you@example.com"
+                                    autoComplete="email"
+                                />
+                                {errors.email && (
+                                    <p className={styles.errorText}>{errors.email}</p>
+                                )}
+                            </div>
+
+                            <div className={styles.fieldGroup}>
+                                <label className={styles.label}>
+                                    Select Country <span className={styles.required}>*</span>
+                                </label>
+                                <Select
+                                    placeholder="Select Country"
+                                    searchable
+                                    data={countryOptions}
+                                    value={formData.country || null}
+                                    limit={50}
+                                    onChange={handleCountryChange}
+                                    onBlur={handleCountryAutofillBlur}
+                                    inputProps={{
+                                        autoComplete: "country-name",
+                                        name: "country",
+                                    }}
+                                    error={errors.country}
+                                    classNames={{ root: styles.selectInput }}
+                                />
+                            </div>
+
+                            <div className={styles.fieldGroup}>
+                                <label className={styles.label} htmlFor="transferAddress">
+                                    Address <span className={styles.required}>*</span>
+                                </label>
+                                <Autocomplete
+                                    id="transferAddress"
+                                    apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+                                    placeholder="House No. / Street"
+                                    className={`${styles.input} ${errors.address ? styles.inputError : ""}`}
+                                    name="address"
+                                    value={formData.address}
+                                    onChange={handleChange}
+                                    onPlaceSelected={handlePlaceSelected}
+                                    options={{
+                                        types: ["geocode", "establishment"],
+                                    }}
+                                />
+                                {errors.address && (
+                                    <p className={styles.errorText}>{errors.address}</p>
+                                )}
+                            </div>
+
+                            <div className={styles.phoneRow}>
+                                <div className={styles.fieldGroup}>
+                                    <label className={styles.label} htmlFor="transferPhoneCode">
+                                        Code
+                                    </label>
+                                    <input
+                                        id="transferPhoneCode"
+                                        type="text"
+                                        name="phoneCode"
+                                        value={formData.phoneCode}
+                                        onChange={handleChange}
+                                        className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
+                                        placeholder="+1"
+                                        inputMode="tel"
+                                        autoComplete="tel-country-code"
+                                    />
+                                </div>
+                                <div className={styles.fieldGroup}>
+                                    <label className={styles.label} htmlFor="transferPhone">
+                                        Phone Number <span className={styles.required}>*</span>
+                                    </label>
+                                    <input
+                                        id="transferPhone"
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        onKeyDown={(e) => {
+                                            if (e.ctrlKey || e.metaKey || e.altKey) return;
+                                            if (
+                                                !/[0-9+]/.test(e.key) &&
+                                                !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'].includes(e.key)
+                                            ) {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                        className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
+                                        placeholder="Phone Number"
+                                        autoComplete="tel"
+                                        inputMode="tel"
+                                    />
+                                    {errors.phone && (
+                                        <p className={styles.errorText}>{errors.phone}</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className={styles.fieldGroup}>
+                                <label className={styles.label} htmlFor="transferTitle">
+                                    Title <span className={styles.required}>*</span>
+                                </label>
+                                <select
+                                    id="transferTitle"
+                                    name="title"
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                    className={`${styles.select} ${errors.title ? styles.inputError : ""}`}
                                 >
-                                    <FaUniversity size={18} />
-                                </span>
-                                <span className={styles.paymentOptionCopy}>
-                                    <span className={styles.paymentOptionTitle}>Bank Transfer</span>
-                                    <span className={styles.paymentOptionDesc}>Direct wire</span>
-                                </span>
-                            </button>
-                        )}
+                                    <option value="">Select</option>
+                                    <option value="MR">Mr</option>
+                                    <option value="MRS">Mrs</option>
+                                    <option value="MISS">Miss</option>
+                                    <option value="DR">Dr</option>
+                                </select>
+                                {errors.title && <p className={styles.errorText}>{errors.title}</p>}
+                            </div>
 
+                            <div className={styles.fieldGroup}>
+                                <label className={styles.label}>
+                                    Gender <span className={styles.required}>*</span>
+                                </label>
+                                <div className={styles.genderGroup}>
+                                    <label className={styles.genderOption} htmlFor="leadRadio1">
+                                        <input
+                                            checked={formData.gender === "male"}
+                                            type="radio"
+                                            onChange={handleChange}
+                                            name="gender"
+                                            id="leadRadio1"
+                                            value="male"
+                                        />
+                                        Male
+                                    </label>
+                                    <label className={styles.genderOption} htmlFor="leadRadio2">
+                                        <input
+                                            checked={formData.gender === "female"}
+                                            type="radio"
+                                            onChange={handleChange}
+                                            name="gender"
+                                            id="leadRadio2"
+                                            value="female"
+                                        />
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p className={styles.sectionNote}>
+                            This information will be used for all booking confirmations and
+                            communications. Ensure that the name matches travel documents.
+                        </p>
+                    </section>
+                </div>
+                <div className={styles.otherGuestsCard}>
+                    <div className={styles.otherGuestsHeader}>
+                        <h2 className={styles.otherGuestsTitle}>Other Guests</h2>
+                        <p className={styles.otherGuestsSubtitle}>
+                            Add details for additional guests staying in the room
+                        </p>
+                    </div>
+
+                    <hr className={styles.otherGuestsDivider} />
+
+                    <div className={styles.otherGuestsAction}>
+                        <p className={styles.otherGuestsHint}>
+                            You can add remaining adults and children travelling with you.
+                        </p>
                         <button
                             type="button"
-                            onClick={() => setPaymentMethod('stripe')}
-                            className={`${styles.paymentOption} ${
-                                paymentMethod === 'stripe' ? styles.paymentOptionActive : ''
-                            }`}
+                            onClick={handleGuestAdd}
+                            className={styles.addGuestBtn}
                         >
-                            <span
-                                className={`${styles.paymentIcon} ${
-                                    paymentMethod === 'stripe'
-                                        ? styles.paymentIconActive
-                                        : styles.paymentIconInactive
-                                }`}
-                            >
-                                <FaCreditCard size={18} />
-                            </span>
-                            <span className={styles.paymentOptionCopy}>
-                                <span className={styles.paymentOptionTitle}>Credit / Debit Card</span>
-                                <span className={styles.paymentOptionDesc}>Visa · MC · Amex</span>
-                            </span>
-                            <span className={styles.cardBrandRow} aria-hidden="true">
-                                <FaCcVisa />
-                                <FaCcAmex />
-                                <FaCcMastercard />
-                            </span>
+                            + Add Guest
                         </button>
                     </div>
 
-                    {paymentMethod === 'bank_transfer' && (
-                        <div className={styles.paymentDetailBox}>
-                            <div className={styles.paymentDetailHeader}>
-                                <FaUniversity size={16} className={styles.paymentDetailHeaderIcon} />
-                                <span>Bank Account Details</span>
-                            </div>
-                            <div className={styles.bankGrid}>
-                                <div>
-                                    <div className={styles.bankFieldLabel}>Account Name</div>
-                                    <div className={styles.bankFieldValue}>
-                                        <span>{bankInfo.accountName}</span>
+                    {otherGuestDetail.length > 0 && (
+                        <div className={styles.guestList}>
+                            {otherGuestDetail.map((item, index) => (
+                                <div key={index} className={styles.guestBlock}>
+                                    <div className={styles.guestHeader}>
+                                        <div className={styles.guestTitleRow}>
+                                            <h3 className={styles.guestTitle}>Passenger {index + 2}</h3>
+                                            {(item.type === 'CH' || item.type === 'IN') && (
+                                                <span className={styles.guestBadge}>
+                                                    {item.type === 'CH' ? 'Child' : 'Infant'}
+                                                </span>
+                                            )}
+                                        </div>
                                         <button
                                             type="button"
-                                            className={styles.copyBtn}
-                                            onClick={() => copyToClipboard(bankInfo.accountName, 'accountName')}
-                                            title="Copy"
+                                            onClick={() => handleGuestRemove(index)}
+                                            className={styles.removeGuestBtn}
+                                            aria-label={`Remove passenger ${index + 2}`}
                                         >
-                                            {copiedField === 'accountName' ? (
-                                                <IoCheckmarkCircleOutline size={16} className={styles.copySuccess} />
-                                            ) : (
-                                                <IoCopyOutline size={15} />
-                                            )}
+                                            <TiDeleteOutline size={20} />
                                         </button>
                                     </div>
-                                </div>
-                                <div>
-                                    <div className={styles.bankFieldLabel}>Account Number</div>
-                                    <div className={styles.bankFieldValue}>
-                                        <span>{bankInfo.accountNumber}</span>
-                                        <button
-                                            type="button"
-                                            className={styles.copyBtn}
-                                            onClick={() =>
-                                                copyToClipboard(bankInfo.accountNumber, 'accountNumber')
-                                            }
-                                            title="Copy"
-                                        >
-                                            {copiedField === 'accountNumber' ? (
-                                                <IoCheckmarkCircleOutline size={16} className={styles.copySuccess} />
-                                            ) : (
-                                                <IoCopyOutline size={15} />
+                                    <div className={styles.fieldGridThree}>
+                                        <div className={styles.fieldGroup}>
+                                            <label className={styles.label}>
+                                                First Name <span className={styles.required}>*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="firstName"
+                                                onChange={(e) => handleGuestChange(e, index)}
+                                                value={item.firstName}
+                                                placeholder="First Name"
+                                                className={`${styles.input} ${otherGuestError[index]?.firstName ? styles.inputError : ""}`}
+                                            />
+                                            {otherGuestError[index]?.firstName && (
+                                                <p className={styles.errorText}>{otherGuestError[index]?.firstName}</p>
                                             )}
-                                        </button>
+                                        </div>
+                                        <div className={styles.fieldGroup}>
+                                            <label className={styles.label}>
+                                                Last Name <span className={styles.required}>*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="lastName"
+                                                onChange={(e) => handleGuestChange(e, index)}
+                                                value={item.lastName}
+                                                placeholder="Last Name"
+                                                className={`${styles.input} ${otherGuestError[index]?.lastName ? styles.inputError : ""}`}
+                                            />
+                                            {otherGuestError[index]?.lastName && (
+                                                <p className={styles.errorText}>{otherGuestError[index]?.lastName}</p>
+                                            )}
+                                        </div>
+                                        <div className={styles.fieldGroup}>
+                                            <label className={styles.label}>
+                                                Gender <span className={styles.required}>*</span>
+                                            </label>
+                                            <div className={styles.genderGroup}>
+                                                <label className={styles.genderOption} htmlFor={`male_${index}`}>
+                                                    <input
+                                                        checked={item.gender === "male"}
+                                                        type="radio"
+                                                        onChange={(e) => handleGuestChange(e, index)}
+                                                        name={`gender_${index}`}
+                                                        id={`male_${index}`}
+                                                        value="male"
+                                                    />
+                                                    Male
+                                                </label>
+                                                <label className={styles.genderOption} htmlFor={`female_${index}`}>
+                                                    <input
+                                                        checked={item.gender === "female"}
+                                                        type="radio"
+                                                        onChange={(e) => handleGuestChange(e, index)}
+                                                        name={`gender_${index}`}
+                                                        id={`female_${index}`}
+                                                        value="female"
+                                                    />
+                                                    Female
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div className={styles.bankFieldLabel}>Sort Code</div>
-                                    <div className={styles.bankFieldValue}>
-                                        <span>{bankInfo.sortcode}</span>
-                                        <button
-                                            type="button"
-                                            className={styles.copyBtn}
-                                            onClick={() => copyToClipboard(bankInfo.sortcode, 'sortcode')}
-                                            title="Copy"
-                                        >
-                                            {copiedField === 'sortcode' ? (
-                                                <IoCheckmarkCircleOutline size={16} className={styles.copySuccess} />
-                                            ) : (
-                                                <IoCopyOutline size={15} />
-                                            )}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.paymentAlert}>
-                                <strong>Important:</strong> After completing your bank transfer, please send
-                                the payment proof (screenshot or bank receipt) to our support team via email
-                                or WhatsApp. Include your booking reference number in the transfer
-                                description. Your booking will be confirmed once payment is verified.
-                            </div>
+                            ))}
                         </div>
                     )}
-
-                    {paymentMethod === 'stripe' && (
-                        <div className={styles.paymentDetailBox}>
-                            <p className={styles.paymentDetailText}>
-                                You will be securely redirected to Stripe&apos;s payment page to enter your
-                                card details. We accept Visa, Mastercard, American Express and more.
-                            </p>
-                            <p className={styles.paymentDetailNote}>
-                                Your card details are never stored on our servers. All transactions are
-                                processed securely through Stripe.
-                            </p>
-                        </div>
-                    )}
-
-                    {paymentMethod === 'stripe' && (
-                        <div className={styles.stripeBar}>
-                            <div className={styles.stripeBarLeft}>
-                                <FaLock size={14} />
-                                <span>
-                                    Secured &amp; powered by <strong>Stripe</strong>
-                                </span>
-                            </div>
-                            <div className={styles.trustBadges}>
-                                <span className={styles.trustBadge}>
-                                    <CiCircleCheck size={14} /> 256-bit
-                                </span>
-                                <span className={styles.trustBadge}>
-                                    <CiCircleCheck size={14} /> PCI DSS Compliant
-                                </span>
-                                <span className={styles.trustBadge}>
-                                    <CiCircleCheck size={14} /> 3D Secure
-                                </span>
-                            </div>
-                        </div>
-                    )}
-
-                    {!paymentMethod && (
-                        <p className={styles.paymentHint}>
-                            Please select a payment method above to continue.
-                        </p>
-                    )}
                 </div>
-            </div>
+                {/* Secure Payment Method */}
+                <div className={styles.paymentCard}>
+                    <div className={styles.paymentHeader}>
+                        <MdOutlineLock className={styles.paymentHeaderIcon} size={20} aria-hidden="true" />
+                        <h2 className={styles.paymentHeaderTitle}>Secure Payment Method</h2>
+                    </div>
 
-            {/* Special Requests */}
-            <div className={styles.specialCard}>
-                <div className={styles.specialHeader}>
-                    <h2 className={styles.specialTitle}>Special Requests</h2>
-                    <p className={styles.specialSubtitle}>
-                        List any operational requirements — child seats, oversized luggage, preferred
-                        cabin temperature.
-                    </p>
-                </div>
-                <hr className={styles.specialDivider} />
-                <div className={styles.specialBody}>
-                    <textarea
-                        className={styles.specialTextarea}
-                        rows={5}
-                        name="requests"
-                        value={formData.requests}
-                        onChange={handleChange}
-                        placeholder="Write your customized request here..."
-                    />
-                </div>
-            </div>
-
-            {/* Terms */}
-            <div className={styles.termsBar}>
-                <div className={styles.termsCheck}>
-                    <input
-                        className={`${styles.termsCheckbox} ${errors.terms ? 'is-invalid' : ''}`}
-                        type="checkbox"
-                        name="terms"
-                        id="transfer-terms"
-                        checked={formData.terms}
-                        onChange={handleChange}
-                    />
-                    <label className={styles.termsLabel} htmlFor="transfer-terms">
-                        I agree to the{' '}
-                        <Link
-                            target="_blank"
-                            href="/terms-and-conditions"
-                            className={styles.termsLink}
+                    <div className={styles.paymentBody}>
+                        <div
+                            className={`${styles.paymentOptions} ${transferDetail?.provider !== 'custom' ? styles.paymentOptionsSingle : ''
+                                }`}
                         >
-                            terms and conditions
-                        </Link>
-                        . <span className={styles.termsRequired}>*</span>
-                    </label>
-                </div>
-                {errors.terms && <p className={styles.errorText}>{errors.terms}</p>}
-            </div>
+                            {transferDetail?.provider === 'custom' && (
+                                <button
+                                    type="button"
+                                    onClick={() => setPaymentMethod('bank_transfer')}
+                                    className={`${styles.paymentOption} ${paymentMethod === 'bank_transfer' ? styles.paymentOptionActive : ''
+                                        }`}
+                                >
+                                    <span
+                                        className={`${styles.paymentIcon} ${paymentMethod === 'bank_transfer'
+                                            ? styles.paymentIconActive
+                                            : styles.paymentIconInactive
+                                            }`}
+                                    >
+                                        <FaUniversity size={18} />
+                                    </span>
+                                    <span className={styles.paymentOptionCopy}>
+                                        <span className={styles.paymentOptionTitle}>Bank Transfer</span>
+                                        <span className={styles.paymentOptionDesc}>Direct wire</span>
+                                    </span>
+                                </button>
+                            )}
 
-            <button
-                type="button"
-                onClick={handleCheckout}
-                className={styles.confirmBtn}
-                disabled={loading || !paymentMethod}
-            >
-                {loading ? (
-                    'Processing...'
-                ) : paymentMethod === 'bank_transfer' ? (
-                    <>
-                        <FaUniversity /> Reserve &amp; Get Bank Details
-                    </>
-                ) : (
-                    <>
-                        Pay{' '}
-                        <PriceDisplay
-                            price={
-                                Number(transferDetail?.quantity || 1) *
-                                    Number(transferDetail?.fare || 0) +
-                                selectedExtras.reduce(
-                                    (sum, extra) => sum + Number(extra?.amount || 0),
-                                    0
-                                )
-                            }
-                            currency={transferDetail?.currency}
+                            <button
+                                type="button"
+                                onClick={() => setPaymentMethod('stripe')}
+                                className={`${styles.paymentOption} ${paymentMethod === 'stripe' ? styles.paymentOptionActive : ''
+                                    }`}
+                            >
+                                <span
+                                    className={`${styles.paymentIcon} ${paymentMethod === 'stripe'
+                                        ? styles.paymentIconActive
+                                        : styles.paymentIconInactive
+                                        }`}
+                                >
+                                    <FaCreditCard size={18} />
+                                </span>
+                                <span className={styles.paymentOptionCopy}>
+                                    <span className={styles.paymentOptionTitle}>Credit / Debit Card</span>
+                                    <span className={styles.paymentOptionDesc}>Visa · MC · Amex</span>
+                                </span>
+                                <span className={styles.cardBrandRow} aria-hidden="true">
+                                    <FaCcVisa />
+                                    <FaCcAmex />
+                                    <FaCcMastercard />
+                                </span>
+                            </button>
+                        </div>
+
+                        {paymentMethod === 'bank_transfer' && (
+                            <div className={styles.paymentDetailBox}>
+                                <div className={styles.paymentDetailHeader}>
+                                    <FaUniversity size={16} className={styles.paymentDetailHeaderIcon} />
+                                    <span>Bank Account Details</span>
+                                </div>
+                                <div className={styles.bankGrid}>
+                                    <div>
+                                        <div className={styles.bankFieldLabel}>Account Name</div>
+                                        <div className={styles.bankFieldValue}>
+                                            <span>{bankInfo.accountName}</span>
+                                            <button
+                                                type="button"
+                                                className={styles.copyBtn}
+                                                onClick={() => copyToClipboard(bankInfo.accountName, 'accountName')}
+                                                title="Copy"
+                                            >
+                                                {copiedField === 'accountName' ? (
+                                                    <IoCheckmarkCircleOutline size={16} className={styles.copySuccess} />
+                                                ) : (
+                                                    <IoCopyOutline size={15} />
+                                                )}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className={styles.bankFieldLabel}>Account Number</div>
+                                        <div className={styles.bankFieldValue}>
+                                            <span>{bankInfo.accountNumber}</span>
+                                            <button
+                                                type="button"
+                                                className={styles.copyBtn}
+                                                onClick={() =>
+                                                    copyToClipboard(bankInfo.accountNumber, 'accountNumber')
+                                                }
+                                                title="Copy"
+                                            >
+                                                {copiedField === 'accountNumber' ? (
+                                                    <IoCheckmarkCircleOutline size={16} className={styles.copySuccess} />
+                                                ) : (
+                                                    <IoCopyOutline size={15} />
+                                                )}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className={styles.bankFieldLabel}>Sort Code</div>
+                                        <div className={styles.bankFieldValue}>
+                                            <span>{bankInfo.sortcode}</span>
+                                            <button
+                                                type="button"
+                                                className={styles.copyBtn}
+                                                onClick={() => copyToClipboard(bankInfo.sortcode, 'sortcode')}
+                                                title="Copy"
+                                            >
+                                                {copiedField === 'sortcode' ? (
+                                                    <IoCheckmarkCircleOutline size={16} className={styles.copySuccess} />
+                                                ) : (
+                                                    <IoCopyOutline size={15} />
+                                                )}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.paymentAlert}>
+                                    <strong>Important:</strong> After completing your bank transfer, please send
+                                    the payment proof (screenshot or bank receipt) to our support team via email
+                                    or WhatsApp. Include your booking reference number in the transfer
+                                    description. Your booking will be confirmed once payment is verified.
+                                </div>
+                            </div>
+                        )}
+
+                        {paymentMethod === 'stripe' && (
+                            <div className={styles.paymentDetailBox}>
+                                <p className={styles.paymentDetailText}>
+                                    You will be securely redirected to Stripe&apos;s payment page to enter your
+                                    card details. We accept Visa, Mastercard, American Express and more.
+                                </p>
+                                <p className={styles.paymentDetailNote}>
+                                    Your card details are never stored on our servers. All transactions are
+                                    processed securely through Stripe.
+                                </p>
+                            </div>
+                        )}
+
+                        {paymentMethod === 'stripe' && (
+                            <div className={styles.stripeBar}>
+                                <div className={styles.stripeBarLeft}>
+                                    <FaLock size={14} />
+                                    <span>
+                                        Secured &amp; powered by <strong>Stripe</strong>
+                                    </span>
+                                </div>
+                                <div className={styles.trustBadges}>
+                                    <span className={styles.trustBadge}>
+                                        <CiCircleCheck size={14} /> 256-bit
+                                    </span>
+                                    <span className={styles.trustBadge}>
+                                        <CiCircleCheck size={14} /> PCI DSS Compliant
+                                    </span>
+                                    <span className={styles.trustBadge}>
+                                        <CiCircleCheck size={14} /> 3D Secure
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+
+                        {!paymentMethod && (
+                            <p className={styles.paymentHint}>
+                                Please select a payment method above to continue.
+                            </p>
+                        )}
+                    </div>
+                </div>
+
+                {/* Special Requests */}
+                <div className={styles.specialCard}>
+                    <div className={styles.specialHeader}>
+                        <h2 className={styles.specialTitle}>Special Requests</h2>
+                        <p className={styles.specialSubtitle}>
+                            List any operational requirements — child seats, oversized luggage, preferred
+                            cabin temperature.
+                        </p>
+                    </div>
+                    <hr className={styles.specialDivider} />
+                    <div className={styles.specialBody}>
+                        <textarea
+                            className={styles.specialTextarea}
+                            rows={5}
+                            name="requests"
+                            value={formData.requests}
+                            onChange={handleChange}
+                            placeholder="Write your customized request here..."
                         />
-                    </>
-                )}
-            </button>
+                    </div>
+                </div>
+
+                {/* Terms */}
+                <div className={styles.termsBar}>
+                    <div className={styles.termsCheck}>
+                        <input
+                            className={`${styles.termsCheckbox} ${errors.terms ? 'is-invalid' : ''}`}
+                            type="checkbox"
+                            name="terms"
+                            id="transfer-terms"
+                            checked={formData.terms}
+                            onChange={handleChange}
+                        />
+                        <label className={styles.termsLabel} htmlFor="transfer-terms">
+                            I agree to the{' '}
+                            <Link
+                                target="_blank"
+                                href="/terms-and-conditions"
+                                className={styles.termsLink}
+                            >
+                                terms and conditions
+                            </Link>
+                            . <span className={styles.termsRequired}>*</span>
+                        </label>
+                    </div>
+                    {errors.terms && <p className={styles.errorText}>{errors.terms}</p>}
+                </div>
+
+                <button
+                    type="button"
+                    onClick={handleCheckout}
+                    className={styles.confirmBtn}
+                    disabled={loading || !paymentMethod}
+                >
+                    {loading ? (
+                        'Processing...'
+                    ) : paymentMethod === 'bank_transfer' ? (
+                        <>
+                            <FaUniversity /> Reserve &amp; Get Bank Details
+                        </>
+                    ) : (
+                        <>
+                            Pay{' '}
+                            <PriceDisplay
+                                price={
+                                    Number(transferDetail?.quantity || 1) *
+                                    Number(transferDetail?.fare || 0) +
+                                    selectedExtras.reduce(
+                                        (sum, extra) => sum + Number(extra?.amount || 0),
+                                        0
+                                    )
+                                }
+                                currency={transferDetail?.currency}
+                            />
+                        </>
+                    )}
+                </button>
+            </div>
         </div>
     )
 }

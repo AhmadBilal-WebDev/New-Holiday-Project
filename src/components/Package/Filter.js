@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { MdFilterListAlt, MdRefresh } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
-import { Checkbox, RangeSlider, Select, Drawer } from "@mantine/core";
+import { RangeSlider, Select, Drawer } from "@mantine/core";
 import { useSearchParams, useRouter } from "next/navigation";
 import { DatePicker } from '@mantine/dates';
 import moment from 'moment';
@@ -79,7 +79,7 @@ export default function Filter() {
         setSelectedDurations(durationsFromURL || null);
         setSelectedDepartures(departuresFromURL || null);
         setSelectedPackageName(packageNameFromURL || null);
-        setSelectedRating(ratingFromURL);
+        setSelectedRating((ratingFromURL || []).map(String));
     }, [searchParams]);
 
     const convertToDisplay = (value) => {
@@ -217,12 +217,13 @@ export default function Filter() {
         setSelectedPackageName(value);
     };
 
-    const handleRatingChange = (event) => {
-        const updated = selectedRating.includes(event.target.value)
-            ? selectedRating.filter((d) => d !== event.target.value)
-            : [...selectedRating, event.target.value];
-        updateURL({ star_rating: updated });
+    const toggleRating = (value) => {
+        const rating = String(value);
+        const updated = selectedRating.includes(rating)
+            ? selectedRating.filter((d) => d !== rating)
+            : [...selectedRating, rating];
         setSelectedRating(updated);
+        updateURL({ star_rating: updated });
     };
 
     const handlePriceRangeChange = (value) => {
@@ -339,19 +340,34 @@ export default function Filter() {
 
     const renderStars = () => (
         <div className={styles.starsGroup}>
-            {STAR_OPTIONS.map((value) => (
-                <Checkbox
-                    key={value}
-                    onChange={handleRatingChange}
-                    checked={selectedRating.includes(value)}
-                    value={value}
-                    label={<StarLabel count={value} />}
-                />
-            ))}
+            {STAR_OPTIONS.map((value) => {
+                const checked = selectedRating.includes(String(value));
+                return (
+                    <div
+                        key={value}
+                        role="checkbox"
+                        aria-checked={checked}
+                        tabIndex={0}
+                        className={`${styles.starOption}${checked ? ` ${styles.starOptionChecked}` : ''}`}
+                        onClick={() => toggleRating(value)}
+                        onKeyDown={(event) => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                                event.preventDefault();
+                                toggleRating(value);
+                            }
+                        }}
+                    >
+                        <span className={`${styles.starCheck}${checked ? ` ${styles.starCheckOn}` : ''}`} aria-hidden="true">
+                            {checked ? '✓' : ''}
+                        </span>
+                        <StarLabel count={value} />
+                    </div>
+                );
+            })}
         </div>
     );
 
-    const renderPackageName = () => (
+    const renderPackageName = (extraProps = {}) => (
         <Select
             className={styles.select}
             searchable
@@ -361,6 +377,7 @@ export default function Filter() {
             onChange={handlePackageNameChange}
             placeholder="Select Package"
             styles={selectStyles}
+            {...extraProps}
         />
     );
 
@@ -539,16 +556,37 @@ export default function Filter() {
                 onClose={() => setActiveDrawer(null)}
                 title="Package Name"
                 position="bottom"
-                size="50%"
+                size="55%"
                 overlayProps={{ backgroundOpacity: 0.5, blur: 2 }}
                 radius="lg"
+                withinPortal
+                lockScroll
+                trapFocus={false}
                 styles={{
                     body: { overflow: 'visible' },
                     content: { overflow: 'visible' },
                 }}
             >
-                <div className={styles.drawerBody}>
-                    <div className={styles.drawerSection}>{renderPackageName()}</div>
+                <div
+                    className={styles.drawerBody}
+                    style={{ position: 'relative', zIndex: 1, touchAction: 'manipulation' }}
+                >
+                    <div className={styles.drawerSection}>
+                        {renderPackageName({
+                            withScrollArea: false,
+                            maxDropdownHeight: 160,
+                            styles: {
+                                input: { fontSize: 16, borderRadius: 999, minHeight: 48 },
+                            },
+                            comboboxProps: {
+                                withinPortal: false,
+                                zIndex: 10000,
+                                position: 'bottom-start',
+                                middlewares: { flip: false, shift: false },
+                                transitionProps: { duration: 0 },
+                            },
+                        })}
+                    </div>
                     {drawerFooter}
                 </div>
             </Drawer>
@@ -558,11 +596,17 @@ export default function Filter() {
                 onClose={() => setActiveDrawer(null)}
                 title="Stars"
                 position="bottom"
-                size="50%"
+                size="55%"
                 overlayProps={{ backgroundOpacity: 0.5, blur: 2 }}
                 radius="lg"
+                withinPortal
+                lockScroll
+                trapFocus={false}
             >
-                <div className={styles.drawerBody}>
+                <div
+                    className={styles.drawerBody}
+                    style={{ position: 'relative', zIndex: 1, touchAction: 'manipulation' }}
+                >
                     <div className={styles.drawerSection}>{renderStars()}</div>
                     {drawerFooter}
                 </div>

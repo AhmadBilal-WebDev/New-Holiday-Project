@@ -8,19 +8,40 @@
   border-radius: 20px !important;
   overflow: hidden;
   max-width: 720px;
+  width: 100%;
+}
+
+.modalInnerMobile {
+  align-items: flex-end !important;
+  padding: 0 !important;
+}
+
+.modalContentMobile {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  border-radius: 22px 22px 0 0 !important;
+  max-height: min(94dvh, 94vh) !important;
 }
 
 .modalBody {
   padding: 0 !important;
+  display: flex !important;
+  flex-direction: column;
   max-height: min(90vh, 860px);
-  overflow-y: auto;
+  overflow: hidden;
+}
+
+.modalContentMobile .modalBody {
+  max-height: min(94dvh, 94vh);
 }
 
 .header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.85rem;
+  flex-shrink: 0;
   padding: 1.15rem 1.25rem;
   background: var(--vd-header, #781035);
   color: #fff;
@@ -28,6 +49,7 @@
 
 .headerText {
   min-width: 0;
+  flex: 1;
 }
 
 .headerTitle {
@@ -44,6 +66,8 @@
   font-weight: 500;
   line-height: 1.35;
   opacity: 0.92;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .closeBtn {
@@ -66,6 +90,11 @@
 }
 
 .body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 1.15rem 1.25rem 1.35rem;
 }
 
@@ -101,6 +130,10 @@
 
 .section {
   margin-bottom: 1.25rem;
+}
+
+.section:last-child {
+  margin-bottom: 0.35rem;
 }
 
 .sectionTitle {
@@ -168,6 +201,7 @@
   font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .serviceGrid {
@@ -178,6 +212,7 @@
 }
 
 .serviceCard {
+  min-width: 0;
   padding: 0.85rem 0.95rem;
   border: 1px solid var(--vd-border, #eee8ec);
   border-radius: 14px;
@@ -196,6 +231,7 @@
   color: var(--vd-text, #131423);
   font-size: 0.88rem;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .routeRow {
@@ -230,6 +266,7 @@
   font-size: 0.92rem;
   font-weight: 700;
   line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .routeAddress {
@@ -237,6 +274,7 @@
   color: var(--vd-muted, #6b7280);
   font-size: 0.78rem;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .routeSwap {
@@ -284,7 +322,7 @@
 }
 
 .quantityBlock {
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .quantityLabel {
@@ -306,7 +344,7 @@
   background-repeat: no-repeat;
   background-position: right 1rem center;
   color: #4b5563;
-  font-size: 0.9rem;
+  font-size: 16px;
   font-weight: 500;
   appearance: none;
   outline: none;
@@ -318,10 +356,9 @@
 }
 
 .footer {
-  position: sticky;
-  bottom: 0;
+  flex-shrink: 0;
   z-index: 5;
-  padding: 0.85rem 1.25rem 1.15rem;
+  padding: 0.85rem 1.25rem calc(1.15rem + env(safe-area-inset-bottom, 0px));
   background: #fff;
   border-top: 1px solid var(--vd-border, #eee8ec);
 }
@@ -365,13 +402,25 @@
   font-size: 0.85rem;
 }
 
-@media (max-width: 767px) {
+/* Tablet */
+@media (max-width: 991.98px) {
   .modalContent {
-    border-radius: 16px !important;
+    max-width: min(640px, calc(100vw - 2rem));
+  }
+
+  .serviceGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile / bottom sheet */
+@media (max-width: 767.98px) {
+  .modalContent {
+    max-width: 100%;
   }
 
   .header {
-    padding: 1rem 1.05rem;
+    padding: 1rem 1rem 0.95rem;
   }
 
   .headerTitle {
@@ -382,23 +431,57 @@
     font-size: 0.8rem;
   }
 
+  .closeBtn {
+    width: 34px;
+    height: 34px;
+  }
+
   .body {
-    padding: 1rem 1.05rem 1.15rem;
+    padding: 1rem 1rem 1.1rem;
   }
 
   .imageWrap {
-    min-height: 170px;
+    min-height: 160px;
     margin-bottom: 1rem;
-    padding: 1rem 0.75rem;
+    padding: 0.9rem 0.65rem;
+    border-radius: 16px;
   }
 
   .image {
-    max-height: 180px;
+    max-height: 160px;
+  }
+
+  .imagePlaceholder {
+    min-height: 120px;
+    font-size: 2.4rem;
+  }
+
+  .section {
+    margin-bottom: 1.05rem;
+  }
+
+  .sectionTitle {
+    font-size: 0.98rem;
+  }
+
+  .description {
+    font-size: 0.86rem;
   }
 
   .specsGrid {
-    gap: 0.75rem;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
     padding: 0.85rem;
+    border-radius: 14px;
+  }
+
+  .specIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .specValue {
+    font-size: 0.86rem;
   }
 
   .serviceGrid {
@@ -407,25 +490,48 @@
 
   .routeRow {
     grid-template-columns: 1fr;
-    gap: 0.55rem;
+    gap: 0.5rem;
   }
 
   .routeSwap {
     transform: rotate(90deg);
-    margin: 0.1rem auto;
+    margin: 0.05rem auto;
+    width: 32px;
+    height: 32px;
+  }
+
+  .routeCard {
+    padding: 0.8rem 0.9rem;
   }
 
   .footer {
-    padding: 0.75rem 1.05rem 1rem;
+    padding: 0.75rem 1rem calc(0.95rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .bookBtn {
+    min-height: 48px;
+    font-size: 0.95rem;
+  }
+
+  .quantitySelect {
+    font-size: 16px;
   }
 }
 
 @media (max-width: 420px) {
-  .specsGrid {
-    grid-template-columns: 1fr;
+  .headerTitle {
+    font-size: 1.02rem;
   }
 
-  .headerTitle {
-    font-size: 1.05rem;
+  .headerSubtitle {
+    font-size: 0.76rem;
+  }
+
+  .body {
+    padding: 0.9rem 0.9rem 1rem;
+  }
+
+  .footer {
+    padding: 0.7rem 0.9rem calc(0.9rem + env(safe-area-inset-bottom, 0px));
   }
 }

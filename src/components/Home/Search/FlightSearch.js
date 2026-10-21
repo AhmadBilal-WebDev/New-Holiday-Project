@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Select, Popover } from "@mantine/core";
 import { DateInput, DatePickerInput } from "@mantine/dates";
 import "@mantine/dates/styles.css";
@@ -31,6 +31,7 @@ const airportToLocation = (code) => {
 
 export default function FlightSearch({ onSearch, variant = 'home' }) {
     const isListing = variant === 'listing';
+    const multiCityActionsRef = useRef(null);
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const router = useRouter();
@@ -595,6 +596,13 @@ export default function FlightSearch({ onSearch, variant = 'home' }) {
                 ...multiCityFlights,
                 { from: lastTo, to: '', departureDate: null },
             ]);
+            // Keep Add/Search visible after a new leg expands the mobile panel
+            requestAnimationFrame(() => {
+                multiCityActionsRef.current?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                });
+            });
         } else {
             notifications.show({
                 title: 'Limit Reached',
@@ -928,7 +936,7 @@ export default function FlightSearch({ onSearch, variant = 'home' }) {
                     ))}
                 </select>
             </div>
-            <button onClick={() => setPopoverOpened(false)} type="button" className="btn mt-3 w-100 btn-outline-success">Done</button>
+            <button onClick={() => setPopoverOpened(false)} type="button" className="btn mt-3 w-100" style={{ backgroundColor: '#e7247a', color: '#fff' }}>Done</button>
         </div>
     );
 
@@ -1138,7 +1146,7 @@ export default function FlightSearch({ onSearch, variant = 'home' }) {
                                     </div>
                                 </div>
                             ))}
-                            <div className={listingStyles.multiCityActions}>
+                            <div ref={multiCityActionsRef} className={listingStyles.multiCityActions}>
                                 <button
                                     type="button"
                                     className={listingStyles.addFlightBtn}

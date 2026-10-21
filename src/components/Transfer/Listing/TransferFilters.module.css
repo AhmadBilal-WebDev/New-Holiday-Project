@@ -131,6 +131,11 @@
   width: 100%;
 }
 
+.resetDrawer {
+  width: 100%;
+  margin-top: 0.85rem;
+}
+
 .resetBtn {
   display: inline-flex;
   align-items: center;
@@ -138,29 +143,31 @@
   gap: 0.5rem;
   width: 100%;
   min-height: 48px;
-  padding: 0.65rem 1.25rem;
-  border: 1.5px solid var(--tf-pink);
+  padding: 0.8rem 1.15rem;
+  border: 1.5px solid rgba(231, 36, 122, 0.28);
   border-radius: 999px;
-  background: transparent;
+  background: #fff;
   color: var(--tf-pink);
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 700;
   cursor: pointer;
   transition:
     background 0.2s ease,
     color 0.2s ease,
+    border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
 .resetBtn:hover {
   background: var(--tf-pink-soft);
+  border-color: var(--tf-pink);
   color: var(--tf-pink);
   box-shadow: 0 6px 16px rgba(231, 36, 122, 0.12);
 }
 
 .resetIcon {
   flex-shrink: 0;
-  font-size: 1.05rem;
+  color: var(--tf-pink);
 }
 
 /* ── Mobile filter pills ── */
@@ -216,24 +223,6 @@
   z-index: 1;
 }
 
-.drawerReset {
-  display: block;
-  width: 100%;
-  text-align: right;
-  margin-top: 0.75rem;
-  padding: 0;
-  border: none;
-  background: none;
-  color: #e7247a;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.drawerReset:hover {
-  text-decoration: underline;
-}
-
 .drawerFooter {
   border-top: 1px solid #eceae5;
   padding-top: 1rem;
@@ -245,14 +234,16 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-height: 48px;
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 999px;
   background: #e7247a;
   color: #fff;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 8px 20px -10px rgba(231, 36, 122, 0.65);
   transition: background 0.2s ease;
 }
 

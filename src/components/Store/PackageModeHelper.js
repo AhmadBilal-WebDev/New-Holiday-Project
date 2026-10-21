@@ -272,7 +272,7 @@ export function PackageModeBanner({ serviceName = "service" }) {
   // return (
   //   <div
   //     style={{
-  //       background: "linear-gradient(135deg, #E7247A 0%, #006666 100%)",
+  //       background: "linear-gradient(135deg, #E7247A 0%, #E7247A 100%)",
   //       color: "white",
   //       padding: "16px 0",
   //       marginBottom: "20px",

@@ -18,12 +18,13 @@ export default function BlogPagination({ totalPages, currentPage, total, from, t
   return (
     <div className="col-12 mt-4">
       <div className="d-flex justify-content-center align-items-center flex-column gap-2">
-        <Pagination 
+        <Pagination
           total={totalPages}
           value={currentPage}
           onChange={handlePageChange}
           size="md"
           radius="md"
+          color="#e7247a"
           withEdges
         />
         {total > 0 && (

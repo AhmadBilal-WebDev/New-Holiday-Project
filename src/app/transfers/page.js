@@ -189,14 +189,14 @@ function TransferPageContent() {
                 <>
                     <div className='container mb-5 mt-3'>
                         <TransferListProvider transfers={transfers}>
-                            {/* <div className='row g-3 mb-3 d-none d-md-flex'>
+                            <div className='row g-3 mb-3 d-none d-md-flex'>
                                 <div className='col-md-3'>
                                     <TransferInfo searchInfo={params} />
                                 </div>
                                 <div className='col-md-9'>
                                     <TransferRouteMap searchParams={params} />
                                 </div>
-                            </div> */}
+                            </div>
 
                             <Index searchParams={params} />
                         </TransferListProvider>

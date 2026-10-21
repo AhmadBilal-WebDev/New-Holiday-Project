@@ -11,13 +11,14 @@
   display: grid;
   grid-template-columns: 1fr 1.05fr;
   gap: 2.75rem;
-  align-items: stretch;
+  align-items: start;
 }
 
 /* ─── Left column ─────────────────────────────────────────── */
 .left {
   display: flex;
   flex-direction: column;
+  gap: 0;
   color: #ffffff;
   min-width: 0;
 }
@@ -62,16 +63,16 @@
   line-height: 1.65;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.92);
-  margin: 0 0 auto;
+  margin: 0 0 1.75rem;
   max-width: 440px;
-  padding-bottom: 2.5rem;
+  padding-bottom: 0;
 }
 
 .supportRow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .supportItem {
@@ -223,7 +224,29 @@
 
 .captchaWrap {
   margin-top: 4px;
-  overflow: auto;
+  overflow: hidden;
+  max-width: 100%;
+  line-height: 0;
+}
+
+.captchaWrap :global(> div) {
+  max-width: 100%;
+  overflow: hidden !important;
+}
+
+.captchaWrap :global(iframe) {
+  max-width: 100%;
+}
+
+.formError {
+  margin: 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 .submitBtn {
@@ -277,7 +300,7 @@
   }
 
   .subtitle {
-    padding-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
     max-width: none;
   }
 
@@ -308,7 +331,7 @@
 
   .subtitle {
     font-size: 15px;
-    padding-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .row {

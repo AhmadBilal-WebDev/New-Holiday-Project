@@ -2749,6 +2749,14 @@ a {
     background-repeat: no-repeat !important;
 }
 
+/* One tick only — hide Mantine's built-in check icon */
+.flight-listing-page .mantine-Checkbox-icon,
+.flight-listing-page [class*="Checkbox-icon"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
 .flight-listing-page .mantine-Slider-bar,
 .flight-listing-page [class*="Slider-bar"] {
     background-color: #e7247a !important;
@@ -4527,10 +4535,22 @@ a {
     transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Keep multi-city Add/Search above the results section (not clipped under it) */
+.msb-collapse--open {
+    overflow: visible;
+}
+
+.msb-mobile-search--open {
+    position: relative;
+    z-index: 20;
+}
+
 .msb-collapse-inner {
     background: #fef5f7;
     border-bottom: 1px solid #f3d6e0;
     padding: 0;
+    position: relative;
+    z-index: 5;
 }
 
 @media (max-width: 400px) {

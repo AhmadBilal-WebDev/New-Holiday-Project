@@ -4,7 +4,7 @@ import { MdRefresh } from 'react-icons/md'
 import { useTransferList } from '../TransferListingContext'
 import styles from '../TransferFilters.module.css'
 
-export default function ResetFilter({ setActiveDrawer }) {
+export default function ResetFilter({ setActiveDrawer, variant = 'sidebar' }) {
     const { resetFilters } = useTransferList();
 
     const handleReset = () => {
@@ -13,10 +13,10 @@ export default function ResetFilter({ setActiveDrawer }) {
     };
 
     return (
-        <div className={styles.resetWrap}>
+        <div className={variant === 'drawer' ? styles.resetDrawer : styles.resetWrap}>
             <button type="button" onClick={handleReset} className={styles.resetBtn}>
                 <MdRefresh className={styles.resetIcon} size={18} aria-hidden="true" />
-                Reset All Filters
+                Reset filters
             </button>
         </div>
     );

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./RecentBlogs.module.css";
 
-export default async function RecentBlogs() {
+export default async function RecentBlogs({ currentSlug }) {
   let posts = [];
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, {
@@ -10,9 +10,13 @@ export default async function RecentBlogs() {
     });
     if (res.ok) {
       const data = await res.json();
-      posts = data?.Content?.posts?.slice(0, 3) ?? [];
+      posts = (data?.Content?.posts || [])
+        .filter((p) => p?.slug && p.slug !== currentSlug)
+        .slice(0, 3);
     }
-  } catch {}
+  } catch {
+    /* ignore */
+  }
 
   if (posts.length === 0) return null;
 
@@ -20,28 +24,48 @@ export default async function RecentBlogs() {
     <section className={styles.section}>
       <div className="container">
         <div className={styles.header}>
-          <h2 className={styles.heading}>Related Articles</h2>
-          <Link href="/blogs" className={styles.browseBtn}>Browse All Articles</Link>
+          <div>
+            <h2 className={styles.heading}>Related Articles</h2>
+            <p className={styles.subheading}>
+              More guides and tips for your journey.
+            </p>
+          </div>
+          <Link href="/blogs" className={styles.browseBtn}>
+            Browse All Articles
+          </Link>
         </div>
+
         <div className={styles.grid}>
           {posts.map((item, i) => (
-            <div key={i} className={styles.card}>
-              <div className={styles.imgWrap}>
-                <Image
-                  src={item.thumbnail?.url || "/assets/images/blog1.webp"}
-                  alt={item.title || "Blog"}
-                  fill
-                  className={styles.img}
-                  sizes="(max-width: 576px) 100vw, (max-width: 900px) 50vw, 33vw"
-                />
-              </div>
-              <div className={styles.body}>
-                <span className={styles.category}>{item.category?.name || "Company News"}</span>
-                <h3 className={styles.title}>
-                  <Link href={`/blogs/${item.slug}`}>{item.title}</Link>
-                </h3>
-              </div>
-            </div>
+            <article key={item?.id || item?.slug || i} className={styles.card}>
+              <Link href={`/blogs/${item.slug}`} className={styles.cardLink}>
+                <div className={styles.imgWrap}>
+                  {item.thumbnail?.url ? (
+                    <Image
+                      src={item.thumbnail.url}
+                      alt={item.title || "Blog"}
+                      fill
+                      className={styles.img}
+                      sizes="(max-width: 576px) 100vw, (max-width: 900px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <div className={styles.imgFallback} />
+                  )}
+                  <span className={styles.category}>
+                    {item.category?.name || "Guides"}
+                  </span>
+                </div>
+                <div className={styles.body}>
+                  <h3 className={styles.title}>{item.title}</h3>
+                  {(item?.excerpt || item?.seo?.meta_description) && (
+                    <p className={styles.excerpt}>
+                      {item?.seo?.meta_description || item?.excerpt}
+                    </p>
+                  )}
+                  <span className={styles.readMore}>Read More</span>
+                </div>
+              </Link>
+            </article>
           ))}
         </div>
       </div>

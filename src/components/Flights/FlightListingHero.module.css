@@ -15,14 +15,19 @@
 
 .headline {
   margin: 0 0 0.65rem;
-  max-width: 18ch;
+  max-width: 100%;
   font-family: Outfit, Inter, sans-serif;
   font-weight: 700;
+  /* font-size: clamp(1.75rem, 2.4vw + 0.6rem, 2.75rem); */
   font-size: 60px;
-  line-height: 63px;
-  letter-spacing: -1.2px;
-  vertical-align: middle;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   color: #131423;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-wrap: balance;
 }
 
 .headlineAccent {

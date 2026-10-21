@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 import moment from "moment";
 import { GiGearStickPattern } from "react-icons/gi";
@@ -8,6 +9,7 @@ import { GoPerson } from "react-icons/go";
 import { PiSuitcaseRolling } from "react-icons/pi";
 import { MdCalendarMonth } from "react-icons/md";
 import { FaCar, FaLocationDot, FaClock } from "react-icons/fa6";
+import { FaHome } from "react-icons/fa";
 import { Tooltip } from "@mantine/core";
 import { useTransferStore } from "@/components/Store/TransferStore";
 import { useRouter } from "next/navigation";
@@ -58,20 +60,21 @@ export default function TransferCard({ transfers, searchParams }) {
     !selectedData?.transfer
   ) {
     return (
-      <div className="container">
-        <div className="text-center my-5">
-          <Image
-            src="/images/search-not-found.svg"
-            alt="No Transfers Found"
-            className="w-100"
-            width={150}
-            height={200}
-          />
-          <h4 className="mt-3">No Transfer Found</h4>
-          <p className="text-muted">
-            No transfers found matching your criteria. Try adjusting your
-            filters.
-          </p>
+      <div className={styles.emptyState} role="status">
+        <div className={styles.emptyIconWrap} aria-hidden="true">
+          <FaCar />
+        </div>
+        <h3 className={styles.emptyTitle}>No Transfers Found</h3>
+        <p className={styles.emptyText}>
+          We couldn&apos;t find any transfers matching your search criteria.
+          Try adjusting your filters or search again with different locations
+          or dates.
+        </p>
+        <div className={styles.emptyActions}>
+          <Link href="/" className={styles.emptyBtnPrimary}>
+            <FaHome size={14} aria-hidden />
+            Go Back Home
+          </Link>
         </div>
       </div>
     );

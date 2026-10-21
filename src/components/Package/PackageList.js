@@ -3,17 +3,13 @@ import React, { useEffect, useMemo, useState } from 'react'
 import PackageCard from './PackageCard';
 import PackageCardLoader from '../Loader/PackageCardLoader';
 import PackageSearchLoader from '../Loader/PackageSearchLoader';
-import { useSearchParams, useParams } from "next/navigation";
+import { useSearchParams, useParams, usePathname, useRouter } from "next/navigation";
 import PackagePagination from './PackagePagination';
 import Link from 'next/link';
-import { FaHome } from 'react-icons/fa';
-import { Playfair } from 'next/font/google';
+import { FaHome, FaFilter, FaBoxOpen } from 'react-icons/fa';
 import Filter from './Filter';
-
-const playfair = Playfair({
-    weight: '700',
-    subsets: ['latin']
-})
+import styles from './PackageList.module.css';
+import TopContact from '../Home/TopContact/TopContact';
 
 function formatCategoryLabel(slug) {
     if (!slug) return 'packages';
@@ -26,10 +22,13 @@ function formatCategoryLabel(slug) {
 export default function PackageList({ category_slug }) {
     const searchParams = useSearchParams();
     const params = useParams();
+    const pathname = usePathname();
+    const router = useRouter();
     const [packageResponse, setPackageResponse] = useState({});
     const [packageList, setPackageList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [progress, setProgress] = useState(0);
+    const hasFilters = Boolean(searchParams?.toString());
 
     const activeSlug = category_slug === 'umrah-packages'
         ? category_slug
@@ -117,14 +116,39 @@ export default function PackageList({ category_slug }) {
                     ) : (
                         <div>
                             {packageList.length === 0 ? (
-                                <div className='text-center packge-card-notfound'>
-                                    <h3 className={playfair.className}>No Packages Found</h3>
-                                    <p>We couldn’t find any packages matching your search criteria. Try adjusting your filters or search again with different dates.</p>
-                                    <Link href='/'>
-                                        <button className='btn btn-success mx-1'>
-                                            <FaHome /> Go Back Home
-                                        </button>
-                                    </Link>
+                                <div className={styles.emptyState} role="status">
+                                    <div className={styles.emptyIconWrap} aria-hidden="true">
+                                        <FaBoxOpen />
+                                    </div>
+                                    <h3 className={styles.emptyTitle}>No Packages Found</h3>
+                                    <p className={styles.emptyText}>
+                                        We couldn&apos;t find any packages matching your search
+                                        criteria. Try adjusting your filters or search again with
+                                        different dates.
+                                    </p>
+                                    <div className={styles.emptyActions}>
+                                        {hasFilters ? (
+                                            <button
+                                                type="button"
+                                                className={styles.emptyBtnPrimary}
+                                                onClick={() => router.push(pathname)}
+                                            >
+                                                <FaFilter size={13} aria-hidden />
+                                                Clear Filters
+                                            </button>
+                                        ) : null}
+                                        <Link
+                                            href="/"
+                                            className={
+                                                hasFilters
+                                                    ? styles.emptyBtnOutline
+                                                    : styles.emptyBtnPrimary
+                                            }
+                                        >
+                                            <FaHome size={14} aria-hidden />
+                                            Go Back Home
+                                        </Link>
+                                    </div>
                                 </div>
                             ) : (
                                 <div>
@@ -143,6 +167,7 @@ export default function PackageList({ category_slug }) {
                         </div>
                     )}
                 </div>
+                <TopContact />
             </div>
         </div>
     )

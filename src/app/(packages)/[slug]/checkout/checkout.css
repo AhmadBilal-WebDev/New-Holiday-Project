@@ -903,9 +903,9 @@
 .summary-total-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.75rem;
-    padding: 0.85rem 0 0.25rem;
+    padding: 0.85rem 0 1.1rem;
     background: transparent;
     border-top: 1px solid var(--sum-pink);
     margin: 0.65rem 0 0;
@@ -916,6 +916,18 @@
     font-size: 1rem;
     font-weight: 700;
     color: var(--sum-text);
+    flex-shrink: 0;
+    padding-top: 0.15rem;
+}
+
+.summary-total-row .total-amount-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.15rem;
+    min-width: 0;
+    max-width: 65%;
+    text-align: right;
 }
 
 .summary-total-row .total-value {
@@ -923,17 +935,18 @@
     font-weight: 800;
     color: var(--sum-pink);
     letter-spacing: -0.02em;
-    white-space: nowrap;
+    line-height: 1.2;
+    word-break: break-word;
 }
 
 .summary-tax-note {
+    display: block;
     font-size: 0.74rem;
     color: var(--sum-muted);
     text-align: right;
-    padding: 0.15rem 0 1.1rem;
-    background: transparent;
+    line-height: 1.35;
     margin: 0;
-    width: 100%;
+    padding: 0;
 }
 
 /* Cancellation */
@@ -1064,8 +1077,26 @@
         font-size: 1rem;
     }
 
+    .summary-total-row {
+        flex-wrap: nowrap;
+        gap: 0.5rem;
+        padding: 0.75rem 0 1rem;
+    }
+
+    .summary-total-row .total-label {
+        font-size: 0.95rem;
+    }
+
+    .summary-total-row .total-amount-wrap {
+        max-width: 70%;
+    }
+
     .summary-total-row .total-value {
-        font-size: 1.12rem;
+        font-size: 1.05rem;
+    }
+
+    .summary-tax-note {
+        font-size: 0.68rem;
     }
 
     .summary-room-block {
@@ -1279,17 +1310,6 @@
 
     .checkout-form-card {
         padding: 1.25rem;
-    }
-
-    .summary-total-row {
-        margin: 0 -1.25rem 0;
-        width: calc(100% + 2.5rem);
-    }
-
-    .summary-tax-note {
-        margin: 0 -1.25rem 0;
-        padding: 0.25rem 1rem 1.25rem;
-        width: calc(100% + 2.5rem);
     }
 
     .activity-location-rating {

@@ -8,7 +8,7 @@ import {
   FaEnvelope,
   FaShieldAlt,
   FaUser,
-  FaPhoneAlt,
+  FaTag,
   FaPaperPlane,
 } from 'react-icons/fa';
 import { HiChatBubbleLeftRight } from 'react-icons/hi2';
@@ -43,14 +43,14 @@ const SUPPORT_ITEMS = [
   {
     id: 2,
     icon: FaEnvelope,
-    title: 'Expert Support',
-    text: "We're here to help you",
+    title: 'Quick Replies',
+    text: 'We respond within 24 hours',
   },
   {
     id: 3,
     icon: FaShieldAlt,
-    title: 'Expert Support',
-    text: "We're here to help you",
+    title: 'Secure & Private',
+    text: 'Your details stay safe',
   },
 ];
 
@@ -59,15 +59,18 @@ export default function TopContact() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState(null);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: false }));
+    setErrorMsg('');
   };
 
   const handleCaptcha = (token) => {
     setCaptchaToken(token);
+    setErrorMsg('');
   };
 
   const validate = () => {
@@ -89,15 +92,26 @@ export default function TopContact() {
 
     if (!validate()) return;
 
+    if (!captchaToken) {
+      setErrorMsg('Please verify captcha');
+      return;
+    }
+
     try {
       setLoading(true);
+      setErrorMsg('');
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
       });
 
       if (!res.ok) throw new Error('Failed to submit');
@@ -196,15 +210,14 @@ export default function TopContact() {
 
               <div className={styles.field}>
                 <div className={`${styles.inputWrap} ${errors.subject ? styles.inputError : ''}`}>
-                  <FaPhoneAlt className={styles.inputIcon} aria-hidden="true" />
+                  <FaTag className={styles.inputIcon} aria-hidden="true" />
                   <input
-                    type="tel"
+                    type="text"
                     name="subject"
-                    placeholder="Phone Number"
+                    placeholder="Subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    autoComplete="tel"
-                    aria-label="Phone Number"
+                    aria-label="Subject"
                   />
                 </div>
               </div>
@@ -227,12 +240,14 @@ export default function TopContact() {
                 </div>
               </div>
 
-              {/* <div className={styles.captchaWrap}>
+              <div className={styles.captchaWrap}>
                 <ReCAPTCHA
                   sitekey="6LdH_IQsAAAAAP8J5zF09QteWVZjAjnWSJjrW64J"
                   onChange={handleCaptcha}
                 />
-              </div> */}
+              </div>
+
+              {errorMsg ? <p className={styles.formError}>{errorMsg}</p> : null}
 
               <button type="submit" className={styles.submitBtn} disabled={loading}>
                 <FaPaperPlane aria-hidden="true" />

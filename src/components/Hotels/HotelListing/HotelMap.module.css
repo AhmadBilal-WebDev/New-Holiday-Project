@@ -189,7 +189,7 @@
 }
 
 .filterApplyBtn:hover {
-  background: #006666;
+  background: #E7247A;
 }
 
 .splitLayout {
@@ -496,7 +496,7 @@
 }
 
 .listCardCta:hover {
-  background: #006666;
+  background: #E7247A;
   transform: translateY(-1px);
   color: #fff !important;
 }
@@ -811,7 +811,7 @@
 }
 
 .floatingCardCta:hover {
-  background: #006666;
+  background: #E7247A;
   color: #fff !important;
 }
 

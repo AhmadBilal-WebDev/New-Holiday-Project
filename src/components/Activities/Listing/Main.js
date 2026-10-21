@@ -4,11 +4,13 @@ import { FaSearch, FaMapMarkerAlt, FaStar, FaCalendarAlt } from "react-icons/fa"
 import { useJsApiLoader } from "@react-google-maps/api";
 import { IoCheckmarkCircle, IoLocationSharp, IoPeopleOutline, IoTimeOutline } from "react-icons/io5";
 import { HiTicket } from "react-icons/hi2";
+import { MdEdit, MdLocationOn } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import moment from "moment";
 import { DatePicker } from '@mantine/dates';
+import { useMediaQuery } from '@mantine/hooks';
 import PriceDisplay from "@/components/Currency/PriceDisplay";
 import { useCurrency } from "@/util/currency";
 import Filter, {
@@ -104,6 +106,7 @@ function SuggestionThumbnail({ label, photoUrl }) {
 function Main() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const isMobile = useMediaQuery('(max-width: 767.98px)', false);
   const { isLoaded: isGoogleLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries: GOOGLE_MAPS_LIBRARIES,
@@ -120,6 +123,7 @@ function Main() {
   const [calendarViewDate, setCalendarViewDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const calendarRef = useRef(null);
   const searchRef = useRef(null);
@@ -376,6 +380,7 @@ function Main() {
   const handleHeroSearch = () => {
     if (!selectedLocation) {
       setShowSearchDropdown(true);
+      setShowMobileSearch(true);
       return;
     }
 
@@ -388,7 +393,18 @@ function Main() {
     }
     params.set('date', moment(selectedDate).format('YYYY-MM-DD'));
     router.push(`?${params.toString()}`);
+    setShowMobileSearch(false);
+    setShowSearchDropdown(false);
+    setShowCalendar(false);
   };
+
+  const mobileSummaryTitle =
+    selectedLocation?.label ||
+    (searchParams.get('city') ? humanizeSlug(searchParams.get('city')) : 'Search Activities');
+
+  const mobileSummaryDate = moment(selectedDate).isValid()
+    ? moment(selectedDate).format('DD MMM YYYY')
+    : '';
 
 
 
@@ -546,199 +562,253 @@ function Main() {
     selectedLocation?.label ||
     (searchParams.get('city') ? humanizeSlug(searchParams.get('city')) : '');
 
+  const renderSearchBar = (inputId = 'activity-where-to') => (
+    <div className={styles.searchContainer}>
+      <div className={styles.searchField} ref={searchRef}>
+        <span className={styles.fieldIcon} aria-hidden="true">
+          <FaMapMarkerAlt />
+        </span>
+        <div className={styles.fieldBody}>
+          <label className={styles.fieldLabel} htmlFor={inputId}>
+            Where To?
+          </label>
+          <input
+            id={inputId}
+            type="text"
+            placeholder="Search destinations, cities..."
+            className={styles.searchInput}
+            value={searchQuery}
+            autoComplete="off"
+            onChange={handleSearchInputChange}
+            onFocus={() => setShowSearchDropdown(true)}
+          />
+        </div>
+        {selectedLocation && (
+          <button
+            type="button"
+            className={styles.clearButton}
+            onClick={() => {
+              setSelectedLocation(null);
+              setSearchQuery('');
+              setGooglePredictions([]);
+            }}
+            title="Clear selection"
+            aria-label="Clear selection"
+          >
+            ✕
+          </button>
+        )}
+        {showSearchDropdown && (
+          <div className={`${styles.searchDropdown} activity-search-dropdown`}>
+            <div className={styles.searchDropdownHeader}>
+              <span>
+                {selectedLocation && !isActivelyTyping
+                  ? 'Selected Location'
+                  : isActivelyTyping
+                    ? (isGoogleLoading ? 'Searching...' : 'Search Results')
+                    : 'Popular Destinations'}
+              </span>
+            </div>
+            <ul className={styles.suggestionsList}>
+              {selectedLocation && !isActivelyTyping && (
+                <>
+                  {renderDestinationItem(selectedLocation, true)}
+                  {hasLocalResults && (
+                    <div className={styles.divider}>
+                      <span>Other Destinations</span>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {isActivelyTyping && hasLocalResults && (
+                <>
+                  <li className={styles.searchSectionLabel}>Our Destinations</li>
+                  {filteredDestinations.map((destination) =>
+                    renderDestinationItem(destination)
+                  )}
+                </>
+              )}
+
+              {hasGoogleResults && (
+                <>
+                  <li className={styles.searchSectionLabel}>
+                    {isGoogleLoading ? '...' : ''}
+                  </li>
+                  {googlePredictions.map((prediction) => {
+                    const mainText = prediction.structured_formatting?.main_text || prediction.description;
+                    const secondaryText = prediction.structured_formatting?.secondary_text || '';
+
+                    return (
+                      <li
+                        key={prediction.place_id}
+                        className={styles.suggestionItem}
+                        onClick={() => handleGoogleSelect(prediction)}
+                      >
+                        <SuggestionThumbnail
+                          label={mainText}
+                          photoUrl={photoCache[prediction.place_id]}
+                        />
+                        <div className={styles.suggestionContent}>
+                          <span className={styles.suggestionTitle}>{mainText}</span>
+                          <span className={styles.suggestionCategory}>{secondaryText}</span>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </>
+              )}
+
+              {isActivelyTyping && !hasLocalResults && isGoogleLoading && !hasGoogleResults && (
+                <li className={styles.loadingSuggestions}>Searching locations...</li>
+              )}
+
+              {showNoResults && (
+                <div className={styles.noResults}>
+                  <p>No destinations found for &quot;{searchQuery}&quot;</p>
+                  <small>Try a different city or country name</small>
+                </div>
+              )}
+
+              {!isActivelyTyping && filteredDestinations.map((destination) =>
+                renderDestinationItem(destination)
+              )}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <div className={styles.fieldDivider} aria-hidden="true" />
+
+      <div className={styles.datePickerWrapper} ref={calendarRef}>
+        <button
+          type="button"
+          className={styles.datePickerButton}
+          onClick={() => {
+            if (!showCalendar) {
+              setCalendarViewDate(selectedDate);
+            }
+            setShowCalendar(!showCalendar);
+          }}
+        >
+          <span className={styles.fieldIcon} aria-hidden="true">
+            <FaCalendarAlt />
+          </span>
+          <span className={styles.fieldBody}>
+            <span className={styles.fieldLabel}>Dates</span>
+            <span className={styles.dateValue}>
+              {moment(selectedDate).format('DD-MM-YYYY')}
+            </span>
+          </span>
+        </button>
+        {showCalendar && (
+          <div className={styles.calendarPopup}>
+            <div className={styles.calendarHeader}>
+              <h5 className={styles.calendarSelectedDate}>
+                WHEN ARE YOU GOING?
+              </h5>
+            </div>
+            <DatePicker
+              value={selectedDate}
+              date={calendarViewDate}
+              onDateChange={setCalendarViewDate}
+              onChange={(date) => {
+                handleDateChange(date);
+              }}
+              minDate={new Date()}
+              styles={{
+                calendarHeader: {
+                  maxWidth: '100%',
+                },
+                day: {
+                  borderRadius: '50%',
+                  height: '40px',
+                  fontSize: '14px',
+                },
+              }}
+            />
+          </div>
+        )}
+      </div>
+
+      <div className={styles.searchAction}>
+        <button
+          type="button"
+          className={styles.searchBtn}
+          onClick={handleHeroSearch}
+        >
+          <FaSearch size={14} aria-hidden="true" />
+          Search
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <>
-      {/* Hero Section */}
-      <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <div className={styles.heroIntro}>
-            <h1 className={styles.heroTitle}>Where Is Your Next Dream Place?</h1>
-            <p className={styles.heroSubtitle}>
-              Find Exclusive Genius Rewards In Every Corner Of The World!
-            </p>
+      {isMobile ? (
+        <div>
+          <div className="msb-bar">
+            <div
+              className="msb-bar__inner"
+              onClick={() => setShowMobileSearch((prev) => !prev)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setShowMobileSearch((prev) => !prev);
+                }
+              }}
+            >
+              <div className="msb-icon" aria-hidden="true">
+                <MdLocationOn size={20} />
+              </div>
+              <div className="msb-info">
+                <div className="msb-title">{mobileSummaryTitle}</div>
+                <div className="msb-subtitle">
+                  {selectedLocation?.country || searchParams.get('country') || 'Activities'}
+                  {mobileSummaryDate && (
+                    <span className="msb-subtitle-date">· {mobileSummaryDate}</span>
+                  )}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMobileSearch((prev) => !prev);
+                }}
+                className="msb-modify-btn"
+              >
+                <MdEdit size={14} />
+                {showMobileSearch ? 'Close' : 'Modify'}
+              </button>
+            </div>
           </div>
 
-          <div className={styles.searchContainer}>
-            <div className={styles.searchField} ref={searchRef}>
-              <span className={styles.fieldIcon} aria-hidden="true">
-                <FaMapMarkerAlt />
-              </span>
-              <div className={styles.fieldBody}>
-                <label className={styles.fieldLabel} htmlFor="activity-where-to">
-                  Where To?
-                </label>
-                <input
-                  id="activity-where-to"
-                  type="text"
-                  placeholder="Search destinations, cities..."
-                  className={styles.searchInput}
-                  value={searchQuery}
-                  autoComplete="off"
-                  onChange={handleSearchInputChange}
-                  onFocus={() => setShowSearchDropdown(true)}
-                />
-              </div>
-              {selectedLocation && (
-                <button
-                  type="button"
-                  className={styles.clearButton}
-                  onClick={() => {
-                    setSelectedLocation(null);
-                    setSearchQuery('');
-                    setGooglePredictions([]);
-                  }}
-                  title="Clear selection"
-                  aria-label="Clear selection"
-                >
-                  ✕
-                </button>
-              )}
-              {showSearchDropdown && (
-                <div className={`${styles.searchDropdown} activity-search-dropdown`}>
-                  <div className={styles.searchDropdownHeader}>
-                    <span>
-                      {selectedLocation && !isActivelyTyping
-                        ? 'Selected Location'
-                        : isActivelyTyping
-                          ? (isGoogleLoading ? 'Searching...' : 'Search Results')
-                          : 'Popular Destinations'}
-                    </span>
-                  </div>
-                  <ul className={styles.suggestionsList}>
-                    {selectedLocation && !isActivelyTyping && (
-                      <>
-                        {renderDestinationItem(selectedLocation, true)}
-                        {hasLocalResults && (
-                          <div className={styles.divider}>
-                            <span>Other Destinations</span>
-                          </div>
-                        )}
-                      </>
-                    )}
-
-                    {isActivelyTyping && hasLocalResults && (
-                      <>
-                        <li className={styles.searchSectionLabel}>Our Destinations</li>
-                        {filteredDestinations.map((destination) =>
-                          renderDestinationItem(destination)
-                        )}
-                      </>
-                    )}
-
-                    {hasGoogleResults && (
-                      <>
-                        <li className={styles.searchSectionLabel}>
-                          {isGoogleLoading ? '...' : ''}
-                        </li>
-                        {googlePredictions.map((prediction) => {
-                          const mainText = prediction.structured_formatting?.main_text || prediction.description;
-                          const secondaryText = prediction.structured_formatting?.secondary_text || '';
-
-                          return (
-                            <li
-                              key={prediction.place_id}
-                              className={styles.suggestionItem}
-                              onClick={() => handleGoogleSelect(prediction)}
-                            >
-                              <SuggestionThumbnail
-                                label={mainText}
-                                photoUrl={photoCache[prediction.place_id]}
-                              />
-                              <div className={styles.suggestionContent}>
-                                <span className={styles.suggestionTitle}>{mainText}</span>
-                                <span className={styles.suggestionCategory}>{secondaryText}</span>
-                              </div>
-                            </li>
-                          );
-                        })}
-                      </>
-                    )}
-
-                    {isActivelyTyping && !hasLocalResults && isGoogleLoading && !hasGoogleResults && (
-                      <li className={styles.loadingSuggestions}>Searching locations...</li>
-                    )}
-
-                    {showNoResults && (
-                      <div className={styles.noResults}>
-                        <p>No destinations found for &quot;{searchQuery}&quot;</p>
-                        <small>Try a different city or country name</small>
-                      </div>
-                    )}
-
-                    {!isActivelyTyping && filteredDestinations.map((destination) =>
-                      renderDestinationItem(destination)
-                    )}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            <div className={styles.fieldDivider} aria-hidden="true" />
-
-            <div className={styles.datePickerWrapper} ref={calendarRef}>
-              <button
-                type="button"
-                className={styles.datePickerButton}
-                onClick={() => {
-                  if (!showCalendar) {
-                    setCalendarViewDate(selectedDate);
-                  }
-                  setShowCalendar(!showCalendar);
-                }}
-              >
-                <span className={styles.fieldIcon} aria-hidden="true">
-                  <FaCalendarAlt />
-                </span>
-                <span className={styles.fieldBody}>
-                  <span className={styles.fieldLabel}>Dates</span>
-                  <span className={styles.dateValue}>
-                    {moment(selectedDate).format('DD-MM-YYYY')}
-                  </span>
-                </span>
-              </button>
-              {showCalendar && (
-                <div className={styles.calendarPopup}>
-                  <div className={styles.calendarHeader}>
-                    <h5 className={styles.calendarSelectedDate}>
-                      WHEN ARE YOU GOING?
-                    </h5>
-                  </div>
-                  <DatePicker
-                    value={selectedDate}
-                    date={calendarViewDate}
-                    onDateChange={setCalendarViewDate}
-                    onChange={(date) => {
-                      handleDateChange(date);
-                    }}
-                    minDate={new Date()}
-                    styles={{
-                      calendarHeader: {
-                        maxWidth: '100%',
-                      },
-                      day: {
-                        borderRadius: '50%',
-                        height: '40px',
-                        fontSize: '14px',
-                      },
-                    }}
-                  />
-                </div>
-              )}
-            </div>
-
-            <div className={styles.searchAction}>
-              <button
-                type="button"
-                className={styles.searchBtn}
-                onClick={handleHeroSearch}
-              >
-                <FaSearch size={14} aria-hidden="true" />
-                Search
-              </button>
+          <div
+            className={`msb-collapse${showMobileSearch ? ' msb-collapse--open' : ''}`}
+            style={{ maxHeight: showMobileSearch ? '1200px' : '0' }}
+          >
+            <div className={`msb-collapse-inner ${styles.mobileSearchPanel}`}>
+              {renderSearchBar('activity-where-to')}
             </div>
           </div>
         </div>
-      </section>
+      ) : (
+        <section className={styles.heroSection}>
+          <div className={styles.heroContent}>
+            <div className={styles.heroIntro}>
+              <h1 className={styles.heroTitle}>Where Is Your Next Dream Place?</h1>
+              <p className={styles.heroSubtitle}>
+                Find Exclusive Genius Rewards In Every Corner Of The World!
+              </p>
+            </div>
+            {renderSearchBar('activity-where-to')}
+          </div>
+        </section>
+      )}
 
       {/* Filters + Results */}
       <section className={styles.resultsSection}>

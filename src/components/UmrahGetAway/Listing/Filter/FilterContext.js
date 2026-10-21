@@ -21,6 +21,29 @@ function parseDistanceStringToMeters(distanceStr) {
   return match[2].toLowerCase() === 'km' ? Math.round(value * 1000) : Math.round(value);
 }
 
+function normalizeCity(city) {
+  if (!city) return city;
+  const c = String(city).toLowerCase();
+  if (c === 'makkah') return 'Makkah';
+  if (c === 'madinah' || c === 'madina') return 'Madinah';
+  return city.charAt(0).toUpperCase() + city.slice(1);
+}
+
+function cacheEntryFromResult(r) {
+  if (r && !r.error) {
+    return {
+      loading: false,
+      distance: r.distance,
+      walking: r.walking,
+      difficulty: r.difficulty,
+      distanceMeters: parseDistanceStringToMeters(r.distance),
+    };
+  }
+  return { loading: false, error: true };
+}
+
+const BULK_ROUTE_BATCH_SIZE = 10;
+
 const FilterContext = createContext();
 
 export function FilterProvider({ children, packages }) {
@@ -54,62 +77,101 @@ export function FilterProvider({ children, packages }) {
   // Distance cache keyed by hotel id.
   // Each entry: { loading: true } | { loading: false, distance, walking, difficulty, distanceMeters } | { loading: false, error: true }
   const [googleDistanceCache, setGoogleDistanceCache] = useState({});
+  const distanceCacheRef = useRef({});
 
   /**
-   * Fetch distance for a single hotel and immediately update its cache entry.
-   * All hotels fire concurrently — each card updates as its own response arrives.
+   * Fetch distances in batches of 10 via POST /api/bulk-route
+   * body: { hotels: [{ hotel, city, lat, lon }, ...] }
+   * response: { total, results: [...] } — mapped back by request index
    */
-  const fetchSingleDistance = useCallback(async ({ id, hotel, city, lat, lon }) => {
-    // Mark this hotel as loading
-    setGoogleDistanceCache(prev => {
-      if (prev[id]) return prev; // already in-flight or resolved
-      return { ...prev, [id]: { loading: true } };
+  const fetchBulkDistances = useCallback(async (hotelItems = []) => {
+    const toFetch = hotelItems.filter(
+      (item) => item?.id && !distanceCacheRef.current[item.id]
+    );
+    if (!toFetch.length) return;
+
+    // Mark loading + reserve ids so parallel callers don't duplicate
+    const loadingMap = {};
+    toFetch.forEach((item) => {
+      loadingMap[item.id] = { loading: true };
+      distanceCacheRef.current[item.id] = { loading: true };
     });
+    setGoogleDistanceCache((prev) => ({ ...prev, ...loadingMap }));
 
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_AI_API_URL}/api/bulk-route`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-API-Key': process.env.NEXT_PUBLIC_AI_API_TOKEN },
-        body: JSON.stringify({ hotel, city, lat, lon }),
-      });
-      const r = await res.json();
+    for (let i = 0; i < toFetch.length; i += BULK_ROUTE_BATCH_SIZE) {
+      const batch = toFetch.slice(i, i + BULK_ROUTE_BATCH_SIZE);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bulk-route`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            hotels: batch.map(({ hotel, city, lat, lon }) => ({
+              hotel,
+              city: normalizeCity(city),
+              lat,
+              lon,
+            })),
+          }),
+        });
+        const json = await res.json();
+        const results = Array.isArray(json?.results) ? json.results : [];
 
-      setGoogleDistanceCache(prev => ({
-        ...prev,
-        [id]: (r && !r.error)
-          ? {
-              loading: false,
-              distance: r.distance,
-              walking: r.walking,
-              difficulty: r.difficulty,
-              distanceMeters: parseDistanceStringToMeters(r.distance),
-            }
-          : { loading: false, error: true },
-      }));
-    } catch {
-      setGoogleDistanceCache(prev => ({ ...prev, [id]: { loading: false, error: true } }));
+        const updates = {};
+        batch.forEach((item, idx) => {
+          updates[item.id] = cacheEntryFromResult(results[idx]);
+          distanceCacheRef.current[item.id] = updates[item.id];
+        });
+        setGoogleDistanceCache((prev) => ({ ...prev, ...updates }));
+      } catch {
+        const updates = {};
+        batch.forEach((item) => {
+          updates[item.id] = { loading: false, error: true };
+          distanceCacheRef.current[item.id] = updates[item.id];
+        });
+        setGoogleDistanceCache((prev) => ({ ...prev, ...updates }));
+      }
     }
   }, []);
 
-  // Fire one request per unique hotel concurrently — results appear as they arrive
+  /** Single-hotel helper for ListingCard / UpdateHotel — uses same bulk API */
+  const fetchSingleDistance = useCallback(
+    async (item) => {
+      await fetchBulkDistances([item]);
+    },
+    [fetchBulkDistances]
+  );
+
+  // Collect unique hotels from packages and fetch in batches of 10
   useEffect(() => {
     if (!packages?.length) return;
+    const hotels = [];
     const seen = new Set();
-    packages.forEach(pkg => {
+    packages.forEach((pkg) => {
       const mh = pkg?.makkah_hotel;
       if (mh?.id && mh?.name && !seen.has(mh.id)) {
         seen.add(mh.id);
-        const mhLabel = [mh.name, mh?.location?.address].filter(Boolean).join(', ');
-        fetchSingleDistance({ id: mh.id, hotel: mhLabel, city: 'makkah', lat: mh?.location?.latitude, lon: mh?.location?.longitude });
+        hotels.push({
+          id: mh.id,
+          hotel: [mh.name, mh?.location?.address].filter(Boolean).join(', '),
+          city: 'makkah',
+          lat: mh?.location?.latitude,
+          lon: mh?.location?.longitude,
+        });
       }
       const mdh = pkg?.madinah_hotel;
       if (mdh?.id && mdh?.name && !seen.has(mdh.id)) {
         seen.add(mdh.id);
-        const mdhLabel = [mdh.name, mdh?.location?.address].filter(Boolean).join(', ');
-        fetchSingleDistance({ id: mdh.id, hotel: mdhLabel, city: 'madinah', lat: mdh?.location?.latitude, lon: mdh?.location?.longitude });
+        hotels.push({
+          id: mdh.id,
+          hotel: [mdh.name, mdh?.location?.address].filter(Boolean).join(', '),
+          city: 'madinah',
+          lat: mdh?.location?.latitude,
+          lon: mdh?.location?.longitude,
+        });
       }
     });
-  }, [packages, fetchSingleDistance]);
+    fetchBulkDistances(hotels);
+  }, [packages, fetchBulkDistances]);
 
   const applyPriceBounds = useCallback((type, pkgList) => {
     if (!pkgList?.length) return;

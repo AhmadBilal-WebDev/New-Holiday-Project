@@ -154,12 +154,12 @@ export default function Search() {
                 </button>
               </li> */}
 
-              {/* <li className="nav-item" role="presentation">
-                <button className={`nav-link ${activeTab === 'ai-tab-pane' ? 'active' : ''} h-100`} id="ai-tab" data-bs-toggle="tab" data-bs-target="#ai-tab-pane" type="button" role="tab" aria-controls="ai-tab-pane" aria-selected={activeTab === 'ai-tab-pane'} onClick={() => handleTabChange('ai-tab-pane')}>
-                  <HiOutlineSparkles color='#ffffff' size='25' />
+              <li className="nav-item" role="presentation">
+                <button className={`nav-link ${styles.aiModeTab} ${activeTab === 'ai-tab-pane' ? 'active' : ''} h-100`} id="ai-tab" data-bs-toggle="tab" data-bs-target="#ai-tab-pane" type="button" role="tab" aria-controls="ai-tab-pane" aria-selected={activeTab === 'ai-tab-pane'} onClick={() => handleTabChange('ai-tab-pane')}>
+                  <HiOutlineSparkles className={styles.aiModeIcon} size={22} />
                   {' '}AI Mode
                 </button>
-              </li> */}
+              </li>
             </ul>
             <ul className={`nav nav-pills ${styles.mobilesearch} d-flex d-md-none gap-2 lights medium px-0`} id="searchTabsMobile" role="tablist">
               {/* <li className="nav-item" role="presentation">
@@ -209,12 +209,12 @@ export default function Search() {
                 </button>
               </li> */}
 
-              {/* <li className="nav-item" role="presentation">
-                <button className={`nav-link ${activeTab === 'ai-tab-pane' ? 'active' : ''} h-100 ${styles.mobileTab}`} id="ai-tab" data-bs-toggle="tab" data-bs-target="#ai-tab-pane" type="button" role="tab" aria-controls="ai-tab-pane" aria-selected={activeTab === 'ai-tab-pane'} onClick={() => handleTabChange('ai-tab-pane')}>
-                  <HiOutlineSparkles color='#0b659b' size='40px' />
+              <li className="nav-item" role="presentation">
+                <button className={`nav-link ${styles.aiModeTab} ${styles.mobileTab} ${activeTab === 'ai-tab-pane' ? 'active' : ''} h-100`} id="ai-tab-mobile" data-bs-toggle="tab" data-bs-target="#ai-tab-pane" type="button" role="tab" aria-controls="ai-tab-pane" aria-selected={activeTab === 'ai-tab-pane'} onClick={() => handleTabChange('ai-tab-pane')}>
+                  <HiOutlineSparkles className={styles.aiModeIcon} size={36} />
                   <span className={styles.tabLabel}>AI Mode</span>
                 </button>
-              </li> */}
+              </li>
             </ul>
           </div>
           {/* Tab Content */}

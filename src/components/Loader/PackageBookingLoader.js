@@ -1,160 +1,169 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
-    FaMapMarkerAlt,
-    FaCreditCard,
-    FaTimes,
-    FaCheck,
-    FaCalendarCheck
+  FaMapMarkerAlt,
+  FaCreditCard,
+  FaTimes,
+  FaCheck,
+  FaCalendarCheck,
+  FaShieldAlt,
 } from "react-icons/fa";
-import "./BookingLoader.css";
+import styles from "./PackageBookingLoader.module.css";
 
 export default function PackageBookingLoader({
-    showLoader,
-    confirmStatus = "pending", // "pending" | "booking" | "payment" | "success" | "error"
-    errorMessage,
-    componentName
+  showLoader,
+  confirmStatus = "pending", // "pending" | "validate" | "reserve" | "payment" | "success" | "error"
+  errorMessage,
+  componentName,
 }) {
-    const [currentStep, setCurrentStep] = useState(0);
-    const [isComplete, setIsComplete] = useState(false);
-    const [failedStep, setFailedStep] = useState(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [failedStep, setFailedStep] = useState(null);
+  const currentStepRef = useRef(0);
 
+  const steps = [
+    { id: "validate", label: "Validating Details", icon: <FaMapMarkerAlt /> },
+    {
+      id: "reserve",
+      label: `Reserving Your ${componentName || "Booking"}`,
+      icon: <FaCalendarCheck />,
+    },
+    { id: "payment", label: "Generating Payment Link", icon: <FaCreditCard /> },
+  ];
 
-    const steps = [
-        { id: "validate", label: "Validating Details", icon: <FaMapMarkerAlt /> },
-        { id: "reserve", label: `Reserving Your ${componentName}`, icon: <FaCalendarCheck /> },
-        { id: "payment", label: "Generating Payment Link", icon: <FaCreditCard /> },
-    ];
+  useEffect(() => {
+    currentStepRef.current = currentStep;
+  }, [currentStep]);
 
-    // ✅ Control step movement based on confirmStatus
-    useEffect(() => {
-        if (confirmStatus === "pending") {
-            setCurrentStep(0);
-        }
-         if (confirmStatus === "validate") {
-            setCurrentStep(1);
-        }
-        if (confirmStatus === "reserve") {
-            setCurrentStep(2);
-        }
-        if (confirmStatus === "payment") {
-            setCurrentStep(3);
-        }
-        if (confirmStatus === "success") {
-            setIsComplete(true);
-        }
-        if (confirmStatus === "error") {
-            setFailedStep(currentStep);
-            setIsComplete(true);
-        }
-    }, [confirmStatus]);
+  useEffect(() => {
+    if (confirmStatus === "pending") {
+      setCurrentStep(0);
+      setIsComplete(false);
+      setFailedStep(null);
+      return;
+    }
+    if (confirmStatus === "validate") {
+      setCurrentStep(1);
+      return;
+    }
+    if (confirmStatus === "reserve") {
+      setCurrentStep(2);
+      return;
+    }
+    if (confirmStatus === "payment") {
+      setCurrentStep(3);
+      return;
+    }
+    if (confirmStatus === "success") {
+      setIsComplete(true);
+      setFailedStep(null);
+      return;
+    }
+    if (confirmStatus === "error") {
+      setFailedStep((prev) => (prev == null ? currentStepRef.current : prev));
+      setIsComplete(true);
+    }
+  }, [confirmStatus]);
 
-    if (!showLoader) return null;
+  if (!showLoader) return null;
 
-    return (
-        <div
-            style={{ zIndex: 9999 }}
-            className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75"
-        >
-            <div className="card shadow-lg border-0" style={{ maxWidth: "500px", width: "100%" }}>
-                <div className="card-body text-center mt-3">
-                    <h4 className="fw-bold mb-2">Processing Your Booking</h4>
-                    <p className="text-muted mb-4">
-                        Please wait while we complete your booking...
-                    </p>
+  const progressWidth = isComplete
+    ? 100
+    : Math.min(100, Math.max(8, (currentStep / steps.length) * 100));
 
-                    {/* ✅ Steps */}
-                    <div className="mb-4">
-                        {steps.map((step, index) => {
-                            const isActive = index === currentStep && !isComplete;
-                            const isCompleted = index < currentStep && confirmStatus !== "error";
-                            // const isFailed = confirmStatus === "error" && index === currentStep;
-                            const isFailed = failedStep === index;
-                            return (
-                                <div
-                                    key={step.id}
-                                    className={`d-flex align-items-center p-3 mb-3 rounded-3 border
-                                        ${
-                                            isFailed
-                                                ? "border-danger bg-danger-subtle"
-                                                : isCompleted
-                                                ? "border-success bg-success-subtle"
-                                                : isActive
-                                                ? "border-warning bg-warning-subtle"
-                                                : "border-secondary bg-light"
-                                        }`}
-                                    style={{ transition: "all 0.4s ease" }}
-                                >
-                                    {/* ICON */}
-                                    <div
-                                        className={`d-flex justify-content-center align-items-center rounded-circle me-3`}
-                                        style={{
-                                            width: "45px",
-                                            height: "45px",
-                                            backgroundColor: isFailed
-                                                ? "#dc3545"
-                                                : isCompleted
-                                                ? "#198754"
-                                                : isActive
-                                                ? "#ffc107"
-                                                : "#dee2e6",
-                                            color: "#fff",
-                                        }}
-                                    >
-                                        {isCompleted ? <FaCheck /> : isFailed ? <FaTimes /> : step.icon}
-                                    </div>
+  const progressClass =
+    confirmStatus === "error"
+      ? `${styles.progressBar} ${styles.progressBarError}`
+      : confirmStatus === "success"
+        ? `${styles.progressBar} ${styles.progressBarSuccess}`
+        : styles.progressBar;
 
-                                    {/* LABEL */}
-                                    <div className="text-start flex-grow-1">
-                                        <p className="mb-0 fw-semibold">
-                                            {step.label}
-                                        </p>
-                                        <small className="text-muted">
-                                            {isFailed
-                                                ? "Failed"
-                                                : isCompleted
-                                                ? "Completed"
-                                                : isActive
-                                                ? "Processing..."
-                                                : "Pending"}
-                                        </small>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
+  return (
+    <div className={styles.overlay} role="alertdialog" aria-modal="true" aria-labelledby="pbl-title">
+      <div className={styles.card}>
+        <div className={styles.brandStrip} aria-hidden="true" />
 
-                    {/* ✅ Progress bar */}
-                    <div className="progress mb-4" style={{ height: "6px" }}>
-                        <div
-                            className={`progress-bar ${
-                                confirmStatus === "error"
-                                    ? "bg-danger"
-                                    : confirmStatus === "success"
-                                    ? "bg-success"
-                                    : "bg-warning"
-                            } progress-bar-striped progress-bar-animated`}
-                            style={{
-                                width: isComplete
-                                    ? "100%"
-                                    : `${(currentStep / (steps.length - 1)) * 100}%`,
-                                transition: "width 0.5s ease-out",
-                            }}
-                        ></div>
-                    </div>
-
-                    {/* ✅ Show error message */}
-                    {confirmStatus === "error" && (
-                        <div className="alert alert-danger mt-2">
-                            {errorMessage || "Something went wrong. Please try again."}
-                        </div>
-                    )}
-
-                    <p className="text-muted small">
-                        Step {currentStep + 1} of {steps.length}
-                    </p>
-                </div>
-            </div>
+        <div className={styles.header}>
+          <div className={styles.logoMark} aria-hidden="true">
+            <FaShieldAlt />
+          </div>
+          <h2 id="pbl-title" className={styles.title}>
+            Processing Your Booking
+          </h2>
+          <p className={styles.subtitle}>
+            Please wait while we securely complete your reservation.
+          </p>
         </div>
-    );
+
+        <div className={styles.body}>
+          <div className={styles.steps}>
+            {steps.map((step, index) => {
+              const isActive = index === currentStep && !isComplete;
+              const isCompleted = index < currentStep && confirmStatus !== "error";
+              const isFailed = failedStep === index;
+
+              const stepClass = [
+                styles.step,
+                isFailed ? styles.stepFailed : "",
+                isCompleted ? styles.stepDone : "",
+                isActive ? styles.stepActive : "",
+              ]
+                .filter(Boolean)
+                .join(" ");
+
+              const statusLabel = isFailed
+                ? "Failed"
+                : isCompleted
+                  ? "Completed"
+                  : isActive
+                    ? "In progress"
+                    : "Pending";
+
+              return (
+                <div key={step.id} className={stepClass}>
+                  <div className={styles.stepIcon} aria-hidden="true">
+                    {isCompleted ? (
+                      <FaCheck />
+                    ) : isFailed ? (
+                      <FaTimes />
+                    ) : isActive ? (
+                      <span className={styles.spinner} />
+                    ) : (
+                      step.icon
+                    )}
+                  </div>
+                  <div className={styles.stepMeta}>
+                    <p className={styles.stepLabel}>{step.label}</p>
+                    <span className={styles.stepStatus}>{statusLabel}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className={styles.progressWrap}>
+          <div className={styles.progressTrack} aria-hidden="true">
+            <div className={progressClass} style={{ width: `${progressWidth}%` }} />
+          </div>
+        </div>
+
+        {confirmStatus === "error" && (
+          <div className={styles.errorBox} role="alert">
+            {errorMessage || "Something went wrong. Please try again."}
+          </div>
+        )}
+
+        <div className={styles.footer}>
+          <p className={styles.stepCount}>
+            {confirmStatus === "error"
+              ? "Booking interrupted"
+              : confirmStatus === "success"
+                ? "All steps complete"
+                : `Step ${Math.min(currentStep + 1, steps.length)} of ${steps.length}`}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }

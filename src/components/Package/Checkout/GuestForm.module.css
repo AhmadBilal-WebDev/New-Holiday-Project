@@ -496,7 +496,78 @@
   font-weight: 700;
 }
 
+.paymentCard {
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.35rem;
+  padding: 1.35rem 1.4rem 1.4rem;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #c91a66 0%, #e7247a 55%, #ff4f9a 100%);
+  color: #ffffff;
+  box-shadow:
+    0 18px 48px rgba(231, 36, 122, 0.28),
+    0 4px 14px rgba(19, 20, 35, 0.08);
+}
+
+.paymentCard::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.paymentCardHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.paymentCardIcon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 1.35rem;
+  color: #ffffff;
+}
+
+.paymentCardTitle {
+  margin: 0 0 0.2rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #ffffff;
+}
+
+.paymentSubtitle {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.paymentNote {
+  position: relative;
+  margin: 0 0 1.15rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .confirmBtn {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -504,24 +575,24 @@
   border: none;
   border-radius: 999px;
   padding: 0.95rem 1.5rem;
-  background: linear-gradient(90deg, #e7247a 0%, #ff4f9a 100%);
-  color: #ffffff;
+  background: #ffffff;
+  color: var(--form-pink);
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.3;
   cursor: pointer;
-  box-shadow: 0 12px 28px -10px rgba(231, 36, 122, 0.55);
+  box-shadow: 0 10px 24px -8px rgba(19, 20, 35, 0.25);
   transition: filter 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
 }
 
 .confirmBtn:hover:not(:disabled) {
-  filter: brightness(1.05);
+  filter: brightness(0.98);
   transform: translateY(-1px);
-  color: #ffffff;
+  color: var(--form-pink);
 }
 
 .confirmBtn:disabled {
-  opacity: 0.65;
+  opacity: 0.7;
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -554,6 +625,15 @@
   .termsBar {
     border-radius: 14px;
     padding: 0.9rem 1rem;
+  }
+
+  .paymentCard {
+    border-radius: 16px;
+    padding: 1.15rem 1.1rem 1.2rem;
+  }
+
+  .paymentCardTitle {
+    font-size: 0.98rem;
   }
 
   .confirmBtn {

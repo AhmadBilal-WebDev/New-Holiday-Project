@@ -134,14 +134,14 @@ export default function IslamicHeader() {
                                     About us
                                 </Link>
                             </li>
-                            {/* <li className={styles.islamicNavItem}>
+                            <li className={styles.islamicNavItem}>
                                 <Link
                                     className={`${styles.islamicNavLink} ${pathname === '/blogs' ? styles.islamicNavLinkActive : ''}`}
                                     href="/blogs"
                                 >
                                     Blogs
                                 </Link>
-                            </li> */}
+                            </li>
                             <li className={styles.islamicNavItem}>
                                 <Link
                                     className={`${styles.islamicNavLink} ${pathname === '/contact-us' ? styles.islamicNavLinkActive : ''}`}
@@ -265,7 +265,7 @@ export default function IslamicHeader() {
                                 Contact Us
                             </Link>
                         </li>
-                        {/* <li className={styles.islamicMobileMenuItem}>
+                        <li className={styles.islamicMobileMenuItem}>
                             <Link
                                 className={`${styles.islamicMobileMenuLink} ${pathname === '/blogs' ? styles.islamicMobileMenuLinkActive : ''}`}
                                 href="/blogs"
@@ -273,7 +273,7 @@ export default function IslamicHeader() {
                             >
                                 Blogs
                             </Link>
-                        </li> */}
+                        </li>
                         <li className={styles.islamicMobileMenuItem}>
                             <Link
                                 className={`${styles.islamicMobileMenuLink} ${pathname === myBookingsHref ? styles.islamicMobileMenuLinkActive : ''}`}

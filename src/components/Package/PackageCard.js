@@ -56,7 +56,7 @@ export default function PackageCard({ packageList }) {
         const dateRange = `${moment(item.start_date).format('DD-MM-YYYY')} – ${moment(item.end_date).format('DD-MM-YYYY')}`;
 
         return (
-          <article className={styles.card} key={item?.id || item?.slug || index}>
+          <article className={`${styles.card} border `} key={item?.id || item?.slug || index}>
             <div className={styles.media}>
               <Link href={href} className={styles.mediaLink} aria-label={item.title}>
                 <Image

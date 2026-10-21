@@ -25,6 +25,7 @@ import { FaPlane } from 'react-icons/fa';
 import { Outfit, Inter } from 'next/font/google';
 import heroStyles from './FlightListingHero.module.css';
 import filterStyles from './Filters/FlightFilters.module.css';
+import TopContact from '../Home/TopContact/TopContact';
 
 const outfit = Outfit({
     subsets: ['latin'],
@@ -290,8 +291,8 @@ export default function FlightListingPage() {
                 <div className={`${heroStyles.hero} d-none d-md-block`}>
                     <div className={`container ${heroStyles.heroInner} ${inter.className}`}>
                         <h1 className={`${heroStyles.headline} ${outfit.className}`}>
-                            Which exciting place is your next{' '}
-                            <span className={heroStyles.headlineAccent}>adventure</span> taking you?
+                            Which exciting place is your next adventure
+                            <span className={heroStyles.headlineAccent}> taking you?</span>
                         </h1>
                         <p className={heroStyles.subhead}>
                             Discover exclusive deals to match your ideal travel plans today!
@@ -303,7 +304,7 @@ export default function FlightListingPage() {
                 </div>
 
                 {/* Mobile: compact summary + collapsible search */}
-                <div className='d-block d-md-none'>
+                <div className={`d-block d-md-none${showMobileSearch ? ' msb-mobile-search--open' : ''}`}>
                     <div className='msb-bar'>
                         <div
                             className='d-flex align-items-center gap-3 cursor-pointer'
@@ -351,8 +352,8 @@ export default function FlightListingPage() {
                         </div>
                     </div>
                     <div
-                        className='msb-collapse'
-                        style={{ maxHeight: showMobileSearch ? '900px' : '0' }}
+                        className={`msb-collapse${showMobileSearch ? ' msb-collapse--open' : ''}`}
+                        style={{ maxHeight: showMobileSearch ? '5000px' : '0' }}
                     >
                         <div className='msb-collapse-inner'>
                             <FlightSearch variant="listing" onSearch={() => setShowMobileSearch(false)} />
@@ -374,6 +375,7 @@ export default function FlightListingPage() {
                             <div className="col-12">
                                 <SortOption />
                             </div>
+
                             <div className='col-md-3 col-sm-12 col-12'>
                                 <aside className={`d-none d-md-block ${filterStyles.sidebar}`}>
                                     <div className={filterStyles.header}>
@@ -525,13 +527,15 @@ export default function FlightListingPage() {
                                 </Drawer>
 
                             </div>
-                            <div className='col-md-9 col-sm-12 col-12'>
 
+                            <div className='col-md-9 col-sm-12 col-12'>
                                 {/* Total Flight Count */}
                                 <FlightResultCount />
                                 <FlightCard />
                                 <FlightListingPaginations />
                             </div>
+
+                            {/* <TopContact/> */}
                         </div>
                     </div>
                 )}

@@ -349,6 +349,31 @@
   color: var(--search-pink) !important;
 }
 
+/* AI Mode tab — same chrome as other tabs; icon uses currentColor */
+.aiModeIcon {
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.searchTabsWrapper .largesearch .aiModeTab .aiModeIcon {
+  color: #8b8fa3;
+}
+
+.searchTabsWrapper .largesearch .aiModeTab:hover .aiModeIcon,
+.searchTabsWrapper .largesearch .aiModeTab:global(.active) .aiModeIcon,
+.searchTabsWrapper .largesearch .aiModeTab.active .aiModeIcon {
+  color: var(--search-pink);
+}
+
+.searchTabsWrapper .mobilesearch .aiModeTab .aiModeIcon {
+  color: #8b8fa3;
+}
+
+.searchTabsWrapper .mobilesearch .aiModeTab:global(.active) .aiModeIcon,
+.searchTabsWrapper .mobilesearch .aiModeTab.active .aiModeIcon {
+  color: var(--search-pink);
+}
+
 .searchBody {
   margin-top: 18px;
 }

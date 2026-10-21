@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { MdFilterListAlt } from "react-icons/md";
+import { MdFilterListAlt, MdRefresh } from "react-icons/md";
 import TransferCard from "./TransferCard";
 import { useTransferList } from "./TransferListingContext";
 import SearchBar from "./Filters/SearchBar";
@@ -55,12 +55,15 @@ function FilterDrawer({ opened, onClose, title, onReset, children }) {
       }}
     >
       <div className={`${styles.drawerBody} ${styles.drawerPanel}`}>{children}</div>
-      <button type="button" onClick={onReset} className={styles.drawerReset}>
-        Reset filters
-      </button>
+      <div className={styles.resetDrawer}>
+        <button type="button" onClick={onReset} className={styles.resetBtn}>
+          <MdRefresh className={styles.resetIcon} size={18} aria-hidden="true" />
+          Reset filters
+        </button>
+      </div>
       <div className={styles.drawerFooter}>
         <button type="button" className={styles.drawerDone} onClick={onClose}>
-          Apply
+          Done
         </button>
       </div>
     </Drawer>

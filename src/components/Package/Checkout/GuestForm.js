@@ -13,6 +13,7 @@ import Autocomplete from "react-google-autocomplete";
 import Link from 'next/link';
 import PriceDisplay from '@/components/Currency/PriceDisplay';
 import { FaUser, FaUserPlus } from 'react-icons/fa';
+import { IoShieldCheckmarkOutline } from 'react-icons/io5';
 import { DUPLICATE_NAME_MESSAGE, findDuplicateNameIndices } from '@/util/guestNameValidation';
 import styles from './GuestForm.module.css';
 
@@ -864,24 +865,41 @@ export default function GuestForm({ packageDetail, servicesTotal, selectedServic
                 )}
             </div>
 
-            <button
-                onClick={handleCheckout}
-                type="button"
-                disabled={loading}
-                className={styles.confirmBtn}
-            >
-                {loading ? (
-                    'Processing...'
-                ) : (
-                    <>
-                        Confirm &amp; Pay{' '}
-                        <PriceDisplay
-                            price={Number(packageDetail?.total_amount || 0) + Number(servicesTotal || 0)}
-                            currency={packageDetail?.currency_code}
-                        />
-                    </>
-                )}
-            </button>
+            <div className={styles.paymentCard}>
+                <div className={styles.paymentCardHeader}>
+                    <div className={styles.paymentCardIcon} aria-hidden="true">
+                        <IoShieldCheckmarkOutline />
+                    </div>
+                    <div>
+                        <h3 className={styles.paymentCardTitle}>Secure Card Payment</h3>
+                        <p className={styles.paymentSubtitle}>
+                            Pay safely with your debit or credit card
+                        </p>
+                    </div>
+                </div>
+                <p className={styles.paymentNote}>
+                    All payment details are encrypted and processed through a secure gateway.
+                    Your booking information remains safe and protected.
+                </p>
+                <button
+                    onClick={handleCheckout}
+                    type="button"
+                    disabled={loading}
+                    className={styles.confirmBtn}
+                >
+                    {loading ? (
+                        'Processing...'
+                    ) : (
+                        <>
+                            Confirm &amp; Pay{' '}
+                            <PriceDisplay
+                                price={Number(packageDetail?.total_amount || 0) + Number(servicesTotal || 0)}
+                                currency={packageDetail?.currency_code}
+                            />
+                        </>
+                    )}
+                </button>
+            </div>
         </div>
     )
 }

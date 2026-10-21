@@ -12,6 +12,7 @@ import VehicleDetail from '@/components/Transfer/Listing/VehicleDetail'
 import { formatTransferServiceValue } from '@/util/formatTransferServiceValue'
 import heroStyles from '@/app/hotels/checkout/CheckoutHero.module.css'
 import styles from './TransferSummary.module.css'
+import TopContact from '@/components/Home/TopContact/TopContact'
 
 export const dynamic = 'force-dynamic'
 
@@ -145,6 +146,7 @@ export default function Page() {
                 </div>
 
                 <div className="row">
+
                     <div className="col-md-9 col-sm-12 col-12 mb-3 order-md-1 order-2">
                         <CheckoutTransfer
                             transferDetail={selectedtransfer}
@@ -358,6 +360,11 @@ export default function Page() {
                             )}
                         </aside>
                     </div>
+
+                    {/* <div className="col-12">
+                        <TopContact />
+                    </div> */}
+
                 </div>
             </div>
         </div>

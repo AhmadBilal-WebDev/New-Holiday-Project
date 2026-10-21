@@ -40,6 +40,29 @@ function parseDistanceStringToMeters(distanceStr) {
     return match[2].toLowerCase() === "km" ? Math.round(value * 1000) : Math.round(value);
 }
 
+function normalizeCity(city) {
+    if (!city) return city;
+    const c = String(city).toLowerCase();
+    if (c === "makkah") return "Makkah";
+    if (c === "madinah" || c === "madina") return "Madinah";
+    return city.charAt(0).toUpperCase() + city.slice(1);
+}
+
+function cacheEntryFromResult(r) {
+    if (r && !r.error) {
+        return {
+            loading: false,
+            distance: r.distance,
+            walking: r.walking,
+            difficulty: r.difficulty,
+            distanceMeters: parseDistanceStringToMeters(r.distance),
+        };
+    }
+    return { loading: false, error: true };
+}
+
+const BULK_ROUTE_BATCH_SIZE = 10;
+
 function parseDistanceRange(rangeStr) {
     switch (rangeStr) {
         case "0-500":
@@ -112,42 +135,60 @@ export function HotelListProvider({ children, hotels, place, city, location }) {
         }
     }, [hotels, rates, currency]);
 
-    const fetchSingleDistance = useCallback(async ({ id, hotel, lat, lon, cityKey, generation }) => {
-        setDistanceCache((prev) => {
-            if (prev[id]) return prev;
-            return { ...prev, [id]: { loading: true } };
+    /**
+     * Fetch distances in batches of 10 via POST /api/bulk-route
+     * body: { hotels: [{ hotel, city, lat, lon }, ...] }
+     * response: { total, results: [...] } — mapped back by request index
+     */
+    const fetchBulkDistances = useCallback(async (hotelItems = [], generation) => {
+        const toFetch = hotelItems.filter(
+            (item) => item?.id && !distanceFetchStarted.current.has(item.id)
+        );
+        if (!toFetch.length) return;
+
+        const loadingMap = {};
+        toFetch.forEach((item) => {
+            distanceFetchStarted.current.add(item.id);
+            loadingMap[item.id] = { loading: true };
         });
+        setDistanceCache((prev) => ({ ...prev, ...loadingMap }));
 
-        try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_AI_API_URL}/api/bulk-route`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-API-Key": process.env.NEXT_PUBLIC_AI_API_TOKEN,
-                },
-                body: JSON.stringify({ hotel, city: cityKey, lat, lon }),
-            });
-            const r = await res.json();
-
-            // Ignore stale responses after a new search / city change
+        for (let i = 0; i < toFetch.length; i += BULK_ROUTE_BATCH_SIZE) {
             if (generation !== distanceFetchGeneration.current) return;
 
-            setDistanceCache((prev) => ({
-                ...prev,
-                [id]:
-                    r && !r.error
-                        ? {
-                              loading: false,
-                              distance: r.distance,
-                              walking: r.walking,
-                              difficulty: r.difficulty,
-                              distanceMeters: parseDistanceStringToMeters(r.distance),
-                          }
-                        : { loading: false, error: true },
-            }));
-        } catch {
-            if (generation !== distanceFetchGeneration.current) return;
-            setDistanceCache((prev) => ({ ...prev, [id]: { loading: false, error: true } }));
+            const batch = toFetch.slice(i, i + BULK_ROUTE_BATCH_SIZE);
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bulk-route`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        hotels: batch.map(({ hotel, city, lat, lon }) => ({
+                            hotel,
+                            city: normalizeCity(city),
+                            lat,
+                            lon,
+                        })),
+                    }),
+                });
+                const json = await res.json();
+
+                // Ignore stale responses after a new search / city change
+                if (generation !== distanceFetchGeneration.current) return;
+
+                const results = Array.isArray(json?.results) ? json.results : [];
+                const updates = {};
+                batch.forEach((item, idx) => {
+                    updates[item.id] = cacheEntryFromResult(results[idx]);
+                });
+                setDistanceCache((prev) => ({ ...prev, ...updates }));
+            } catch {
+                if (generation !== distanceFetchGeneration.current) return;
+                const updates = {};
+                batch.forEach((item) => {
+                    updates[item.id] = { loading: false, error: true };
+                });
+                setDistanceCache((prev) => ({ ...prev, ...updates }));
+            }
         }
     }, []);
 
@@ -167,46 +208,28 @@ export function HotelListProvider({ children, hotels, place, city, location }) {
         distanceFetchStarted.current = new Set();
     }, [hotels]);
 
-    // Fetch distances one-by-one; each completed hotel updates the UI immediately
+    // Fetch distances in batches of 10 as hotels (and coords) become available
     useEffect(() => {
         if (!holyCity || !convertedHotels?.length) return;
 
-        let cancelled = false;
         const generation = distanceFetchGeneration.current;
+        const hotelItems = [];
 
-        const runQueue = async () => {
-            for (const h of convertedHotels) {
-                if (cancelled || generation !== distanceFetchGeneration.current) break;
+        convertedHotels.forEach((h) => {
+            const id = h?.id;
+            if (!id || !h?.name || distanceFetchStarted.current.has(id)) return;
 
-                const id = h?.id;
-                if (!id || !h?.name || distanceFetchStarted.current.has(id)) continue;
+            hotelItems.push({
+                id,
+                hotel: [h.name, h?.location?.address].filter(Boolean).join(", "),
+                city: holyCity,
+                lat: h?.location?.latitude ?? null,
+                lon: h?.location?.longitude ?? null,
+            });
+        });
 
-                const lat = h?.location?.latitude;
-                const lon = h?.location?.longitude;
-                // Wait until coords exist (may arrive later via Places geocode)
-                if (lat == null || lon == null || Number.isNaN(Number(lat)) || Number.isNaN(Number(lon))) {
-                    continue;
-                }
-
-                distanceFetchStarted.current.add(id);
-                const hotelLabel = [h.name, h?.location?.address].filter(Boolean).join(", ");
-                await fetchSingleDistance({
-                    id,
-                    hotel: hotelLabel,
-                    lat,
-                    lon,
-                    cityKey: holyCity,
-                    generation,
-                });
-            }
-        };
-
-        runQueue();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [holyCity, convertedHotels, fetchSingleDistance]);
+        fetchBulkDistances(hotelItems, generation);
+    }, [holyCity, convertedHotels, fetchBulkDistances]);
 
     const resetPriceRange = () => {
         setPriceRange([minPrice, maxPrice]);

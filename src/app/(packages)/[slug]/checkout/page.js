@@ -472,9 +472,16 @@ export default function Page() {
                                         </div>
                                         <div className='summary-total-row'>
                                             <span className='total-label'>Grand Total</span>
-                                            <span className='total-value'><PriceDisplay price={Number(packageDetail?.total_amount || 0) + servicesTotal} currency={packageDetail?.currency_code} /></span>
+                                            <div className='total-amount-wrap'>
+                                                <span className='total-value'>
+                                                    <PriceDisplay
+                                                        price={Number(packageDetail?.total_amount || 0) + servicesTotal}
+                                                        currency={packageDetail?.currency_code}
+                                                    />
+                                                </span>
+                                                <span className='summary-tax-note'>Inclusive of VAT and taxes</span>
+                                            </div>
                                         </div>
-                                        <div className='summary-tax-note'>Inclusive of VAT and taxes</div>
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { Modal } from "@mantine/core";
+import { useMediaQuery } from '@mantine/hooks';
 import Image from "next/image";
 import { FaCar, FaKey } from 'react-icons/fa';
 import { GoPerson } from 'react-icons/go';
@@ -38,6 +39,8 @@ export default function VehicleDetail({
     setVehicleQuantity,
     isSelecting = false,
 }) {
+    const isMobile = useMediaQuery('(max-width: 767.98px)');
+
     const isCustom =
         selectedTransferDetail?.provider === 'custom' ||
         String(selectedTransferDetail?.transfer_type_code || '').toUpperCase() === 'CUSTOM';
@@ -81,17 +84,18 @@ export default function VehicleDetail({
     return (
         <Modal
             opened={showModal}
-            size="lg"
+            size={isMobile ? '100%' : 'lg'}
             onClose={handleCloseModal}
             withCloseButton={false}
-            centered
+            centered={!isMobile}
             overlayProps={{
                 backgroundOpacity: 0.55,
                 blur: 3,
             }}
             classNames={{
-                content: styles.modalContent,
+                content: `${styles.modalContent}${isMobile ? ` ${styles.modalContentMobile}` : ''}`,
                 body: styles.modalBody,
+                inner: isMobile ? styles.modalInnerMobile : undefined,
             }}
             styles={{
                 content: {
@@ -125,6 +129,7 @@ export default function VehicleDetail({
                             src={selectedTransferDetail.vehicle_image}
                             height={220}
                             width={360}
+                            sizes="(max-width: 767px) 100vw, 360px"
                             className={styles.image}
                             alt={vehicleName}
                         />

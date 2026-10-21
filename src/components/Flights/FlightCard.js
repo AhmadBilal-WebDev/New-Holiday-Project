@@ -345,13 +345,13 @@ export default function FlightCard() {
           <div className={styles.emptyIconWrap}>
             <FaPlane className={styles.emptyIcon} aria-hidden />
           </div>
-          <Image
+          {/* <Image
             src="/images/search-not-found.svg"
             alt=""
             width={140}
             height={160}
             className={styles.emptyImage}
-          />
+          /> */}
           <h4 className={styles.emptyStateTitle}>No Flights Found</h4>
           <p className={styles.emptyStateText}>
             We couldn&apos;t find any flights that match your search details. Try adjusting your dates, destination, or filters to see more options.
